@@ -39,6 +39,9 @@ cdef class BZ3Compressor:
 
     cpdef bytes compress(self, const uint8_t[::1] data):  # todo use self.buffer
         cdef Py_ssize_t input_size = data.shape[0]
+        if <int32_t>input_size > self.block_size:
+            raise ValueError("input chunk is too big")
+
         memcpy(self.buffer, &data[0], <size_t>input_size)
         # make a copy so that bytes object's inner buffer won't be changed
         cdef int32_t new_size = bz3_encode_block(self.state, self.buffer, <int32_t>input_size)
@@ -64,6 +67,8 @@ cdef class BZ3Decompressor:
         uint8_t * buffer
         int32_t block_size
         uint8_t byteswap_buf[4]
+    
+    cdef public bint eof
 
     def __cinit__(self, int32_t block_size = 1000000):
         self.block_size = block_size
@@ -86,6 +91,8 @@ cdef class BZ3Decompressor:
 
     cpdef bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
+        if <int32_t>input_size > self.block_size:
+            raise ValueError("input chunk is too big")
         if input_size<8:
             raise ValueError("no more data")
         cdef int32_t new_size = read_neutral_s32(&data[0])
@@ -98,11 +105,6 @@ cdef class BZ3Decompressor:
         if ret == -1:
             raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
         return PyBytes_FromStringAndSize(<char*>self.buffer, <Py_ssize_t>old_size)
-
-    @property
-    def eof(self):
-        """True if the end-of-stream marker has been reached."""
-        pass
 
     @property
     def needs_input(self):
