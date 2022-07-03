@@ -48,7 +48,6 @@ cdef class BZ3Compressor:
             raise
         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray  
         cdef int32_t new_size
-        cdef bytes out
         cdef bytearray ret = bytearray()
         while len(self.uncompressed)>self.block_size:
             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
@@ -56,17 +55,16 @@ cdef class BZ3Compressor:
             new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
-            out = PyBytes_FromStringAndSize(NULL, new_size + 8) # extra 8 byte is for mate data
-            if <void*> out ==NULL:
-                raise MemoryError
+            if PyByteArray_Resize(ret, len(ret) + new_size + 8) < 0:
+                raise
+
             write_neutral_s32(self.byteswap_buf, new_size)
-            memcpy(<void *> PyBytes_AS_STRING(out), <void*>self.byteswap_buf, 4)
+            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-8]), <void*>self.byteswap_buf, 4)
             write_neutral_s32(self.byteswap_buf, self.block_size)
-            memcpy(<void *> &(PyBytes_AS_STRING(out)[4]), <void *> self.byteswap_buf, 4)
-            memcpy(<void *> &(PyBytes_AS_STRING(out)[8]), self.buffer, <size_t>new_size)
+            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
+            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)
 
             self.uncompressed = self.uncompressed[self.block_size:]  # todo profille here using c api
-            ret.extend(out)
         return bytes(ret)
 
     cpdef bytes flush(self):
