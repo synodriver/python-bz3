@@ -46,7 +46,7 @@ cdef class BZ3Compressor:
         cdef Py_ssize_t input_size = data.shape[0]
         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
             raise
-        memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray  
+        memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray  
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
         while len(self.uncompressed)>self.block_size:
@@ -64,7 +64,7 @@ cdef class BZ3Compressor:
             memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
             memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)
 
-            self.uncompressed = self.uncompressed[self.block_size:]  # todo profille here using c api
+            del self.uncompressed[:self.block_size]  # todo profille here using c api
         return bytes(ret)
 
     cpdef bytes flush(self):

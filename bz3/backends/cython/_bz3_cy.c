@@ -16,7 +16,6 @@
         "sources": [
             "bz3/backends/cython/_bz3_cy.pyx",
             "./dep/src/lzp.c",
-            "./dep/src/main.c",
             "./dep/src/libbz3.c",
             "./dep/src/libsais.c",
             "./dep/src/rle.c",
@@ -1502,6 +1501,14 @@ static _PyErr_StackItem * __Pyx_PyErr_GetTopmostException(PyThreadState *tstate)
 /* ReRaiseException.proto */
 static CYTHON_INLINE void __Pyx_ReraiseException(void);
 
+/* SliceObject.proto */
+#define __Pyx_PyObject_DelSlice(obj, cstart, cstop, py_start, py_stop, py_slice, has_cstart, has_cstop, wraparound)\
+    __Pyx_PyObject_SetSlice(obj, (PyObject*)NULL, cstart, cstop, py_start, py_stop, py_slice, has_cstart, has_cstop, wraparound)
+static CYTHON_INLINE int __Pyx_PyObject_SetSlice(
+        PyObject* obj, PyObject* value, Py_ssize_t cstart, Py_ssize_t cstop,
+        PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
+        int has_cstart, int has_cstop, int wraparound);
+
 /* ArgTypeTest.proto */
 #define __Pyx_ArgTypeTest(obj, type, none_allowed, name, exact)\
     ((likely((Py_TYPE(obj) == type) | (none_allowed && (obj == Py_None)))) ? 1 :\
@@ -2872,7 +2879,7 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:             # <<<<<<<<<<<<<<
  *             raise
- *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray
+ *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  */
   __pyx_t_1 = __pyx_v_self->uncompressed;
   __Pyx_INCREF(__pyx_t_1);
@@ -2892,7 +2899,7 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
  *             raise             # <<<<<<<<<<<<<<
- *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray
+ *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *         cdef int32_t new_size
  */
     __Pyx_ReraiseException(); __PYX_ERR(0, 48, __pyx_L1_error)
@@ -2902,14 +2909,14 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:             # <<<<<<<<<<<<<<
  *             raise
- *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray
+ *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  */
   }
 
   /* "bz3/backends/cython/_bz3_cy.pyx":49
  *         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
  *             raise
- *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray             # <<<<<<<<<<<<<<
+ *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray             # <<<<<<<<<<<<<<
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()
  */
@@ -2924,11 +2931,11 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
   __pyx_t_6 = PyByteArray_GET_SIZE(__pyx_t_2); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_8 = 0;
-  (void)(memcpy((&(PyByteArray_AS_STRING(__pyx_t_1)[__pyx_t_6])), (&(*((uint8_t const  *) ( /* dim=0 */ ((char *) (((uint8_t const  *) __pyx_v_data.data) + __pyx_t_8)) )))), __pyx_v_input_size));
+  (void)(memcpy((&(PyByteArray_AS_STRING(__pyx_t_1)[(__pyx_t_6 - __pyx_v_input_size)])), (&(*((uint8_t const  *) ( /* dim=0 */ ((char *) (((uint8_t const  *) __pyx_v_data.data) + __pyx_t_8)) )))), __pyx_v_input_size));
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "bz3/backends/cython/_bz3_cy.pyx":51
- *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)]), &data[0], input_size) # todo? direct copy to bytearray
+ *         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         while len(self.uncompressed)>self.block_size:
@@ -3094,7 +3101,7 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
  *             memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
  *             memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)             # <<<<<<<<<<<<<<
  * 
- *             self.uncompressed = self.uncompressed[self.block_size:]  # todo profille here using c api
+ *             del self.uncompressed[:self.block_size]  # todo profille here using c api
  */
     __pyx_t_6 = PyByteArray_GET_SIZE(__pyx_v_ret); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 65, __pyx_L1_error)
     (void)(memcpy(((void *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[(__pyx_t_6 - __pyx_v_new_size)]))), __pyx_v_self->buffer, ((size_t)__pyx_v_new_size)));
@@ -3102,7 +3109,7 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
     /* "bz3/backends/cython/_bz3_cy.pyx":67
  *             memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)
  * 
- *             self.uncompressed = self.uncompressed[self.block_size:]  # todo profille here using c api             # <<<<<<<<<<<<<<
+ *             del self.uncompressed[:self.block_size]  # todo profille here using c api             # <<<<<<<<<<<<<<
  *         return bytes(ret)
  * 
  */
@@ -3110,18 +3117,12 @@ static PyObject *__pyx_f_3bz3_8backends_6cython_7_bz3_cy_13BZ3Compressor_compres
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 67, __pyx_L1_error)
     }
-    __pyx_t_1 = PySequence_GetSlice(__pyx_v_self->uncompressed, __pyx_v_self->block_size, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    __Pyx_GOTREF(__pyx_v_self->uncompressed);
-    __Pyx_DECREF(__pyx_v_self->uncompressed);
-    __pyx_v_self->uncompressed = ((PyObject*)__pyx_t_1);
-    __pyx_t_1 = 0;
+    if (__Pyx_PyObject_DelSlice(__pyx_v_self->uncompressed, 0, __pyx_v_self->block_size, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
   }
 
   /* "bz3/backends/cython/_bz3_cy.pyx":68
  * 
- *             self.uncompressed = self.uncompressed[self.block_size:]  # todo profille here using c api
+ *             del self.uncompressed[:self.block_size]  # todo profille here using c api
  *         return bytes(ret)             # <<<<<<<<<<<<<<
  * 
  *     cpdef bytes flush(self):
@@ -20363,6 +20364,104 @@ static CYTHON_INLINE void __Pyx_ReraiseException(void) {
 #endif
         PyErr_Restore(type, value, tb);
     }
+}
+
+/* SliceObject */
+static CYTHON_INLINE int __Pyx_PyObject_SetSlice(PyObject* obj, PyObject* value,
+        Py_ssize_t cstart, Py_ssize_t cstop,
+        PyObject** _py_start, PyObject** _py_stop, PyObject** _py_slice,
+        int has_cstart, int has_cstop, CYTHON_UNUSED int wraparound) {
+#if CYTHON_USE_TYPE_SLOTS
+    PyMappingMethods* mp;
+#if PY_MAJOR_VERSION < 3
+    PySequenceMethods* ms = Py_TYPE(obj)->tp_as_sequence;
+    if (likely(ms && ms->sq_ass_slice)) {
+        if (!has_cstart) {
+            if (_py_start && (*_py_start != Py_None)) {
+                cstart = __Pyx_PyIndex_AsSsize_t(*_py_start);
+                if ((cstart == (Py_ssize_t)-1) && PyErr_Occurred()) goto bad;
+            } else
+                cstart = 0;
+        }
+        if (!has_cstop) {
+            if (_py_stop && (*_py_stop != Py_None)) {
+                cstop = __Pyx_PyIndex_AsSsize_t(*_py_stop);
+                if ((cstop == (Py_ssize_t)-1) && PyErr_Occurred()) goto bad;
+            } else
+                cstop = PY_SSIZE_T_MAX;
+        }
+        if (wraparound && unlikely((cstart < 0) | (cstop < 0)) && likely(ms->sq_length)) {
+            Py_ssize_t l = ms->sq_length(obj);
+            if (likely(l >= 0)) {
+                if (cstop < 0) {
+                    cstop += l;
+                    if (cstop < 0) cstop = 0;
+                }
+                if (cstart < 0) {
+                    cstart += l;
+                    if (cstart < 0) cstart = 0;
+                }
+            } else {
+                if (!PyErr_ExceptionMatches(PyExc_OverflowError))
+                    goto bad;
+                PyErr_Clear();
+            }
+        }
+        return ms->sq_ass_slice(obj, cstart, cstop, value);
+    }
+#endif
+    mp = Py_TYPE(obj)->tp_as_mapping;
+    if (likely(mp && mp->mp_ass_subscript))
+#endif
+    {
+        int result;
+        PyObject *py_slice, *py_start, *py_stop;
+        if (_py_slice) {
+            py_slice = *_py_slice;
+        } else {
+            PyObject* owned_start = NULL;
+            PyObject* owned_stop = NULL;
+            if (_py_start) {
+                py_start = *_py_start;
+            } else {
+                if (has_cstart) {
+                    owned_start = py_start = PyInt_FromSsize_t(cstart);
+                    if (unlikely(!py_start)) goto bad;
+                } else
+                    py_start = Py_None;
+            }
+            if (_py_stop) {
+                py_stop = *_py_stop;
+            } else {
+                if (has_cstop) {
+                    owned_stop = py_stop = PyInt_FromSsize_t(cstop);
+                    if (unlikely(!py_stop)) {
+                        Py_XDECREF(owned_start);
+                        goto bad;
+                    }
+                } else
+                    py_stop = Py_None;
+            }
+            py_slice = PySlice_New(py_start, py_stop, Py_None);
+            Py_XDECREF(owned_start);
+            Py_XDECREF(owned_stop);
+            if (unlikely(!py_slice)) goto bad;
+        }
+#if CYTHON_USE_TYPE_SLOTS
+        result = mp->mp_ass_subscript(obj, py_slice, value);
+#else
+        result = value ? PyObject_SetItem(obj, py_slice, value) : PyObject_DelItem(obj, py_slice);
+#endif
+        if (!_py_slice) {
+            Py_DECREF(py_slice);
+        }
+        return result;
+    }
+    PyErr_Format(PyExc_TypeError,
+        "'%.200s' object does not support slice %.10s",
+        Py_TYPE(obj)->tp_name, value ? "assignment" : "deletion");
+bad:
+    return -1;
 }
 
 /* ArgTypeTest */
