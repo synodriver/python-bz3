@@ -47,27 +47,28 @@ cdef class BZ3Compressor:
 
     cpdef inline bytes compress(self, const uint8_t[::1] data):  # todo use self.buffer
         cdef Py_ssize_t input_size = data.shape[0]
-        if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
-            raise
-        memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray  
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
-        while len(self.uncompressed)>=self.block_size:
-            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
-            # make a copy
-            new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
-            if new_size == -1:
-                raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
-            if PyByteArray_Resize(ret, len(ret) + new_size + 8) < 0:
+        if input_size > 0:
+            if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
                 raise
+            memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray  
+            while len(self.uncompressed)>=self.block_size:
+                memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
+                # make a copy
+                new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
+                if new_size == -1:
+                    raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
+                if PyByteArray_Resize(ret, len(ret) + new_size + 8) < 0:
+                    raise
 
-            write_neutral_s32(self.byteswap_buf, new_size)
-            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-8]), <void*>self.byteswap_buf, 4)
-            write_neutral_s32(self.byteswap_buf, self.block_size)
-            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
-            memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)
+                write_neutral_s32(self.byteswap_buf, new_size)
+                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-8]), <void*>self.byteswap_buf, 4)
+                write_neutral_s32(self.byteswap_buf, self.block_size)
+                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
+                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[len(ret)-new_size]), self.buffer, <size_t>new_size)
 
-            del self.uncompressed[:self.block_size]  # todo profille here using c api
+                del self.uncompressed[:self.block_size]  # todo profille here using c api
         return bytes(ret)
 
     cpdef inline bytes flush(self):
@@ -90,14 +91,17 @@ cdef class BZ3Compressor:
         return ret
 
 
+@cython.final
 cdef class BZ3Decompressor:
     cdef:
         bz3_state * state
         uint8_t * buffer
         int32_t block_size
         uint8_t byteswap_buf[4]
+        bytearray unused  # 还没解压的数据
     
     cdef readonly bint eof
+    cdef readonly bint needs_input
 
     def __cinit__(self, int32_t block_size = 1000000):
         self.block_size = block_size
@@ -109,6 +113,9 @@ cdef class BZ3Decompressor:
             bz3_free(self.state)
             self.state = NULL
             raise MemoryError("Failed to allocate memory")
+        self.unused = bytearray()
+        self.needs_input = 1
+        self.eof = 0
 
     def __dealloc__(self):
         if self.state != NULL:
@@ -120,28 +127,36 @@ cdef class BZ3Decompressor:
 
     cpdef bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
-        if <int32_t>input_size > self.block_size:
-            raise ValueError("input chunk is too big")
-        if input_size<8:
-            raise ValueError("no more data")
-        cdef int32_t new_size = read_neutral_s32(&data[0]) # todo gcc warning but bytes is contst
-        cdef int32_t old_size = read_neutral_s32(&data[4])
-        if  input_size< new_size+8:
-            raise ValueError("no more data")
-        memcpy(self.buffer, &data[8], <size_t>new_size)
+        cdef int32_t state
+        cdef bytearray ret = bytearray()
+        cdef int32_t new_size, old_size
+        if input_size > 0:
+            if PyByteArray_Resize(self.unused, input_size+len(self.unused)) < 0:
+                raise
+            memcpy(&(PyByteArray_AS_STRING(self.unused)[len(self.unused)-input_size]), &data[0], input_size)
+            while True:
+                if len(self.unused)<8: # 8 byte的 header都不够 直接返回
+                    self.needs_input = 1
+                    break
+                new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
+                old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
+                if len(self.unused) < new_size+8: # 数据段不够
+                    self.needs_input = 1
+                    break
+                self.needs_input = 0 # 现在够了
+                memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
 
-        cdef int32_t ret = bz3_decode_block(self.state, self.buffer, new_size, old_size)
-        if ret == -1:
-            raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
-        return PyBytes_FromStringAndSize(<char*>self.buffer, <Py_ssize_t>old_size)
-
-    @property
-    def needs_input(self):
-        """True if more input is needed before more decompressed data can be produced."""
-        pass
+                state = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                if state == -1:
+                    raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
+                if PyByteArray_Resize(ret, len(ret) + old_size) < 0:
+                    raise
+                memcpy(&(PyByteArray_AS_STRING(ret)[len(ret)-old_size]), self.buffer, <size_t>old_size)
+                del self.unused[:new_size+8]
+        return bytes(ret)
 
     @property
     def unused_data(self):
         """Data found after the end of the compressed stream."""
-        pass
+        return bytes(self.unused)
 
