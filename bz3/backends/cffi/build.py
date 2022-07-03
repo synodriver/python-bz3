@@ -83,8 +83,7 @@ void bz3_encode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t
  * @brief Decode `n' blocks, all in parallel.
  * Same specifics as `bz3_encode_blocks', but doesn't overwrite `sizes'.
  */
-void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
-                       int32_t n);
+void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[], int32_t n);
 
 s32 lzp_compress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut);
 
@@ -98,13 +97,17 @@ void PyMem_Free(void* p);
 )
 
 source = """
+#include "cm.h"
 #include "common.h"
 #include "libbz3.h"
 #include "lzp.h"
 #include "crc32.h"
+#include "rle.h"
+#include "libsais.h"
 """
 c_sources = glob.glob("./dep/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
+print(c_sources)
 
 ffibuilder.set_source(
     "bz3.backends.cffi._bz3_cffi",

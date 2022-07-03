@@ -27,7 +27,10 @@ class build_ext_compiler_check(build_ext):
         args = BUILD_ARGS[compiler]
         for ext in self.extensions:
             ext.extra_compile_args = args
+            if self.compiler.compiler_type == "msvc":
+                ext.define_macros.extend([("restrict", "__restrict")])
         super().build_extensions()
+
 
 c_sources = ["bz3/backends/cython/_bz3_cy.pyx"] + glob.glob("./dep/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
@@ -36,6 +39,7 @@ extensions = [
         "bz3.backends.cython._bz3_cy",
         c_sources,
         include_dirs=["./dep/include"],
+        define_macros=[],
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]

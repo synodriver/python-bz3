@@ -1,6 +1,6 @@
 """Copied from cpython to ensure compatibility"""
-
 import io
+from typing import Callable, Dict, Tuple
 
 BUFFER_SIZE = io.DEFAULT_BUFFER_SIZE  # Compressed data read chunk size
 
@@ -37,7 +37,13 @@ class DecompressReader(io.RawIOBase):
     def readable(self):
         return True
 
-    def __init__(self, fp, decomp_factory, trailing_error=(), **decomp_args):
+    def __init__(
+        self,
+        fp: io.IOBase,
+        decomp_factory: Callable,
+        trailing_error: Tuple[Exception, ...] = (),
+        **decomp_args: Dict,
+    ):
         self._fp = fp
         self._eof = False
         self._pos = 0  # Current offset in decompressed stream
@@ -57,20 +63,20 @@ class DecompressReader(io.RawIOBase):
         # trailing data to ignore
         self._trailing_error = trailing_error
 
-    def close(self):
+    def close(self) -> None:
         self._decompressor = None
         return super().close()
 
-    def seekable(self):
+    def seekable(self) -> bool:
         return self._fp.seekable()
 
-    def readinto(self, b):
+    def readinto(self, b) -> int:
         with memoryview(b) as view, view.cast("B") as byte_view:
             data = self.read(len(byte_view))
             byte_view[: len(data)] = data
         return len(data)
 
-    def read(self, size=-1):
+    def read(self, size=-1) -> int:  # todo 这个是重点
         if size < 0:
             return self.readall()
 
