@@ -12,7 +12,7 @@ cdef extern from "common.h" nogil:
     ctypedef int16_t s16
     ctypedef int32_t s32
 
-    s32 read_neutral_s32(u8 * data)
+    s32 read_neutral_s32(const u8 * data)
     void write_neutral_s32(u8 * data, s32 value)
 
 cdef extern from "libbz3.h" nogil:

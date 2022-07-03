@@ -4,6 +4,8 @@ from cpython.mem cimport PyMem_Free, PyMem_Malloc
 from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.string cimport memcpy
 
+cimport cython
+
 from bz3.backends.cython.bzip3 cimport (bz3_decode_block, bz3_decode_blocks,
                                         bz3_encode_block, bz3_encode_blocks,
                                         bz3_free, bz3_last_error, bz3_new,
@@ -11,9 +13,10 @@ from bz3.backends.cython.bzip3 cimport (bz3_decode_block, bz3_decode_blocks,
                                         read_neutral_s32, write_neutral_s32)
 
 
-cpdef uint32_t crc32(uint32_t crc, uint8_t[::1] buf):
+cpdef inline uint32_t crc32(uint32_t crc, uint8_t[::1] buf):
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
 
+@cython.final
 cdef class BZ3Compressor:
     cdef:
         bz3_state * state
@@ -42,14 +45,14 @@ cdef class BZ3Compressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef bytes compress(self, const uint8_t[::1] data):  # todo use self.buffer
+    cpdef inline bytes compress(self, const uint8_t[::1] data):  # todo use self.buffer
         cdef Py_ssize_t input_size = data.shape[0]
         if PyByteArray_Resize(self.uncompressed, input_size+len(self.uncompressed)) < 0:
             raise
         memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[len(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray  
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
-        while len(self.uncompressed)>self.block_size:
+        while len(self.uncompressed)>=self.block_size:
             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
             # make a copy
             new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
@@ -67,8 +70,24 @@ cdef class BZ3Compressor:
             del self.uncompressed[:self.block_size]  # todo profille here using c api
         return bytes(ret)
 
-    cpdef bytes flush(self):
-        pass
+    cpdef inline bytes flush(self):
+        cdef bytes ret = b""
+        cdef int32_t new_size
+        if self.uncompressed:
+            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>len(self.uncompressed))
+            new_size = bz3_encode_block(self.state, self.buffer, len(self.uncompressed))
+            if new_size == -1:
+                raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
+            ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
+            if not ret:
+                raise
+            write_neutral_s32(self.byteswap_buf, new_size)
+            memcpy(PyBytes_AS_STRING(ret), self.byteswap_buf, 4)
+            write_neutral_s32(self.byteswap_buf, len(self.uncompressed))
+            memcpy(&(PyBytes_AS_STRING(ret)[4]), self.byteswap_buf, 4)
+            memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer,<size_t> new_size)
+            self.uncompressed.clear()
+        return ret
 
 
 cdef class BZ3Decompressor:
@@ -78,7 +97,7 @@ cdef class BZ3Decompressor:
         int32_t block_size
         uint8_t byteswap_buf[4]
     
-    cdef public bint eof
+    cdef readonly bint eof
 
     def __cinit__(self, int32_t block_size = 1000000):
         self.block_size = block_size
@@ -105,7 +124,7 @@ cdef class BZ3Decompressor:
             raise ValueError("input chunk is too big")
         if input_size<8:
             raise ValueError("no more data")
-        cdef int32_t new_size = read_neutral_s32(&data[0])
+        cdef int32_t new_size = read_neutral_s32(&data[0]) # todo gcc warning but bytes is contst
         cdef int32_t old_size = read_neutral_s32(&data[4])
         if  input_size< new_size+8:
             raise ValueError("no more data")
@@ -125,3 +144,4 @@ cdef class BZ3Decompressor:
     def unused_data(self):
         """Data found after the end of the compressed stream."""
         pass
+

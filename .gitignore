@@ -1,0 +1,16 @@
+cmake-build-debug/
+cmake-build-release/
+*/__pycache__/
+build/
+dist/
+out/
+lib/
+/_skbuild/
+.idea/
+*.pyd
+*.pyc
+*.exe
+*.dll
+*.lib
+*.a
+*.so

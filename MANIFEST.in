@@ -1,0 +1,4 @@
+recursive-include bz3  *
+recursive-include dep/include  *
+recursive-include dep/src  *
+include README.markdown
