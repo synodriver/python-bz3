@@ -25,7 +25,7 @@ cdef inline uint8_t PyFile_Check(object file):
         return 1
     return 0
 
-cpdef inline uint32_t crc32(uint32_t crc, uint8_t[::1] buf):
+cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf):
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
 
 
@@ -62,7 +62,7 @@ cdef class BZ3Compressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef inline bytes compress(self, const uint8_t[::1] data):
+    cpdef inline bytes compress(self, const uint8_t[::1] data) with gil:
         cdef Py_ssize_t input_size = data.shape[0]
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
@@ -96,7 +96,7 @@ cdef class BZ3Compressor:
                 del self.uncompressed[:self.block_size]
         return bytes(ret)
 
-    cpdef inline bytes flush(self):
+    cpdef inline bytes flush(self) with gil:
         cdef bytes ret = b""
         cdef int32_t new_size
         if self.uncompressed:
@@ -169,7 +169,7 @@ cdef class BZ3Decompressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef inline bytes decompress(self, const uint8_t[::1] data):
+    cpdef inline bytes decompress(self, const uint8_t[::1] data) with gil:
         cdef Py_ssize_t input_size = data.shape[0]
         cdef int32_t code
         cdef bytearray ret = bytearray()
@@ -220,7 +220,7 @@ cdef class BZ3Decompressor:
         return None
 
 
-cpdef inline void compress(object input, object output, int32_t block_size):
+cpdef inline void compress(object input, object output, int32_t block_size) with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -250,17 +250,20 @@ cpdef inline void compress(object input, object output, int32_t block_size):
             new_size = bz3_encode_block(state, buffer, <int32_t>PyBytes_GET_SIZE(data))
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
+            # print(f"oldsize: {PyBytes_GET_SIZE(data)} newsize{new_size}") # todo del
             write_neutral_s32(byteswap_buf, new_size)
             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
             write_neutral_s32(byteswap_buf, <int32_t>PyBytes_GET_SIZE(data))
             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
+            output.flush()
     finally:
+        output.flush()
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline void decompress(object input, object output):
+cpdef inline void decompress(object input, object output) with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -303,12 +306,14 @@ cpdef inline void decompress(object input, object output):
             if code == -1:
                 raise ValueError("Failed to decode a block: %s", bz3_strerror(state))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+            output.flush()
     finally:
+        output.flush()
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline bint test(object input, bint should_raise = False) except? 0:
+cpdef inline bint test(object input, bint should_raise = False) except? 0 with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
         return 0
@@ -355,6 +360,7 @@ cpdef inline bint test(object input, bint should_raise = False) except? 0:
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
             code = bz3_decode_block(state, buffer, new_size, old_size)
+            # print(f"newsize {new_size} oldsize {old_size}") # todo
             if code == -1:
                 if should_raise:
                     raise ValueError("Failed to decode a block: %s", bz3_strerror(state))

@@ -97,7 +97,7 @@ def main():
 
     dis = get_dis()
     setup(
-        name="bz3",
+        name="bzip3",
         version=version,
         url="https://github.com/synodriver/python-bz3",
         packages=packages,
