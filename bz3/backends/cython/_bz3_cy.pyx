@@ -6,7 +6,7 @@ from cpython.bytearray cimport (PyByteArray_AS_STRING, PyByteArray_GET_SIZE,
 from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
                             PyBytes_GET_SIZE)
 from cpython.mem cimport PyMem_Free, PyMem_Malloc
-from cpython.object cimport PyObject, PyObject_HasAttrString
+from cpython.object cimport PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.string cimport memcpy, strncmp
 
@@ -283,7 +283,6 @@ cpdef inline void decompress(object input, object output):
         bz3_free(state)
         state = NULL
         raise MemoryError("Failed to allocate memory")
-    cdef uint8_t byteswap_buf[4]
     cdef int32_t new_size, old_size, code
 
     try:
@@ -339,7 +338,6 @@ cpdef inline bint test(object input, bint should_raise = False) except? 0:
         state = NULL
         raise MemoryError("Failed to allocate memory")
         return 0
-    cdef uint8_t byteswap_buf[4]
     cdef int32_t new_size, old_size, code
 
     try:

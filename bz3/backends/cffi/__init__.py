@@ -3,6 +3,14 @@ from typing import IO
 from bz3.backends.cffi._bz3_cffi import ffi, lib
 
 
+def KiB(x: int) -> int:
+    return x * 1024
+
+
+def MiB(x: int) -> int:
+    return x * 1024 * 1024
+
+
 def check_file(file) -> bool:
     if hasattr(file, "read") and hasattr(file, "write"):
         return True
@@ -60,4 +68,49 @@ def decompress(input: IO, output: IO) -> None:
         raise TypeError(
             "output except a file-like object, got %s" % type(output).__name__
         )
-    pass
+    # cdef bytes data
+    # cdef int32_t block_size
+    data: bytes = input.read(9)  # magic and block_size type: bytes len = 9
+    if len(data) < 9:
+        raise ValueError("Invalid file. Reason: Smaller than magic header")
+    if data[:5] != b"BZ3v1":
+        raise ValueError("Invalid signature")
+    block_size: int = lib.read_neutral_s32(
+        ffi.cast("uint8_t*", ffi.from_buffer(data[5:]))
+    )
+    if block_size < KiB(65) or block_size > MiB(511):
+        raise ValueError(
+            "The input file is corrupted. Reason: Invalid block size in the header"
+        )
+    state = lib.bz3_new(block_size)
+    if state == ffi.NULL:
+        raise MemoryError("Failed to create a block encoder state")
+    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(block_size + block_size / 50 + 32))
+    if buffer == ffi.NULL:
+        lib.bz3_free(state)
+        raise MemoryError("Failed to allocate memory")
+    # cdef uint8_t byteswap_buf[4]
+    # cdef int32_t new_size, old_size, code
+    try:
+        while True:
+            data = input.read(4)
+            if len(data) < 4:
+                break
+            new_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
+            data = input.read(4)
+            if len(data) < 4:
+                break
+            old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
+            data = input.read(new_size)  # type: bytes
+            if len(data) < new_size:
+                break
+            lib.memcpy(buffer, ffi.cast("uint8_t*", ffi.from_buffer(data)), new_size)
+            code = lib.bz3_decode_block(state, buffer, new_size, old_size)
+            if code == -1:
+                raise ValueError(
+                    "Failed to decode a block: %s", lib.bz3_strerror(state)
+                )
+            output.write(ffi.unpack(buffer, old_size))
+    finally:
+        lib.bz3_free(state)
+        lib.PyMem_Free(buffer)
