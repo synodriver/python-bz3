@@ -308,3 +308,61 @@ cpdef inline void decompress(object input, object output):
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
+
+cpdef inline bint test(object input, bint should_raise = False) except? 0:
+    if not PyFile_Check(input):
+        raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+        return 0
+    cdef bytes data
+    cdef int32_t block_size
+    data = input.read(9)  # magic and block_size type: bytes len = 9
+    if PyBytes_GET_SIZE(data) < 9:
+        if should_raise:
+            raise ValueError("Invalid file. Reason: Smaller than magic header")
+        return 0
+    if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+        if should_raise:
+            raise ValueError("Invalid signature")
+        return 0
+    block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
+    if block_size < KiB(65) or block_size > MiB(511):
+        if should_raise:
+            raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+        return 0
+    cdef bz3_state *state = bz3_new(block_size)
+    if state == NULL:
+        raise MemoryError("Failed to create a block encoder state")
+        return 0
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    if buffer == NULL:
+        bz3_free(state)
+        state = NULL
+        raise MemoryError("Failed to allocate memory")
+        return 0
+    cdef uint8_t byteswap_buf[4]
+    cdef int32_t new_size, old_size, code
+
+    try:
+        while True:
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            new_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            data = input.read(new_size)  # type: bytes
+            if PyBytes_GET_SIZE(data) < new_size:
+                break
+            memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+            code = bz3_decode_block(state, buffer, new_size, old_size)
+            if code == -1:
+                if should_raise:
+                    raise ValueError("Failed to decode a block: %s", bz3_strerror(state))
+                return 0
+        return 1
+    finally:
+        bz3_free(state)
+        state = NULL
+        PyMem_Free(buffer)
