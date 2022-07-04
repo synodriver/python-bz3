@@ -93,10 +93,14 @@ s32 read_neutral_s32(u8 * data);
 void write_neutral_s32(u8 * data, s32 value);
 void* PyMem_Malloc(size_t n);
 void PyMem_Free(void* p);
+int strncmp (const char *s1, const char *s2, size_t size);
+void *memcpy  (void *pto, const void *pfrom, size_t size);
     """
 )
 
 source = """
+#include <stdint.h>
+#include <string.h>
 #include "cm.h"
 #include "common.h"
 #include "libbz3.h"

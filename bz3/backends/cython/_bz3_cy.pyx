@@ -24,8 +24,10 @@ cdef inline uint8_t PyFile_Check(object file):
     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?
         return 1
     return 0
+
 cpdef inline uint32_t crc32(uint32_t crc, uint8_t[::1] buf):
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
+
 
 @cython.final
 cdef class BZ3Compressor:
@@ -60,7 +62,7 @@ cdef class BZ3Compressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef inline bytes compress(self, const uint8_t[::1] data):  # todo use self.buffer
+    cpdef inline bytes compress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
@@ -169,7 +171,7 @@ cdef class BZ3Decompressor:
 
     cpdef inline bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
-        cdef int32_t state
+        cdef int32_t code
         cdef bytearray ret = bytearray()
         cdef int32_t new_size, old_size, block_size
         if input_size > 0:
@@ -179,8 +181,7 @@ cdef class BZ3Decompressor:
             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
-                memcpy(self.byteswap_buf, &(PyByteArray_AS_STRING(self.unused)[5]), 4)
-                block_size = read_neutral_s32(self.byteswap_buf)
+                block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
                 if block_size  < KiB(65) or block_size >MiB(511):
                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
                 self.init_state(block_size)
@@ -199,8 +200,8 @@ cdef class BZ3Decompressor:
                 self.needs_input = 0 # 现在够了
                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
 
-                state = bz3_decode_block(self.state, self.buffer, new_size, old_size)
-                if state == -1:
+                code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                if code == -1:
                     raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
                 if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
                     raise
@@ -229,7 +230,9 @@ cpdef inline void compress(object input, object output, int32_t block_size):
         raise MemoryError("Failed to create a block encoder state")
     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
     if buffer == NULL:
-        raise
+        bz3_free(state)
+        state = NULL
+        raise MemoryError
     cdef bytes data
     cdef int32_t new_size
     cdef uint8_t byteswap_buf[4]
@@ -238,16 +241,70 @@ cpdef inline void compress(object input, object output, int32_t block_size):
     write_neutral_s32(byteswap_buf, block_size)
     output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header
 
-    while True:
-        data = input.read(block_size)
-        if not data:
-            break
-        memcpy(buffer, PyBytes_AS_STRING(data), PyBytes_GET_SIZE(data))
-        new_size = bz3_encode_block(state, buffer, <int32_t>PyBytes_GET_SIZE(data))
-        if new_size == -1:
-            raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
-        write_neutral_s32(byteswap_buf, new_size)
-        output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
-        write_neutral_s32(byteswap_buf, <int32_t>PyBytes_GET_SIZE(data))
-        output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
-        output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
+    try:
+        while True:
+            data = input.read(block_size)
+            if not data:
+                break
+            memcpy(buffer, PyBytes_AS_STRING(data), PyBytes_GET_SIZE(data))
+            new_size = bz3_encode_block(state, buffer, <int32_t>PyBytes_GET_SIZE(data))
+            if new_size == -1:
+                raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
+            write_neutral_s32(byteswap_buf, new_size)
+            output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
+            write_neutral_s32(byteswap_buf, <int32_t>PyBytes_GET_SIZE(data))
+            output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
+            output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
+    finally:
+        bz3_free(state)
+        state = NULL
+        PyMem_Free(buffer)
+
+cpdef inline void decompress(object input, object output):
+    if not PyFile_Check(input):
+        raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+    if not PyFile_Check(output):
+        raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+    cdef bytes data
+    cdef int32_t block_size
+    data = input.read(9) # magic and block_size type: bytes len = 9
+    if PyBytes_GET_SIZE(data) < 9:
+        raise ValueError("Invalid file. Reason: Smaller than magic header")
+    if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+        raise ValueError("Invalid signature")
+    block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+    if block_size < KiB(65) or block_size > MiB(511):
+        raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+    cdef bz3_state *state = bz3_new(block_size)
+    if state == NULL:
+        raise MemoryError("Failed to create a block encoder state")
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    if buffer == NULL:
+        bz3_free(state)
+        state = NULL
+        raise MemoryError("Failed to allocate memory")
+    cdef uint8_t byteswap_buf[4]
+    cdef int32_t new_size, old_size, code
+
+    try:
+        while True:
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            data = input.read(new_size) # type: bytes
+            if PyBytes_GET_SIZE(data) < new_size:
+                break
+            memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+            code = bz3_decode_block(state, buffer, new_size, old_size)
+            if code == -1:
+                raise ValueError("Failed to decode a block: %s", bz3_strerror(state))
+            output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+    finally:
+        bz3_free(state)
+        state = NULL
+        PyMem_Free(buffer)
