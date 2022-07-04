@@ -3,8 +3,10 @@
 cimport cython
 from cpython.bytearray cimport (PyByteArray_AS_STRING, PyByteArray_GET_SIZE,
                                 PyByteArray_Resize)
-from cpython.bytes cimport PyBytes_AS_STRING, PyBytes_FromStringAndSize
+from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
+                            PyBytes_GET_SIZE)
 from cpython.mem cimport PyMem_Free, PyMem_Malloc
+from cpython.object cimport PyObject, PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.string cimport memcpy, strncmp
 
@@ -18,6 +20,10 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_decode_block,
 
 cdef const char* magic = "BZ3v1"
 
+cdef inline uint8_t PyFile_Check(object file):
+    if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?
+        return 1
+    return 0
 cpdef inline uint32_t crc32(uint32_t crc, uint8_t[::1] buf):
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
 
@@ -211,3 +217,37 @@ cdef class BZ3Decompressor:
         if bz3_last_error(self.state) != BZ3_OK:
             return (<bytes> bz3_strerror(self.state)).decode()
         return None
+
+
+cpdef inline void compress(object input, object output, int32_t block_size):
+    if not PyFile_Check(input):
+        raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+    if not PyFile_Check(output):
+        raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+    cdef bz3_state *state = bz3_new(block_size)
+    if state == NULL:
+        raise MemoryError("Failed to create a block encoder state")
+    cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
+    if buffer == NULL:
+        raise
+    cdef bytes data
+    cdef int32_t new_size
+    cdef uint8_t byteswap_buf[4]
+
+    output.write(b"BZ3v1")
+    write_neutral_s32(byteswap_buf, block_size)
+    output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header
+
+    while True:
+        data = input.read(block_size)
+        if not data:
+            break
+        memcpy(buffer, PyBytes_AS_STRING(data), PyBytes_GET_SIZE(data))
+        new_size = bz3_encode_block(state, buffer, <int32_t>PyBytes_GET_SIZE(data))
+        if new_size == -1:
+            raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
+        write_neutral_s32(byteswap_buf, new_size)
+        output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
+        write_neutral_s32(byteswap_buf, <int32_t>PyBytes_GET_SIZE(data))
+        output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
+        output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
