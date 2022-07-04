@@ -114,7 +114,7 @@ def main():
         classifiers=[
             "Development Status :: 3 - Alpha",
             "Operating System :: OS Independent",
-            "License :: OSI Approved :: BSD License",
+            "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
             "Programming Language :: C",
             "Programming Language :: Cython",
             "Programming Language :: Python",

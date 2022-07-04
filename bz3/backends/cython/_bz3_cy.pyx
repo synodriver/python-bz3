@@ -100,7 +100,7 @@ cdef class BZ3Compressor:
         cdef bytes ret = b""
         cdef int32_t new_size
         if self.uncompressed:
-            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>len(self.uncompressed))
+            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>PyByteArray_GET_SIZE(self.uncompressed))
             new_size = bz3_encode_block(self.state, self.buffer, <int32_t>PyByteArray_GET_SIZE(self.uncompressed))
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
@@ -147,15 +147,6 @@ cdef class BZ3Decompressor:
             raise MemoryError("Failed to allocate memory")
 
     def __cinit__(self):
-        # self.block_size = block_size
-        # self.state = bz3_new(block_size)  todo block_size根据读取的文件决定
-        # if self.state == NULL:
-        #     raise MemoryError("Failed to create a block encoder state")
-        # self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
-        # if self.buffer == NULL:
-        #     bz3_free(self.state)
-        #     self.state = NULL
-        #     raise MemoryError("Failed to allocate memory")
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
         self.needs_input = 1

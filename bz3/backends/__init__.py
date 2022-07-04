@@ -27,4 +27,4 @@ if not _should_use_cffi():
         test,
     )
 else:
-    from bz3.backends.cffi import compress, crc32, decompress, test
+    from bz3.backends.cffi import BZ3Compressor, BZ3Decompressor, compress, crc32, decompress, test
