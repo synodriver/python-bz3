@@ -28,7 +28,8 @@ cdef inline uint8_t PyFile_Check(object file):
 cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf):
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
 
-
+@cython.freelist(8)
+@cython.no_gc
 @cython.final
 cdef class BZ3Compressor:
     cdef:
@@ -120,7 +121,8 @@ cdef class BZ3Compressor:
             return (<bytes>bz3_strerror(self.state)).decode()
         return None
 
-
+@cython.freelist(8)
+@cython.no_gc
 @cython.final
 cdef class BZ3Decompressor:
     cdef:
