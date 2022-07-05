@@ -41,7 +41,6 @@ class DecompressReader(io.RawIOBase):
         self,
         fp: io.IOBase,
         decomp_factory: Callable,
-        trailing_error: Tuple[Exception, ...] = (),
         **decomp_args: Dict,
     ):
         self._fp = fp
@@ -61,7 +60,7 @@ class DecompressReader(io.RawIOBase):
 
         # Exception class to catch from decompressor signifying invalid
         # trailing data to ignore
-        self._trailing_error = trailing_error
+        self._buffer = bytearray()  # type: bytearray
 
     def close(self) -> None:
         self._decompressor = None
@@ -76,46 +75,48 @@ class DecompressReader(io.RawIOBase):
             byte_view[: len(data)] = data
         return len(data)
 
-    def read(self, size=-1) -> int:  # todo 这个是重点
+    def read(self, size=-1) -> bytes:  # todo 这个是重点
         if size < 0:
             return self.readall()
-
+        if size <= len(self._buffer):
+            ret = bytes(self._buffer[:size])
+            del self._buffer[:size]
+            return ret
         if not size or self._eof:
             return b""
-        data = None  # Default if EOF is encountered
+        # data = None  # Default if EOF is encountered
         # Depending on the input data, our call to the decompressor may not
         # return any data. In this case, try again after reading another block.
+        # try:
         while True:
-            if self._decompressor.eof:
-                rawblock = self._decompressor.unused_data or self._fp.read(BUFFER_SIZE)
-                if not rawblock:
-                    break
-                # Continue to next stream.
-                self._decompressor = self._decomp_factory(**self._decomp_args)
-                try:
-                    data = self._decompressor.decompress(rawblock, size)
-                except self._trailing_error:
-                    # Trailing data isn't a valid compressed stream; ignore it.
-                    break
-            else:
-                if self._decompressor.needs_input:
-                    rawblock = self._fp.read(BUFFER_SIZE)
-                    if not rawblock:
-                        raise EOFError(
-                            "Compressed file ended before the "
-                            "end-of-stream marker was reached"
-                        )
-                else:
-                    rawblock = b""
-                data = self._decompressor.decompress(rawblock, size)
-            if data:
+            rawblock = self._fp.read(BUFFER_SIZE)
+            if not rawblock:
                 break
-        if not data:
+            self._buffer.extend(self._decompressor.decompress(rawblock))
+            if len(self._buffer) >= size:
+                break
+        if len(self._buffer) >= size:
+            self._pos += size
+            ret = bytes(self._buffer[:size])
+            del self._buffer[:size]
+        else:  # 不够长了
+            self._pos += len(self._buffer)
             self._eof = True
             self._size = self._pos
-            return b""
-        self._pos += len(data)
-        return data
+            ret = bytes(self._buffer)
+            self._buffer.clear()
+        return ret
+
+    def readall(self) -> bytes:
+        while True:
+            rawblock = self._fp.read(BUFFER_SIZE)
+            if not rawblock:
+                break
+            self._buffer.extend(self._decompressor.decompress(rawblock))
+        self._pos += len(self._buffer)
+        ret = bytes(self._buffer)
+        self._buffer.clear()
+        return ret
 
     # Rewind the file to the beginning of the data stream.
     def _rewind(self):
@@ -154,6 +155,6 @@ class DecompressReader(io.RawIOBase):
 
         return self._pos
 
-    def tell(self):
+    def tell(self) -> int:
         """Return the current file position."""
         return self._pos

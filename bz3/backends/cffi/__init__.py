@@ -1,4 +1,4 @@
-from typing import IO
+from typing import IO, Optional
 
 from bz3.backends.cffi._bz3_cffi import ffi, lib
 
@@ -22,7 +22,6 @@ def crc32(crc: int, buf: bytes) -> int:
 
 
 class BZ3Compressor:
-
     def __init__(self, block_size: int):
         if block_size < KiB(65) or block_size > MiB(511):
             raise ValueError("Block size must be between 65 KiB and 511 MiB")
@@ -30,7 +29,9 @@ class BZ3Compressor:
         self.state = lib.bz3_new(block_size)
         if self.state == ffi.NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(block_size + block_size // 50 + 32))
+        self.buffer = ffi.cast(
+            "uint8_t*", lib.PyMem_Malloc(block_size + block_size // 50 + 32)
+        )
         if self.buffer == ffi.NULL:
             lib.bz3_free(self.state)
             raise MemoryError("Failed to allocate memory")
@@ -49,41 +50,59 @@ class BZ3Compressor:
         ret = bytearray()
         if not self.have_magic_number:
             ret.extend(b"BZ3v1")
-            lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), self.block_size)
+            lib.write_neutral_s32(
+                ffi.cast("uint8_t*", self.byteswap_buf), self.block_size
+            )
             ret.extend(ffi.unpack(ffi.cast("char*", self.byteswap_buf), 4))
-            self.have_magic_number = 1
+            self.have_magic_number = True
 
         if input_size > 0:
             self.uncompressed.extend(data)
             while len(self.uncompressed) >= self.block_size:
-                lib.memcpy(self.buffer, ffi.from_buffer(self.uncompressed), self.block_size)
+                lib.memcpy(
+                    self.buffer, ffi.from_buffer(self.uncompressed), self.block_size
+                )
                 # make a copy
-                new_size = lib.bz3_encode_block(self.state, self.buffer, self.block_size)
+                new_size = lib.bz3_encode_block(
+                    self.state, self.buffer, self.block_size
+                )
                 if new_size == -1:
-                    raise ValueError("Failed to encode a block: %s", lib.bz3_strerror(self.state))
+                    raise ValueError(
+                        "Failed to encode a block: %s", lib.bz3_strerror(self.state)
+                    )
 
                 lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), new_size)
                 ret.extend(ffi.unpack(ffi.cast("char*", self.byteswap_buf), 4))
-                lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), self.block_size)
+                lib.write_neutral_s32(
+                    ffi.cast("uint8_t*", self.byteswap_buf), self.block_size
+                )
                 ret.extend(ffi.unpack(ffi.cast("char*", self.byteswap_buf), 4))
                 ret.extend(ffi.unpack(ffi.cast("char*", self.buffer), new_size))
 
-                del self.uncompressed[:self.block_size]
+                del self.uncompressed[: self.block_size]
         return bytes(ret)
 
     def flush(self) -> bytes:
         ret = bytearray()
         if self.uncompressed:
-            lib.memcpy(self.buffer, ffi.from_buffer(self.uncompressed), len(self.uncompressed))
-            new_size = lib.bz3_encode_block(self.state, self.buffer, len(self.uncompressed))
+            lib.memcpy(
+                self.buffer, ffi.from_buffer(self.uncompressed), len(self.uncompressed)
+            )
+            new_size = lib.bz3_encode_block(
+                self.state, self.buffer, len(self.uncompressed)
+            )
             if new_size == -1:
-                raise ValueError("Failed to encode a block: %s", lib.bz3_strerror(self.state))
+                raise ValueError(
+                    "Failed to encode a block: %s", lib.bz3_strerror(self.state)
+                )
             # ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
             # if not ret:
             #     raise
             lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), new_size)
             ret.extend(ffi.unpack(ffi.cast("char*", self.byteswap_buf), 4))
-            lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), len(self.uncompressed))
+            lib.write_neutral_s32(
+                ffi.cast("uint8_t*", self.byteswap_buf), len(self.uncompressed)
+            )
             ret.extend(ffi.unpack(ffi.cast("char*", self.byteswap_buf), 4))
             ret.extend(ffi.unpack(ffi.cast("char*", self.buffer), new_size))
             self.uncompressed.clear()
@@ -106,6 +125,7 @@ class BZ3Decompressor:
 
     # cdef readonly bint eof
     # cdef readonly bint needs_input
+    # cdef readonly bint needs_input
 
     def init_state(self, block_size: int) -> int:
         """should exec only once"""
@@ -113,7 +133,9 @@ class BZ3Decompressor:
         self.state = lib.bz3_new(block_size)
         if self.state == ffi.NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(block_size + block_size // 50 + 32))
+        self.buffer = ffi.cast(
+            "uint8_t*", lib.PyMem_Malloc(block_size + block_size // 50 + 32)
+        )
         if self.buffer == ffi.NULL:
             lib.bz3_free(self.state)
             self.state = ffi.NULL
@@ -121,9 +143,7 @@ class BZ3Decompressor:
 
     def __init__(self):
         self.unused = bytearray()
-        self.have_magic_number = 0  # 还没有读到magic number
-        self.needs_input = 1
-        self.eof = 0
+        self.have_magic_number = False  # 还没有读到magic number
 
     def __del__(self):
         if self.state != ffi.NULL:
@@ -140,37 +160,45 @@ class BZ3Decompressor:
             #     raise
             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
             self.unused.extend(data)
-            if len(self.unused) > 9 and not self.have_magic_number:  # 9 bytes magic number
+            if (
+                len(self.unused) > 9 and not self.have_magic_number
+            ):  # 9 bytes magic number
                 if bytes(self.unused[:5]) != b"BZ3v1":
                     raise ValueError("Invalid signature")
                 temp = self.unused[5:9]
-                block_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(temp)))
+                block_size = lib.read_neutral_s32(
+                    ffi.cast("uint8_t*", ffi.from_buffer(temp))
+                )
                 if block_size < KiB(65) or block_size > MiB(511):
-                    raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+                    raise ValueError(
+                        "The input file is corrupted. Reason: Invalid block size in the header"
+                    )
                 self.init_state(block_size)
                 del self.unused[:9]
-                self.have_magic_number = 1
+                self.have_magic_number = True
 
             while True:
                 if len(self.unused) < 8:  # 8 byte的 header都不够 直接返回
-                    self.needs_input = 1
                     break
                 new_size = lib.read_neutral_s32(
-                    ffi.cast("uint8_t*", ffi.from_buffer(self.unused)))  # todo gcc warning but bytes is contst
+                    ffi.cast("uint8_t*", ffi.from_buffer(self.unused))
+                )  # todo gcc warning but bytes is contst
                 temp = self.unused[4:8]
-                old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(temp)))
+                old_size = lib.read_neutral_s32(
+                    ffi.cast("uint8_t*", ffi.from_buffer(temp))
+                )
                 if len(self.unused) < new_size + 8:  # 数据段不够
-                    self.needs_input = 1
                     break
-                self.needs_input = 0  # 现在够了
                 temp = self.unused[8:]
                 lib.memcpy(self.buffer, ffi.from_buffer(temp), new_size)
 
                 code = lib.bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
-                    raise ValueError("Failed to decode a block: %s", lib.bz3_strerror(self.state))
+                    raise ValueError(
+                        "Failed to decode a block: %s", lib.bz3_strerror(self.state)
+                    )
                 ret.extend(ffi.unpack(ffi.cast("char*", self.buffer), old_size))
-                del self.unused[:new_size + 8]
+                del self.unused[: new_size + 8]
         return bytes(ret)
 
     @property
@@ -178,13 +206,13 @@ class BZ3Decompressor:
         """Data found after the end of the compressed stream."""
         return bytes(self.unused)
 
-    def error(self) -> str:
+    def error(self) -> Optional[str]:
         if lib.bz3_last_error(self.state) != lib.BZ3_OK:
             return ffi.string(lib.bz3_strerror(self.state)).decode()
         return None
 
 
-def compress(input: IO, output: IO, block_size: int) -> None:
+def compress_file(input: IO, output: IO, block_size: int) -> None:
     if not check_file(input):
         raise TypeError(
             "input except a file-like object, got %s" % type(input).__name__
@@ -228,7 +256,7 @@ def compress(input: IO, output: IO, block_size: int) -> None:
         lib.PyMem_Free(buffer)
 
 
-def decompress(input: IO, output: IO) -> None:
+def decompress_file(input: IO, output: IO) -> None:
     if not check_file(input):
         raise TypeError(
             "input except a file-like object, got %s" % type(input).__name__
@@ -287,7 +315,7 @@ def decompress(input: IO, output: IO) -> None:
         lib.PyMem_Free(buffer)
 
 
-def test(input: IO, should_raise: bool = False) -> bool:
+def test_file(input: IO, should_raise: bool = False) -> bool:
     if not check_file(input):
         raise TypeError(
             "input except a file-like object, got %s" % type(input).__name__

@@ -132,9 +132,6 @@ cdef class BZ3Decompressor:
         uint8_t byteswap_buf[4]
         bytearray unused  # 还没解压的数据
         bint have_magic_number
-    
-    cdef readonly bint eof
-    cdef readonly bint needs_input
 
     cdef inline int init_state(self, int32_t block_size):
         """should exec only once"""
@@ -151,8 +148,6 @@ cdef class BZ3Decompressor:
     def __cinit__(self):
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
-        self.needs_input = 1
-        self.eof = 0
 
     def __dealloc__(self):
         if self.state != NULL:
@@ -183,14 +178,11 @@ cdef class BZ3Decompressor:
 
             while True:
                 if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte的 header都不够 直接返回
-                    self.needs_input = 1
                     break
                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: # 数据段不够
-                    self.needs_input = 1
                     break
-                self.needs_input = 0 # 现在够了
                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
 
                 code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
@@ -213,7 +205,7 @@ cdef class BZ3Decompressor:
         return None
 
 
-cpdef inline void compress(object input, object output, int32_t block_size) with gil:
+cpdef inline void compress_file(object input, object output, int32_t block_size) with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -256,7 +248,7 @@ cpdef inline void compress(object input, object output, int32_t block_size) with
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline void decompress(object input, object output) with gil:
+cpdef inline void decompress_file(object input, object output) with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -306,7 +298,7 @@ cpdef inline void decompress(object input, object output) with gil:
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline bint test(object input, bint should_raise = False) except? 0 with gil:
+cpdef inline bint test_file(object input, bint should_raise = False) except? 0 with gil:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
         return 0
