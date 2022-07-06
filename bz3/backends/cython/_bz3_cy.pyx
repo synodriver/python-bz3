@@ -25,7 +25,7 @@ cdef inline uint8_t PyFile_Check(object file):
         return 1
     return 0
 
-cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf):
+cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf) nogil:
     return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
 
 @cython.freelist(8)
@@ -63,7 +63,7 @@ cdef class BZ3Compressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef inline bytes compress(self, const uint8_t[::1] data) with gil:
+    cpdef inline bytes compress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
@@ -82,7 +82,8 @@ cdef class BZ3Compressor:
             while PyByteArray_GET_SIZE(self.uncompressed)>=self.block_size:
                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
                 # make a copy
-                new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
+                with nogil:
+                    new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
                 if new_size == -1:
                     raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
                 if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
@@ -97,12 +98,14 @@ cdef class BZ3Compressor:
                 del self.uncompressed[:self.block_size]
         return bytes(ret)
 
-    cpdef inline bytes flush(self) with gil:
+    cpdef inline bytes flush(self):
         cdef bytes ret = b""
         cdef int32_t new_size
+        cdef int32_t old_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
         if self.uncompressed:
-            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>PyByteArray_GET_SIZE(self.uncompressed))
-            new_size = bz3_encode_block(self.state, self.buffer, <int32_t>PyByteArray_GET_SIZE(self.uncompressed))
+            memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>old_size)
+            with nogil:
+                new_size = bz3_encode_block(self.state, self.buffer, old_size)
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
@@ -110,7 +113,7 @@ cdef class BZ3Compressor:
                 raise
             write_neutral_s32(self.byteswap_buf, new_size)
             memcpy(PyBytes_AS_STRING(ret), self.byteswap_buf, 4)
-            write_neutral_s32(self.byteswap_buf, <int32_t>PyByteArray_GET_SIZE(self.uncompressed))
+            write_neutral_s32(self.byteswap_buf, old_size)
             memcpy(&(PyBytes_AS_STRING(ret)[4]), self.byteswap_buf, 4)
             memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer,<size_t> new_size)
             self.uncompressed.clear()
@@ -157,7 +160,7 @@ cdef class BZ3Decompressor:
             PyMem_Free(self.buffer)
             self.buffer = NULL
 
-    cpdef inline bytes decompress(self, const uint8_t[::1] data) with gil:
+    cpdef inline bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
         cdef int32_t code
         cdef bytearray ret = bytearray()
@@ -184,8 +187,8 @@ cdef class BZ3Decompressor:
                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: # 数据段不够
                     break
                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
-
-                code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                with nogil:
+                    code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
                     raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
                 if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
@@ -205,7 +208,7 @@ cdef class BZ3Decompressor:
         return None
 
 
-cpdef inline void compress_file(object input, object output, int32_t block_size) with gil:
+cpdef inline void compress_file(object input, object output, int32_t block_size):
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -225,20 +228,22 @@ cpdef inline void compress_file(object input, object output, int32_t block_size)
     output.write(b"BZ3v1")
     write_neutral_s32(byteswap_buf, block_size)
     output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header
-
+    cdef int32_t old_size
     try:
         while True:
             data = input.read(block_size)
             if not data:
                 break
-            memcpy(buffer, PyBytes_AS_STRING(data), PyBytes_GET_SIZE(data))
-            new_size = bz3_encode_block(state, buffer, <int32_t>PyBytes_GET_SIZE(data))
+            old_size = <int32_t>PyBytes_GET_SIZE(data)
+            memcpy(buffer, PyBytes_AS_STRING(data), <size_t>old_size)
+            with nogil:
+                new_size = bz3_encode_block(state, buffer, old_size)
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
             # print(f"oldsize: {PyBytes_GET_SIZE(data)} newsize{new_size}") # todo del
             write_neutral_s32(byteswap_buf, new_size)
             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
-            write_neutral_s32(byteswap_buf, <int32_t>PyBytes_GET_SIZE(data))
+            write_neutral_s32(byteswap_buf, old_size)
             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
             output.flush()
@@ -248,7 +253,7 @@ cpdef inline void compress_file(object input, object output, int32_t block_size)
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline void decompress_file(object input, object output) with gil:
+cpdef inline void decompress_file(object input, object output):
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -287,7 +292,8 @@ cpdef inline void decompress_file(object input, object output) with gil:
             if PyBytes_GET_SIZE(data) < new_size:
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
-            code = bz3_decode_block(state, buffer, new_size, old_size)
+            with nogil:
+                code = bz3_decode_block(state, buffer, new_size, old_size)
             if code == -1:
                 raise ValueError("Failed to decode a block: %s", bz3_strerror(state))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
@@ -298,7 +304,7 @@ cpdef inline void decompress_file(object input, object output) with gil:
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline bint test_file(object input, bint should_raise = False) except? 0 with gil:
+cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
         return 0
@@ -344,7 +350,8 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0 w
             if PyBytes_GET_SIZE(data) < new_size:
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
-            code = bz3_decode_block(state, buffer, new_size, old_size)
+            with nogil:
+                code = bz3_decode_block(state, buffer, new_size, old_size)
             # print(f"newsize {new_size} oldsize {old_size}") # todo
             if code == -1:
                 if should_raise:

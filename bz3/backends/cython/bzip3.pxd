@@ -37,7 +37,7 @@ cdef extern from "libbz3.h" nogil:
     void bz3_free(bz3_state * state)
     int32_t bz3_encode_block(bz3_state * state, uint8_t * buffer, int32_t size)
     int32_t bz3_decode_block(bz3_state * state, uint8_t * buffer, int32_t size, int32_t orig_size)
-    void bz3_encode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t n);
+    void bz3_encode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t n)
     void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
                            int32_t n)
 

@@ -4,9 +4,11 @@ Copyright (c) 2008-2021 synodriver <synodriver@gmail.com>
 import os
 from unittest import TestCase
 
-os.environ["BZ3_USE_CFFI"] = "1"
+from bz3 import compress_file, decompress_file
+from bz3 import open as bz3_open
+from bz3 import test_file
 
-from bz3 import compress_file, decompress_file, test_file, open as bz3_open
+# os.environ["BZ3_USE_CFFI"] = "1"
 
 
 class TestCompress(TestCase):
