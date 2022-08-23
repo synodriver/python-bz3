@@ -79,6 +79,7 @@ class DecompressReader(io.RawIOBase):
         if size < 0:
             return self.readall()
         if size <= len(self._buffer):
+            self._pos += size
             ret = bytes(self._buffer[:size])
             del self._buffer[:size]
             return ret
