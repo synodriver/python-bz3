@@ -36,7 +36,6 @@ cdef class BZ3Compressor:
         bz3_state * state
         uint8_t * buffer
         int32_t block_size
-        uint8_t byteswap_buf[4]
         bytearray uncompressed
         bint have_magic_number
 
@@ -71,8 +70,7 @@ cdef class BZ3Compressor:
             if PyByteArray_Resize(ret, 9) < 0:
                 raise
             memcpy(PyByteArray_AS_STRING(ret), magic, 5)
-            write_neutral_s32(self.byteswap_buf, self.block_size)
-            memcpy(&(PyByteArray_AS_STRING(ret)[5]), self.byteswap_buf, 4)
+            write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
             self.have_magic_number = 1
 
         if input_size > 0:
@@ -89,10 +87,8 @@ cdef class BZ3Compressor:
                 if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
                     raise
 
-                write_neutral_s32(self.byteswap_buf, new_size)
-                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), <void*>self.byteswap_buf, 4)
-                write_neutral_s32(self.byteswap_buf, self.block_size)
-                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), <void *> self.byteswap_buf, 4)
+                write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)
+                write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), self.block_size)
                 memcpy(<void *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size]), self.buffer, <size_t>new_size)
 
                 del self.uncompressed[:self.block_size]
@@ -111,11 +107,9 @@ cdef class BZ3Compressor:
             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
             if not ret:
                 raise
-            write_neutral_s32(self.byteswap_buf, new_size)
-            memcpy(PyBytes_AS_STRING(ret), self.byteswap_buf, 4)
-            write_neutral_s32(self.byteswap_buf, old_size)
-            memcpy(&(PyBytes_AS_STRING(ret)[4]), self.byteswap_buf, 4)
-            memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer,<size_t> new_size)
+            write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)
+            write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)
+            memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer, <size_t> new_size)
             self.uncompressed.clear()
         return ret
 
@@ -132,11 +126,10 @@ cdef class BZ3Decompressor:
         bz3_state * state
         uint8_t * buffer
         int32_t block_size
-        uint8_t byteswap_buf[4]
         bytearray unused  # 还没解压的数据
         bint have_magic_number
 
-    cdef inline int init_state(self, int32_t block_size):
+    cdef inline int init_state(self, int32_t block_size) except -1:
         """should exec only once"""
         self.block_size = block_size
         self.state = bz3_new(block_size)
@@ -240,7 +233,6 @@ cpdef inline void compress_file(object input, object output, int32_t block_size)
                 new_size = bz3_encode_block(state, buffer, old_size)
             if new_size == -1:
                 raise ValueError("Failed to encode a block: %s", bz3_strerror(state))
-            # print(f"oldsize: {PyBytes_GET_SIZE(data)} newsize{new_size}") # todo del
             write_neutral_s32(byteswap_buf, new_size)
             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
             write_neutral_s32(byteswap_buf, old_size)
@@ -307,7 +299,6 @@ cpdef inline void decompress_file(object input, object output):
 cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
-        return 0
     cdef bytes data
     cdef int32_t block_size
     data = input.read(9)  # magic and block_size type: bytes len = 9
@@ -327,13 +318,11 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-        return 0
     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
     if buffer == NULL:
         bz3_free(state)
         state = NULL
         raise MemoryError("Failed to allocate memory")
-        return 0
     cdef int32_t new_size, old_size, code
 
     try:

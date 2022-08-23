@@ -8,6 +8,7 @@ from bz3 import compress_file, decompress_file
 from bz3 import open as bz3_open
 from bz3 import test_file
 
+
 # os.environ["BZ3_USE_CFFI"] = "1"
 
 
@@ -20,13 +21,11 @@ class TestCompress(TestCase):
         with open("compressed.bz3", "rb") as inp, open("output.tar", "wb") as out:
             decompress_file(inp, out)
 
-    def test_filelike(self):
+    def test_filelike_write(self):
         with bz3_open("test.bz3", "wt", encoding="utf-8") as f:
             f.write("test data")
-
-    def test_filelike_read(self):
         with bz3_open("test.bz3", "rt", encoding="utf-8") as f:
-            print(f.read())
+            self.assertEqual(f.read(), "test data")
 
 
 if __name__ == "__main__":
