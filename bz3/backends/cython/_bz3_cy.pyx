@@ -81,31 +81,32 @@ cdef class BZ3Compressor:
             ret.len += 9
             self.have_magic_number = 1
 
-        if input_size > 0:
-            # if PyByteArray_Resize(self.uncompressed, input_size+PyByteArray_GET_SIZE(self.uncompressed)) < 0:
-            #     raise
-            # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
-            if buffer_append_right(self.uncompressed, &data[0], <size_t>input_size)==-1:
-                raise MemoryError
-            while <int32_t>buffer_get_size(self.uncompressed)>=self.block_size:
-                memcpy(self.buffer, buffer_as_string(self.uncompressed), <size_t>self.block_size)
-                # make a copy
-                with nogil:
-                    new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
-                if new_size == -1:
-                    raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
-                # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
-                #     raise todo add make_room_for
-                if buffer_make_room_for(ret,  <size_t>new_size + 8) == -1:
-                    raise MemoryError
-
-                write_neutral_s32(&(buffer_as_string(ret)[buffer_get_size(ret)]), new_size)
-                write_neutral_s32(&(buffer_as_string(ret)[buffer_get_size(ret)+4]), self.block_size)
-                memcpy(&(buffer_as_string(ret)[buffer_get_size(ret)+8]), self.buffer, <size_t>new_size)
-                ret.len += (new_size+8)
-
-                buffer_pop_left(self.uncompressed, self.block_size)
         try:
+            if input_size > 0:
+                # if PyByteArray_Resize(self.uncompressed, input_size+PyByteArray_GET_SIZE(self.uncompressed)) < 0:
+                #     raise
+                # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
+                if buffer_append_right(self.uncompressed, &data[0], <size_t>input_size)==-1:
+                    raise MemoryError
+                while <int32_t>buffer_get_size(self.uncompressed)>=self.block_size:
+                    memcpy(self.buffer, buffer_as_string(self.uncompressed), <size_t>self.block_size)
+                    # make a copy
+                    with nogil:
+                        new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
+                    if new_size == -1:
+                        raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
+                    # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
+                    #     raise todo add make_room_for
+                    if buffer_make_room_for(ret,  <size_t>new_size + 8) == -1:
+                        raise MemoryError
+
+                    write_neutral_s32(&(buffer_as_string(ret)[buffer_get_size(ret)]), new_size)
+                    write_neutral_s32(&(buffer_as_string(ret)[buffer_get_size(ret)+4]), self.block_size)
+                    memcpy(&(buffer_as_string(ret)[buffer_get_size(ret)+8]), self.buffer, <size_t>new_size)
+                    ret.len += (new_size+8)
+
+                    if buffer_pop_left(self.uncompressed, self.block_size)==-1:
+                        raise MemoryError
             return PyBytes_FromStringAndSize(<char*>buffer_as_string(ret), <Py_ssize_t>buffer_get_size(ret))
         finally:
             buffer_del(&ret)
@@ -126,7 +127,8 @@ cdef class BZ3Compressor:
             write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)
             write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)
             memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer, <size_t> new_size)
-            buffer_pop_left(self.uncompressed, <size_t>old_size)
+            if buffer_pop_left(self.uncompressed, <size_t>old_size)==-1:
+                raise MemoryError
         return ret
 
     cpdef inline str error(self):
@@ -180,40 +182,41 @@ cdef class BZ3Decompressor:
         if ret == NULL:
             raise MemoryError
         cdef int32_t new_size, old_size, block_size
-        if input_size > 0:
-            # if PyByteArray_Resize(self.unused, input_size+PyByteArray_GET_SIZE(self.unused)) < 0:
-            #     raise
-            # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
-            if buffer_append_right(self.unused,  &data[0], <size_t>input_size)== -1:
-                raise MemoryError
-            if buffer_get_size(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
-                if strncmp(<const char*>buffer_as_string(self.unused), magic, 5) != 0:
-                    raise ValueError("Invalid signature")
-                block_size = read_neutral_s32(&(buffer_as_string(self.unused)[5]))
-                if block_size  < KiB(65) or block_size >MiB(511):
-                    raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
-                self.init_state(block_size)
-                if buffer_pop_left(self.unused, 9)==-1:
-                    raise MemoryError
-                self.have_magic_number = 1
-
-            while True:
-                if buffer_get_size(self.unused)<8: # 8 byte的 header都不够 直接返回
-                    break
-                new_size = read_neutral_s32(buffer_as_string(self.unused)) # todo gcc warning but bytes is contst
-                old_size = read_neutral_s32(&(buffer_as_string(self.unused)[4]))
-                if buffer_get_size(self.unused) < new_size+8: # 数据段不够
-                    break
-                memcpy(self.buffer, &(buffer_as_string(self.unused)[8]), <size_t>new_size)
-                with nogil:
-                    code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
-                if code == -1:
-                    raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
-                if buffer_append_right(ret, self.buffer, <size_t>old_size)==-1:
-                    raise MemoryError
-                if buffer_pop_left(self.unused, new_size+8)==-1:
-                    raise MemoryError
         try:
+            if input_size > 0:
+                # if PyByteArray_Resize(self.unused, input_size+PyByteArray_GET_SIZE(self.unused)) < 0:
+                #     raise
+                # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
+                if buffer_append_right(self.unused,  &data[0], <size_t>input_size)== -1:
+                    raise MemoryError
+                if buffer_get_size(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+                    if strncmp(<const char*>buffer_as_string(self.unused), magic, 5) != 0:
+                        raise ValueError("Invalid signature")
+                    block_size = read_neutral_s32(&(buffer_as_string(self.unused)[5]))
+                    if block_size  < KiB(65) or block_size >MiB(511):
+                        raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+                    self.init_state(block_size)
+                    if buffer_pop_left(self.unused, 9)==-1:
+                        raise MemoryError
+                    self.have_magic_number = 1
+
+                while True:
+                    if buffer_get_size(self.unused)<8: # 8 byte的 header都不够 直接返回
+                        break
+                    new_size = read_neutral_s32(buffer_as_string(self.unused)) # todo gcc warning but bytes is contst
+                    old_size = read_neutral_s32(&(buffer_as_string(self.unused)[4]))
+                    if buffer_get_size(self.unused) < new_size+8: # 数据段不够
+                        break
+                    memcpy(self.buffer, &(buffer_as_string(self.unused)[8]), <size_t>new_size)
+                    with nogil:
+                        code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                    if code == -1:
+                        raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
+                    if buffer_append_right(ret, self.buffer, <size_t>old_size)==-1:
+                        raise MemoryError
+                    if buffer_pop_left(self.unused, new_size+8)==-1:
+                        raise MemoryError
+
             return PyBytes_FromStringAndSize(<char*>buffer_as_string(ret), <Py_ssize_t>buffer_get_size(ret))
         finally:
             buffer_del(&ret)
