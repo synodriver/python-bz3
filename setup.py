@@ -32,13 +32,13 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
-c_sources = ["bz3/backends/cython/_bz3_cy.pyx"] + glob.glob("./dep/src/*.c")
+c_sources = ["bz3/backends/cython/_bz3_cy.pyx"] + glob.glob("./dep/src/*.c") + glob.glob("./buffer/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
 extensions = [
     Extension(
         "bz3.backends.cython._bz3_cy",
         c_sources,
-        include_dirs=["./dep/include"],
+        include_dirs=["./dep/include", "./buffer/src"],
         define_macros=[],
     ),
 ]
