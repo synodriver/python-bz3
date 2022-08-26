@@ -39,7 +39,8 @@ extensions = [
         "bz3.backends.cython._bz3_cy",
         c_sources,
         include_dirs=["./dep/include", "./buffer/src"],
-        define_macros=[],
+        define_macros=[("BUFFER_MALLOC", "PyMem_Malloc"), ("BUFFER_REALLOC", "PyMem_Realloc"),
+                       ("BUFFER_FREE", "PyMem_Free")],
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]

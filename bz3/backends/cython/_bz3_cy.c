@@ -3,6 +3,20 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "define_macros": [
+            [
+                "BUFFER_MALLOC",
+                "PyMem_Malloc"
+            ],
+            [
+                "BUFFER_REALLOC",
+                "PyMem_Realloc"
+            ],
+            [
+                "BUFFER_FREE",
+                "PyMem_Free"
+            ]
+        ],
         "depends": [
             "buffer\\src\\buffer.h",
             "dep\\include\\common.h",
@@ -8145,6 +8159,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
  *         PyMem_Free(buffer)
+ * 
  */
         __pyx_v_state = NULL;
 
@@ -8152,6 +8167,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
+ * 
  */
         PyMem_Free(__pyx_v_buffer);
       }
@@ -8186,6 +8202,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
  *         PyMem_Free(buffer)
+ * 
  */
       __pyx_v_state = NULL;
 
@@ -8193,6 +8210,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
+ * 
  */
       PyMem_Free(__pyx_v_buffer);
       __pyx_r = __pyx_t_1;
