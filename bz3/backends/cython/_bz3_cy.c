@@ -15,6 +15,10 @@
             [
                 "BUFFER_FREE",
                 "PyMem_Free"
+            ],
+            [
+                "BUFFER_INCLUDE",
+                "\"Python.h\""
             ]
         ],
         "depends": [

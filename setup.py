@@ -32,15 +32,23 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
-c_sources = ["bz3/backends/cython/_bz3_cy.pyx"] + glob.glob("./dep/src/*.c") + glob.glob("./buffer/src/*.c")
+c_sources = (
+    ["bz3/backends/cython/_bz3_cy.pyx"]
+    + glob.glob("./dep/src/*.c")
+    + glob.glob("./buffer/src/*.c")
+)
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
 extensions = [
     Extension(
         "bz3.backends.cython._bz3_cy",
         c_sources,
         include_dirs=["./dep/include", "./buffer/src"],
-        define_macros=[("BUFFER_MALLOC", "PyMem_Malloc"), ("BUFFER_REALLOC", "PyMem_Realloc"),
-                       ("BUFFER_FREE", "PyMem_Free")],
+        define_macros=[
+            ("BUFFER_MALLOC", "PyMem_Malloc"),
+            ("BUFFER_REALLOC", "PyMem_Realloc"),
+            ("BUFFER_FREE", "PyMem_Free"),
+            ("BUFFER_INCLUDE", '"Python.h"'),
+        ],
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]
