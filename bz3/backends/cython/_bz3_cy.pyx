@@ -26,7 +26,7 @@ cdef inline uint8_t PyFile_Check(object file):
     return 0
 
 cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf) nogil:
-    return crc32sum(crc, &buf[0], <size_t>buf.shape[0])
+    return crc32sum(crc, <uint8_t*>&buf[0], <size_t>buf.shape[0])
 
 @cython.freelist(8)
 @cython.no_gc
