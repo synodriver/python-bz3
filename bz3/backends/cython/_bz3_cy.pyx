@@ -205,7 +205,7 @@ cdef class BZ3Decompressor:
         return None
 
 
-cpdef inline void compress_file(object input, object output, int32_t block_size):
+def compress_file(object input, object output, int32_t block_size):
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
@@ -249,7 +249,7 @@ cpdef inline void compress_file(object input, object output, int32_t block_size)
         state = NULL
         PyMem_Free(buffer)
 
-cpdef inline void decompress_file(object input, object output):
+def decompress_file(object input, object output):
     if not PyFile_Check(input):
         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
     if not PyFile_Check(output):
