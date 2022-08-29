@@ -37,7 +37,7 @@ class BZ3Compressor:
             raise MemoryError("Failed to allocate memory")
         self.uncompressed = bytearray()
         self.have_magic_number = False  # 还没有写入magic number
-        self.byteswap_buf = ffi.new("uint8_t[4]")
+        self.byteswap_buf = ffi.new("uint8_t[4]")   # fixme: multithread concurrent competition, e.g. single instance in multithread
 
     def __del__(self):
         if self.state != ffi.NULL:

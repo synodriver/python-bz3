@@ -67,16 +67,18 @@ cdef class BZ3Compressor:
         cdef int32_t new_size
         cdef bytearray ret = bytearray()
         if not self.have_magic_number:
-            if PyByteArray_Resize(ret, 9) < 0:
-                raise
-            memcpy(PyByteArray_AS_STRING(ret), magic, 5)
+            # if PyByteArray_Resize(ret, 9) < 0:
+            #     raise
+            # memcpy(PyByteArray_AS_STRING(ret), magic, 5)
+            ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes
             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
             self.have_magic_number = 1
 
         if input_size > 0:
-            if PyByteArray_Resize(self.uncompressed, input_size+PyByteArray_GET_SIZE(self.uncompressed)) < 0:
-                raise
-            memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
+            # if PyByteArray_Resize(self.uncompressed, input_size+PyByteArray_GET_SIZE(self.uncompressed)) < 0:
+            #     raise
+            # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
+            self.uncompressed.extend(data)
             while PyByteArray_GET_SIZE(self.uncompressed)>=self.block_size:
                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
                 # make a copy
@@ -84,12 +86,12 @@ cdef class BZ3Compressor:
                     new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
                 if new_size == -1:
                     raise ValueError("Failed to encode a block: %s", bz3_strerror(self.state))
-                if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
-                    raise
-
+                # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
+                #     raise
+                ret.extend((new_size + 8)*b"\x00")
                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)
                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), self.block_size)
-                memcpy(<void *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size]), self.buffer, <size_t>new_size)
+                memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size]), self.buffer, <size_t>new_size)
 
                 del self.uncompressed[:self.block_size]
         return bytes(ret)
@@ -159,9 +161,10 @@ cdef class BZ3Decompressor:
         cdef bytearray ret = bytearray()
         cdef int32_t new_size, old_size, block_size
         if input_size > 0:
-            if PyByteArray_Resize(self.unused, input_size+PyByteArray_GET_SIZE(self.unused)) < 0:
-                raise
-            memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
+            # if PyByteArray_Resize(self.unused, input_size+PyByteArray_GET_SIZE(self.unused)) < 0:
+            #     raise
+            # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
+            self.unused.extend(data)
             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
@@ -184,9 +187,10 @@ cdef class BZ3Decompressor:
                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
                     raise ValueError("Failed to decode a block: %s", bz3_strerror(self.state))
-                if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
-                    raise
-                memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-old_size]), self.buffer, <size_t>old_size)
+                # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
+                #     raise
+                ret.extend(<bytes>self.buffer[:old_size])
+                # memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-old_size]), self.buffer, <size_t>old_size)
                 del self.unused[:new_size+8]
         return bytes(ret)
 
