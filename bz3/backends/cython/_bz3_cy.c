@@ -5,9 +5,7 @@
     "distutils": {
         "depends": [
             "dep/include/common.h",
-            "dep/include/crc32.h",
-            "dep/include/libbz3.h",
-            "dep/include/lzp.h"
+            "dep/include/libbz3.h"
         ],
         "include_dirs": [
             "./dep/include"
@@ -15,12 +13,7 @@
         "name": "bz3.backends.cython._bz3_cy",
         "sources": [
             "bz3/backends/cython/_bz3_cy.pyx",
-            "./dep/src/cm.c",
-            "./dep/src/libsais.c",
-            "./dep/src/libbz3.c",
-            "./dep/src/lzp.c",
-            "./dep/src/rle.c",
-            "./dep/src/crc32.c"
+            "./dep/src/libbz3.c"
         ]
     },
     "module_name": "bz3.backends.cython._bz3_cy"
@@ -773,8 +766,6 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include <stdint.h>
 #include "common.h"
 #include "libbz3.h"
-#include "lzp.h"
-#include "crc32.h"
 #include "pythread.h"
 #include <stdlib.h>
 #include "pystate.h"
@@ -7870,7 +7861,6 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
  *         PyMem_Free(buffer)
- * 
  */
         __pyx_v_state = NULL;
 
@@ -7878,7 +7868,6 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
- * 
  */
         PyMem_Free(__pyx_v_buffer);
       }
@@ -7913,7 +7902,6 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
  *         PyMem_Free(buffer)
- * 
  */
       __pyx_v_state = NULL;
 
@@ -7921,7 +7909,6 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_7_bz3_cy_test_file(PyObj
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
- * 
  */
       PyMem_Free(__pyx_v_buffer);
       __pyx_r = __pyx_t_1;

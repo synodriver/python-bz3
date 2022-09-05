@@ -42,10 +42,7 @@ cdef extern from "libbz3.h" nogil:
                            int32_t n)
 
 
-
-cdef extern from "lzp.h" nogil:
+cdef extern from * nogil:
     lzp_compress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut)
     lzp_decompress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut)
-
-cdef extern from "crc32.h" nogil:
-    u32 crc32sum(u32 crc, u8 * buf, size_t size)
+    extern u32 crc32sum(u32 crc, u8 * buf, size_t size)

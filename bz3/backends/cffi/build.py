@@ -101,12 +101,8 @@ void *memcpy  (void *pto, const void *pfrom, size_t size);
 source = """
 #include <stdint.h>
 #include <string.h>
-#include "cm.h"
 #include "common.h"
 #include "libbz3.h"
-#include "lzp.h"
-#include "crc32.h"
-#include "rle.h"
 #include "libsais.h"
 """
 c_sources = glob.glob("./dep/src/*.c")
