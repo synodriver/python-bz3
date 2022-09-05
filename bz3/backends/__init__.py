@@ -22,7 +22,6 @@ if not _should_use_cffi():
         BZ3Compressor,
         BZ3Decompressor,
         compress_file,
-        crc32,
         decompress_file,
         test_file,
     )
@@ -31,7 +30,6 @@ else:
         BZ3Compressor,
         BZ3Decompressor,
         compress_file,
-        crc32,
         decompress_file,
         test_file,
     )

@@ -17,8 +17,6 @@ typedef int32_t s32;
 
 
 
-u32 crc32sum(u32 crc, u8 * buf, size_t size);
-
 #define BZ3_OK 0
 #define BZ3_ERR_OUT_OF_BOUNDS -1
 #define BZ3_ERR_BWT -2
@@ -84,10 +82,6 @@ int32_t bz3_decode_block(struct bz3_state * state, uint8_t * buffer, int32_t siz
  * Same specifics as `bz3_encode_blocks', but doesn't overwrite `sizes'.
  */
 //void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[], int32_t n);
-
-s32 lzp_compress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut);
-
-s32 lzp_decompress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut);  
 
 s32 read_neutral_s32(u8 * data);
 void write_neutral_s32(u8 * data, s32 value);

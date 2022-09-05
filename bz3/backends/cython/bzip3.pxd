@@ -40,9 +40,3 @@ cdef extern from "libbz3.h" nogil:
     void bz3_encode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t n)
     void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
                            int32_t n)
-
-
-cdef extern from * nogil:
-    lzp_compress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut)
-    lzp_decompress(const u8 * input, u8 * output, s32 n, s32 hash, s32 min, s32 * lut)
-    extern u32 crc32sum(u32 crc, u8 * buf, size_t size)

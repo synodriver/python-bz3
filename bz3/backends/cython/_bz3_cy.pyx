@@ -14,8 +14,8 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_decode_block,
                                         bz3_decode_blocks, bz3_encode_block,
                                         bz3_encode_blocks, bz3_free,
                                         bz3_last_error, bz3_new, bz3_state,
-                                        bz3_strerror, crc32sum,
-                                        read_neutral_s32, write_neutral_s32)
+                                        bz3_strerror, read_neutral_s32,
+                                        write_neutral_s32)
 
 
 cdef const char* magic = "BZ3v1"
@@ -24,9 +24,6 @@ cdef inline uint8_t PyFile_Check(object file):
     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?
         return 1
     return 0
-
-cpdef inline uint32_t crc32(uint32_t crc, const uint8_t[::1] buf) nogil:
-    return crc32sum(crc, <uint8_t*>&buf[0], <size_t>buf.shape[0])
 
 @cython.freelist(8)
 @cython.no_gc

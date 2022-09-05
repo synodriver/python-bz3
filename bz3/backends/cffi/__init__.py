@@ -17,10 +17,6 @@ def check_file(file) -> bool:
     return False
 
 
-def crc32(crc: int, buf: bytes) -> int:
-    return lib.crc32sum(crc, ffi.cast("uint8_t*", ffi.from_buffer(buf)), len(buf))
-
-
 class BZ3Compressor:
     def __init__(self, block_size: int):
         if block_size < KiB(65) or block_size > MiB(511):
