@@ -10,12 +10,13 @@ from cpython.object cimport PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.string cimport memcpy, strncmp
 
-from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_decode_block,
-                                        bz3_decode_blocks, bz3_encode_block,
-                                        bz3_encode_blocks, bz3_free,
-                                        bz3_last_error, bz3_new, bz3_state,
-                                        bz3_strerror, read_neutral_s32,
-                                        write_neutral_s32)
+from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
+                                        bz3_compress, bz3_decode_block,
+                                        bz3_decode_blocks, bz3_decompress,
+                                        bz3_encode_block, bz3_encode_blocks,
+                                        bz3_free, bz3_last_error, bz3_new,
+                                        bz3_state, bz3_strerror, bz3_version,
+                                        read_neutral_s32, write_neutral_s32)
 
 
 cdef const char* magic = "BZ3v1"
@@ -352,3 +353,30 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
+
+cpdef inline size_t bound(size_t input_size) nogil:
+    return bz3_bound(input_size)
+
+
+cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:
+    cdef:
+        size_t out_size = <size_t>out.shape[0]
+        int bzerr
+    with nogil:
+        bzerr = bz3_compress(block_size, &data[0], &out[0], <size_t>data.shape[0], &out_size)
+    if bzerr != BZ3_OK:
+        raise ValueError(f"bz3_compress() failed with error code {bzerr}")
+    return out_size
+
+cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:
+    cdef:
+        size_t out_size = <size_t>out.shape[0]
+        int bzerr
+    with nogil:
+        bzerr = bz3_decompress(&data[0], &out[0], <size_t>data.shape[0], &out_size)
+    if bzerr != BZ3_OK:
+        raise ValueError(f"bz3_decompress() failed with error code {bzerr}")
+    return out_size
+
+cpdef inline str libversion():
+    return (<bytes>bz3_version()).decode()

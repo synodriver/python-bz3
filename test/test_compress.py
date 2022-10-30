@@ -8,7 +8,6 @@ from bz3 import compress_file, decompress_file
 from bz3 import open as bz3_open
 from bz3 import test_file
 
-
 # os.environ["BZ3_USE_CFFI"] = "1"
 
 

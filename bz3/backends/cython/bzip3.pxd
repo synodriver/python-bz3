@@ -35,8 +35,12 @@ cdef extern from "libbz3.h" nogil:
     const char * bz3_strerror(bz3_state * state)
     bz3_state * bz3_new(int32_t block_size)
     void bz3_free(bz3_state * state)
+    size_t bz3_bound(size_t input_size)
+    int bz3_compress(uint32_t block_size, const uint8_t * in_, uint8_t * out, size_t in_size, size_t * out_size)
+    int bz3_decompress(const uint8_t * in_, uint8_t * out, size_t in_size, size_t * out_size)
     int32_t bz3_encode_block(bz3_state * state, uint8_t * buffer, int32_t size)
     int32_t bz3_decode_block(bz3_state * state, uint8_t * buffer, int32_t size, int32_t orig_size)
     void bz3_encode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t n)
     void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
                            int32_t n)
+    const char * bz3_version()

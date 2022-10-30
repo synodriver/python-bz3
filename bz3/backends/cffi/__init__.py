@@ -1,6 +1,6 @@
 from typing import IO, Optional
 
-from bz3.backends.cffi._bz3_cffi import ffi, lib
+from bz3.backends.cffi._bz3 import ffi, lib
 
 
 def KiB(x: int) -> int:
@@ -372,3 +372,33 @@ def test_file(input: IO, should_raise: bool = False) -> bool:
     finally:
         lib.bz3_free(state)
         lib.PyMem_Free(buffer)
+
+
+def bound(input_size: int) -> int:
+    return lib.bz3_bound(input_size)
+
+
+def compress_into(data, out, block_size: int = 1000000) -> int:
+    out_size = ffi.new("size_t*")
+    out_size[0] = len(out)
+    bzerr = bz3_compress(
+        block_size, ffi.from_buffer(data), ffi.from_buffer(out), len(data), out_size
+    )
+    if bzerr != lib.BZ3_OK:
+        raise ValueError(f"bz3_compress() failed with error code {bzerr}")
+    return out_size[0]
+
+
+def decompress_into(data, out) -> int:
+    out_size = ffi.new("size_t*")
+    out_size[0] = len(out)
+    bzerr = bz3_decompress(
+        ffi.from_buffer(data), ffi.from_buffer(out), len(data), out_size
+    )
+    if bzerr != lib.BZ3_OK:
+        raise ValueError(f"bz3_decompress() failed with error code {bzerr}")
+    return out_size[0]
+
+
+def libversion():
+    return ffi.string(lib.bz3_version())

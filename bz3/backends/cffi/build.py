@@ -50,6 +50,32 @@ struct bz3_state * bz3_new(int32_t block_size);
 void bz3_free(struct bz3_state * state);
 
 /**
+ * @brief Return the recommended size of the output buffer for the compression functions.
+ */
+size_t bz3_bound(size_t input_size);
+
+/* ** HIGH LEVEL APIs ** */
+
+/**
+ * @brief Compress a block of data. This function does not support parallelism
+ * by itself, consider using the low level `bz3_encode_blocks()` function instead.
+ * Using the low level API might provide better performance.
+ * Returns a bzip3 error code; BZ3_OK when the operation is successful.
+ * Make sure to set out_size to the size of the output buffer before the operation;
+ * out_size must be at least equal to `bz3_bound(in_size)'.
+ */
+int bz3_compress(uint32_t block_size, const uint8_t * in, uint8_t * out, size_t in_size, size_t * out_size);
+
+/**
+ * @brief Decompress a block of data. This function does not support parallelism
+ * by itself, consider using the low level `bz3_decode_blocks()` function instad.
+ * Using the low level API might provide better performance.
+ * Returns a bzip3 error code; BZ3_OK when the operation is successful.
+ * Make sure to set out_size to the size of the output buffer before the operation.
+ */
+int bz3_decompress(const uint8_t * in, uint8_t * out, size_t in_size, size_t * out_size);
+
+/**
  * @brief Encode a single block. Returns the amount of bytes written to `buffer'.
  * `buffer' must be able to hold at least `size + size / 50 + 32' bytes. The size must not
  * exceed the block size associated with the state.
@@ -83,6 +109,8 @@ int32_t bz3_decode_block(struct bz3_state * state, uint8_t * buffer, int32_t siz
  */
 //void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[], int32_t n);
 
+const char * bz3_version();
+
 s32 read_neutral_s32(u8 * data);
 void write_neutral_s32(u8 * data, s32 value);
 void* PyMem_Malloc(size_t n);
@@ -104,10 +132,11 @@ c_sources = list(filter(lambda x: "main" not in x, c_sources))
 print(c_sources)
 
 ffibuilder.set_source(
-    "bz3.backends.cffi._bz3_cffi",
+    "bz3.backends.cffi._bz3",
     source,
     sources=c_sources,
     include_dirs=["./dep/include"],
+    define_macros=[("VERSION", '"1.1.8.r14-g532677a"')],
 )
 
 if __name__ == "__main__":

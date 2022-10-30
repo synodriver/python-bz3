@@ -21,15 +21,21 @@ if not _should_use_cffi():
     from bz3.backends.cython import (
         BZ3Compressor,
         BZ3Decompressor,
+        bound,
         compress_file,
+        compress_into,
         decompress_file,
+        decompress_into,
         test_file,
     )
 else:
     from bz3.backends.cffi import (
         BZ3Compressor,
         BZ3Decompressor,
+        bound,
         compress_file,
+        compress_into,
         decompress_file,
+        decompress_into,
         test_file,
     )

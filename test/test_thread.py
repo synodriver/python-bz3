@@ -4,7 +4,6 @@ Copyright (c) 2008-2021 synodriver <synodriver@gmail.com>
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, wait
-
 from unittest import TestCase
 
 sys.path.append(".")
