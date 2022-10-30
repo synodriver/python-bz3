@@ -358,7 +358,7 @@ cpdef inline size_t bound(size_t input_size) nogil:
     return bz3_bound(input_size)
 
 
-cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:
+cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:
     cdef:
         size_t out_size = <size_t>out.shape[0]
         int bzerr
@@ -368,7 +368,7 @@ cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uin
         raise ValueError(f"bz3_compress() failed with error code {bzerr}")
     return out_size
 
-cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:
+cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:
     cdef:
         size_t out_size = <size_t>out.shape[0]
         int bzerr

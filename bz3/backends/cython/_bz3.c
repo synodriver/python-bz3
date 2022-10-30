@@ -6,7 +6,7 @@
         "define_macros": [
             [
                 "VERSION",
-                "\"1.1.8.r14-g532677a\""
+                "\"1.1.8.r15-gb4e15dc\""
             ]
         ],
         "depends": [
@@ -1118,7 +1118,7 @@ struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_test_file {
 /* "bz3/backends/cython/_bz3.pyx":361
  * 
  * 
- * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:             # <<<<<<<<<<<<<<
+ * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]
  */
@@ -8046,7 +8046,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyOb
 /* "bz3/backends/cython/_bz3.pyx":361
  * 
  * 
- * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:             # <<<<<<<<<<<<<<
+ * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]
  */
@@ -8074,7 +8074,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
   }
 
   /* "bz3/backends/cython/_bz3.pyx":363
- * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:
+ * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]             # <<<<<<<<<<<<<<
  *         int bzerr
@@ -8171,7 +8171,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
  *         raise ValueError(f"bz3_compress() failed with error code {bzerr}")
  *     return out_size             # <<<<<<<<<<<<<<
  * 
- * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:
+ * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:
  */
   __pyx_r = __pyx_v_out_size;
   goto __pyx_L0;
@@ -8179,7 +8179,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
   /* "bz3/backends/cython/_bz3.pyx":361
  * 
  * 
- * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except 0:             # <<<<<<<<<<<<<<
+ * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]
  */
@@ -8293,7 +8293,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNU
   if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 361, __pyx_L1_error) }
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.block_size = __pyx_v_block_size;
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(__pyx_v_data, __pyx_v_out, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((size_t)0))) __PYX_ERR(0, 361, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(__pyx_v_data, __pyx_v_out, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 361, __pyx_L1_error)
   __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 361, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
@@ -8316,7 +8316,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNU
 /* "bz3/backends/cython/_bz3.pyx":371
  *     return out_size
  * 
- * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:             # <<<<<<<<<<<<<<
+ * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:             # <<<<<<<<<<<<<<
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]
  */
@@ -8338,7 +8338,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
   __Pyx_RefNannySetupContext("decompress_into", 0);
 
   /* "bz3/backends/cython/_bz3.pyx":373
- * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:
+ * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]             # <<<<<<<<<<<<<<
  *         int bzerr
@@ -8443,7 +8443,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
   /* "bz3/backends/cython/_bz3.pyx":371
  *     return out_size
  * 
- * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except 0:             # <<<<<<<<<<<<<<
+ * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:             # <<<<<<<<<<<<<<
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]
  */
@@ -8536,7 +8536,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 371, __pyx_L1_error) }
   if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 371, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into(__pyx_v_data, __pyx_v_out, 0); if (unlikely(__pyx_t_1 == ((size_t)0))) __PYX_ERR(0, 371, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into(__pyx_v_data, __pyx_v_out, 0); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 371, __pyx_L1_error)
   __pyx_t_2 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;

@@ -9,5 +9,6 @@ from bz3.backends.cython._bz3 import (
     compress_into,
     decompress_file,
     decompress_into,
+    libversion,
     test_file,
 )

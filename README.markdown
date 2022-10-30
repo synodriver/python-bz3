@@ -72,4 +72,16 @@ class BZ3File:
 def open(filename, mode: str = ..., block_size: int = ..., encoding: str = ..., errors: str = ..., newline: str = ...) -> BZ3File: ...
 def compress(data: bytes, block_size: int = ...) -> bytes: ...
 def decompress(data: bytes) -> bytes: ...
+
+def libversion() -> str: ... # Get bzip3 version
+def bound(int) -> str: ... # Return the recommended size of the output buffer for the compression functions.
+
+# High-level api
+# Compress a block of data into out buffer, zerocopy, both parameters accept objects which implements buffer-protocol.
+# out must be writabel, size of out must be at least equal to bound(len(inp))
+def compress_into(inp: Union[bytes, bytearray], out: bytearray) -> int: ...
+# Decompress a block of data into out buffer, zerocopy
+def decompress_into(inp: Union[bytes, bytearray], out: bytearray) -> int: ...
 ```
+
+- Note, high-level api won't work with low-level api, see [this](https://github.com/kspalaiologos/bzip3/issues/70)

@@ -39,7 +39,7 @@ extensions = [
         "bz3.backends.cython._bz3",
         c_sources,
         include_dirs=["./dep/include"],
-        define_macros=[("VERSION", '"1.1.8.r14-g532677a"')],
+        define_macros=[("VERSION", '"1.1.8.r15-gb4e15dc"')],
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]

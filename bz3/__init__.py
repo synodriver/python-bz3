@@ -9,6 +9,7 @@ from bz3.backends import (
     compress_into,
     decompress_file,
     decompress_into,
+    libversion,
     test_file,
 )
 from bz3.bz3 import BZ3File, compress, decompress, open
