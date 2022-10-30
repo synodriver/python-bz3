@@ -400,5 +400,5 @@ def decompress_into(data, out) -> int:
     return out_size[0]
 
 
-def libversion():
-    return ffi.string(lib.bz3_version())
+def libversion() -> str:
+    return ffi.string(lib.bz3_version()).decode()
