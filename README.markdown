@@ -74,7 +74,7 @@ def compress(data: bytes, block_size: int = ...) -> bytes: ...
 def decompress(data: bytes) -> bytes: ...
 
 def libversion() -> str: ... # Get bzip3 version
-def bound(int) -> str: ... # Return the recommended size of the output buffer for the compression functions.
+def bound(in: int) -> int: ... # Return the recommended size of the output buffer for the compression functions.
 
 # High-level api
 # Compress a block of data into out buffer, zerocopy, both parameters accept objects which implements buffer-protocol.
