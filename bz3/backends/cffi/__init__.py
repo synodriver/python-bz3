@@ -381,7 +381,7 @@ def bound(input_size: int) -> int:
 def compress_into(data, out, block_size: int = 1000000) -> int:
     out_size = ffi.new("size_t*")
     out_size[0] = len(out)
-    bzerr = bz3_compress(
+    bzerr = lib.bz3_compress(
         block_size, ffi.from_buffer(data), ffi.from_buffer(out), len(data), out_size
     )
     if bzerr != lib.BZ3_OK:
@@ -392,7 +392,7 @@ def compress_into(data, out, block_size: int = 1000000) -> int:
 def decompress_into(data, out) -> int:
     out_size = ffi.new("size_t*")
     out_size[0] = len(out)
-    bzerr = bz3_decompress(
+    bzerr = lib.bz3_decompress(
         ffi.from_buffer(data), ffi.from_buffer(out), len(data), out_size
     )
     if bzerr != lib.BZ3_OK:
