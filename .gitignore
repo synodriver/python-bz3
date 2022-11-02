@@ -14,3 +14,6 @@ lib/
 *.lib
 *.a
 *.so
+bzip3.egg-info/
+*.bin
+*.bz3

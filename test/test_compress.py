@@ -10,7 +10,7 @@ from unittest import TestCase
 
 from bz3 import bound, compress_file, compress_into, decompress_file, decompress_into
 from bz3 import open as bz3_open
-from bz3 import test_file
+from bz3 import test_file, libversion
 
 # os.environ["BZ3_USE_CFFI"] = "1"
 
@@ -40,6 +40,8 @@ class TestCompress(TestCase):
             buffer_updated = decompress_into(out[:buffer_updated], out2)
             self.assertEqual(bytes(out2[:buffer_updated]), inp)
 
+    def test_version(self):
+        self.assertTrue(isinstance(libversion(), str))
 
 if __name__ == "__main__":
     import unittest
