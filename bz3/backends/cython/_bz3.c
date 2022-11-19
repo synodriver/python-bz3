@@ -6,7 +6,7 @@
         "define_macros": [
             [
                 "VERSION",
-                "\"1.1.8.r15-gb4e15dc\""
+                "\"1.2.1.r5-g044136a\""
             ]
         ],
         "depends": [

@@ -8,9 +8,16 @@ import os
 from random import randint
 from unittest import TestCase
 
-from bz3 import bound, compress_file, compress_into, decompress_file, decompress_into
+from bz3 import (
+    bound,
+    compress_file,
+    compress_into,
+    decompress_file,
+    decompress_into,
+    libversion,
+)
 from bz3 import open as bz3_open
-from bz3 import test_file, libversion
+from bz3 import test_file
 
 # os.environ["BZ3_USE_CFFI"] = "1"
 
@@ -42,6 +49,7 @@ class TestCompress(TestCase):
 
     def test_version(self):
         self.assertTrue(isinstance(libversion(), str))
+
 
 if __name__ == "__main__":
     import unittest
