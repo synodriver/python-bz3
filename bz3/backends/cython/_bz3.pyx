@@ -32,7 +32,7 @@ cdef class BZ3Compressor:
     cdef:
         bz3_state * state
         uint8_t * buffer
-        int32_t block_size
+        readonly int32_t block_size
         bytearray uncompressed
         bint have_magic_number
 
@@ -124,7 +124,7 @@ cdef class BZ3Decompressor:
     cdef:
         bz3_state * state
         uint8_t * buffer
-        int32_t block_size
+        readonly int32_t block_size
         bytearray unused  # 还没解压的数据
         bint have_magic_number
 
@@ -400,10 +400,10 @@ cdef class BZ3OmpCompressor:
         uint8_t ** buffers
         int32_t * sizes   # compressed
         int32_t * old_sizes # origin size
-        int32_t block_size
+        readonly int32_t block_size
         bytearray uncompressed
         bint have_magic_number
-        uint32_t numthreads  # how many threads to use
+        readonly uint32_t numthreads  # how many threads to use
 
     def __cinit__(self, int32_t block_size, uint32_t numthreads):
         if block_size < KiB(65) or block_size > MiB(511):
@@ -577,10 +577,10 @@ cdef class BZ3OmpDecompressor:
         uint8_t ** buffers
         int32_t * sizes   # compressed
         int32_t * old_sizes  # origin
-        int32_t block_size
+        readonly int32_t block_size
         bytearray unused  # 还没解压的数据
         bint have_magic_number
-        uint32_t numthreads  # how many threads to use
+        readonly uint32_t numthreads  # how many threads to use
 
     cdef inline int init_state(self, int32_t block_size) except -1:
         """should exec only once"""

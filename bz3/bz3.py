@@ -31,7 +31,13 @@ class BZ3File(BaseStream):
     returned as bytes, and data to be written should be given as bytes.
     """
 
-    def __init__(self, filename, mode: str = "r", block_size: int = 1024 * 1024, num_threads: int = 1):
+    def __init__(
+        self,
+        filename,
+        mode: str = "r",
+        block_size: int = 1024 * 1024,
+        num_threads: int = 1,
+    ):
         self._lock = RLock()
         self._fp = None  # type: IO
         self._closefp = False
@@ -42,15 +48,27 @@ class BZ3File(BaseStream):
         elif mode in ("w", "wb"):
             mode = "wb"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size) if num_threads == 1 else BZ3OmpCompressor(block_size, num_threads)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         elif mode in ("x", "xb"):
             mode = "xb"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size) if num_threads == 1 else BZ3OmpCompressor(block_size, num_threads)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         elif mode in ("a", "ab"):
             mode = "ab"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size) if num_threads == 1 else BZ3OmpCompressor(block_size, num_threads)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         else:
             raise ValueError("Invalid mode: %r" % (mode,))
 
@@ -65,7 +83,13 @@ class BZ3File(BaseStream):
             raise TypeError("filename must be a str, bytes, file or PathLike object")
 
         if self._mode == _MODE_READ:
-            raw = DecompressReader(self._fp, BZ3Decompressor, numthreads=num_threads)
+            raw = (
+                DecompressReader(self._fp, BZ3Decompressor)
+                if num_threads == 1
+                else DecompressReader(
+                    self._fp, BZ3OmpDecompressor, numthreads=num_threads
+                )
+            )
             self._buffer = io.BufferedReader(raw)
         else:
             self._pos = 0

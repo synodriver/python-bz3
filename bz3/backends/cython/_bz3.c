@@ -2518,6 +2518,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_4compress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_6flush(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_8error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_12__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
@@ -2525,6 +2526,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decompress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unused_data___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, PyObject *__pyx_v_output, int32_t __pyx_v_block_size); /* proto */
@@ -2539,6 +2541,8 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_6flush(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_8error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_12__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, uint32_t __pyx_v_numthreads); /* proto */
@@ -2546,6 +2550,8 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4decompress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11unused_data___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -3969,6 +3975,53 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_8error(st
   return __pyx_r;
 }
 
+/* "bz3/backends/cython/_bz3.pyx":35
+ *         bz3_state * state
+ *         uint8_t * buffer
+ *         readonly int32_t block_size             # <<<<<<<<<<<<<<
+ *         bytearray uncompressed
+ *         bint have_magic_number
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Compressor.block_size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
@@ -5162,6 +5215,53 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error(
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Decompressor.error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":127
+ *         bz3_state * state
+ *         uint8_t * buffer
+ *         readonly int32_t block_size             # <<<<<<<<<<<<<<
+ *         bytearray unused  #
+ *         bint have_magic_number
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Decompressor.block_size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -8867,7 +8967,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
 }
 
 /* "bz3/backends/cython/_bz3.pyx":408
- *         uint32_t numthreads  # how many threads to use
+ *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):             # <<<<<<<<<<<<<<
  *         if block_size < KiB(65) or block_size > MiB(511):
@@ -9486,7 +9586,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_v_self->numthreads = __pyx_v_numthreads;
 
   /* "bz3/backends/cython/_bz3.pyx":408
- *         uint32_t numthreads  # how many threads to use
+ *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):             # <<<<<<<<<<<<<<
  *         if block_size < KiB(65) or block_size > MiB(511):
@@ -10817,6 +10917,100 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_8error
   return __pyx_r;
 }
 
+/* "bz3/backends/cython/_bz3.pyx":403
+ *         int32_t * sizes   # compressed
+ *         int32_t * old_sizes # origin size
+ *         readonly int32_t block_size             # <<<<<<<<<<<<<<
+ *         bytearray uncompressed
+ *         bint have_magic_number
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 403, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpCompressor.block_size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":406
+ *         bytearray uncompressed
+ *         bint have_magic_number
+ *         readonly uint32_t numthreads  # how many threads to use             # <<<<<<<<<<<<<<
+ * 
+ *     def __cinit__(self, int32_t block_size, uint32_t numthreads):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpCompressor.numthreads.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
@@ -11038,7 +11232,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
 }
 
 /* "bz3/backends/cython/_bz3.pyx":585
- *         uint32_t numthreads  # how many threads to use
+ *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -11393,7 +11587,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
   __pyx_v_self->block_size = __pyx_v_block_size;
 
   /* "bz3/backends/cython/_bz3.pyx":585
- *         uint32_t numthreads  # how many threads to use
+ *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -12797,6 +12991,100 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6err
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":580
+ *         int32_t * sizes   # compressed
+ *         int32_t * old_sizes  # origin
+ *         readonly int32_t block_size             # <<<<<<<<<<<<<<
+ *         bytearray unused  #
+ *         bint have_magic_number
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.block_size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":583
+ *         bytearray unused  #
+ *         bint have_magic_number
+ *         readonly uint32_t numthreads  # how many threads to use             # <<<<<<<<<<<<<<
+ * 
+ *     cdef inline int init_state(self, int32_t block_size) except -1:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 583, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.numthreads.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -26003,6 +26291,10 @@ static void __pyx_tp_dealloc_3bz3_8backends_6cython_4_bz3_BZ3Compressor(PyObject
   }
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_block_size(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Compressor[] = {
   {"compress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_5compress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_4compress},
   {"flush", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_7flush, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_6flush},
@@ -26010,6 +26302,11 @@ static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Compressor[] = 
   {"__reduce_cython__", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_11__reduce_cython__, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10__reduce_cython__},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_13__setstate_cython__, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_12__setstate_cython__},
   {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3Compressor[] = {
+  {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_block_size, 0, (char *)0, 0},
+  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor = {
@@ -26052,7 +26349,7 @@ static PyTypeObject __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor = {
   0, /*tp_iternext*/
   __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Compressor, /*tp_methods*/
   0, /*tp_members*/
-  0, /*tp_getset*/
+  __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3Compressor, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -26131,6 +26428,10 @@ static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_un
   return __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unused_data_1__get__(o);
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_block_size(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] = {
   {"decompress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_5decompress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decompress},
   {"error", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_7error, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error},
@@ -26141,6 +26442,7 @@ static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] 
 
 static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] = {
   {(char *)"unused_data", __pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_unused_data, 0, (char *)"Data found after the end of the compressed stream.", 0},
+  {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_block_size, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
@@ -26259,6 +26561,14 @@ static void __pyx_tp_dealloc_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor(PyObj
   }
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_block_size(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10block_size_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_numthreads(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor[] = {
   {"compress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_5compress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compress},
   {"flush", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_7flush, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_6flush},
@@ -26266,6 +26576,12 @@ static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor[]
   {"__reduce_cython__", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_11__reduce_cython__, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10__reduce_cython__},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_13__setstate_cython__, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_12__setstate_cython__},
   {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor[] = {
+  {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_block_size, 0, (char *)0, 0},
+  {(char *)"numthreads", __pyx_getprop_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_numthreads, 0, (char *)0, 0},
+  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor = {
@@ -26308,7 +26624,7 @@ static PyTypeObject __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor = {
   0, /*tp_iternext*/
   __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor, /*tp_methods*/
   0, /*tp_members*/
-  0, /*tp_getset*/
+  __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -26387,6 +26703,14 @@ static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor
   return __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11unused_data_1__get__(o);
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_block_size(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size_1__get__(o);
+}
+
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_numthreads(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor[] = {
   {"decompress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_5decompress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4decompress},
   {"error", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_7error, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6error},
@@ -26397,6 +26721,8 @@ static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor
 
 static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor[] = {
   {(char *)"unused_data", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_unused_data, 0, (char *)"Data found after the end of the compressed stream.", 0},
+  {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_block_size, 0, (char *)0, 0},
+  {(char *)"numthreads", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_numthreads, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
