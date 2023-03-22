@@ -654,7 +654,7 @@ cdef class BZ3OmpDecompressor:
         cdef int32_t code
         cdef bytearray ret = bytearray()
         cdef int32_t  block_size
-        cdef uint32_t i, thread_count, j
+        cdef uint32_t i, thread_count, j, should_delete=0
         cdef int should_break = 0
         if input_size > 0:
             # if PyByteArray_Resize(self.unused, input_size+PyByteArray_GET_SIZE(self.unused)) < 0:
@@ -673,17 +673,18 @@ cdef class BZ3OmpDecompressor:
             # 有几个block就用几个
             while not should_break:
                 thread_count = 0  # 这一波能用上几个thread
+                # should_delete = 0 # 讀取完成后從self.unused刪多少
                 for i in range(self.numthreads):
-                    if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte的 header都不够 直接返回
+                    if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte的 header都不够 直接返回
                         should_break = 1
                         break
-                    self.sizes[i] = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is const
-                    self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
-                    if PyByteArray_GET_SIZE(self.unused) < self.sizes[i]+8: # 数据段不够
+                    self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
+                    self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
+                    if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: # 数据段不够
                         should_break = 1
                         break
-                    memcpy(self.buffers[i], &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>self.sizes[i])
-                    del self.unused[:self.sizes[i] + 8]
+                    memcpy(self.buffers[i], &(PyByteArray_AS_STRING(self.unused)[should_delete+8]), <size_t>self.sizes[i])
+                    should_delete += (self.sizes[i] + 8)
                     thread_count += 1
                 if thread_count:  # 一个block都凑不齐decode个jb
                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
@@ -691,6 +692,7 @@ cdef class BZ3OmpDecompressor:
                     if bz3_last_error(self.states[j]) != BZ3_OK:
                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
+            del self.unused[:should_delete]
         return bytes(ret)
 
     @property
