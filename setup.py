@@ -20,10 +20,7 @@ for compiler, args in [
 ]:
     BUILD_ARGS[compiler] = args
 
-if sys.platform.startswith("win"):
-    openmp_arg = '-openmp'
-else:
-    openmp_arg = '-fopenmp'
+openmp_arg = '-openmp' if sys.platform.startswith("win") else '-fopenmp'
 
 
 class build_ext_compiler_check(build_ext):

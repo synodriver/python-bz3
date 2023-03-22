@@ -42,10 +42,10 @@ class BZ3File(BaseStream):
         self._fp = None  # type: IO
         self._closefp = False
         self._mode = _MODE_CLOSED
-        if mode in ("", "r", "rb"):
+        if mode in {"", "r", "rb"}:
             mode = "rb"
             mode_code = _MODE_READ
-        elif mode in ("w", "wb"):
+        elif mode in {"w", "wb"}:
             mode = "wb"
             mode_code = _MODE_WRITE
             self._compressor = (
@@ -53,7 +53,7 @@ class BZ3File(BaseStream):
                 if num_threads == 1
                 else BZ3OmpCompressor(block_size, num_threads)
             )
-        elif mode in ("x", "xb"):
+        elif mode in {"x", "xb"}:
             mode = "xb"
             mode_code = _MODE_WRITE
             self._compressor = (
@@ -61,7 +61,7 @@ class BZ3File(BaseStream):
                 if num_threads == 1
                 else BZ3OmpCompressor(block_size, num_threads)
             )
-        elif mode in ("a", "ab"):
+        elif mode in {"a", "ab"}:
             mode = "ab"
             mode_code = _MODE_WRITE
             self._compressor = (
@@ -266,9 +266,7 @@ class BZ3File(BaseStream):
         """Return the current file position."""
         with self._lock:
             self._check_not_closed()
-            if self._mode == _MODE_READ:
-                return self._buffer.tell()
-            return self._pos
+            return self._buffer.tell() if self._mode == _MODE_READ else self._pos
 
 
 def open(

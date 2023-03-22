@@ -9,12 +9,7 @@ impl = platform.python_implementation()
 
 def _should_use_cffi() -> bool:
     ev = os.getenv("BZ3_USE_CFFI")
-    if ev is not None:
-        return True
-    if impl == "CPython":
-        return False
-    else:
-        return True
+    return True if ev is not None else impl != "CPython"
 
 
 if not _should_use_cffi():
