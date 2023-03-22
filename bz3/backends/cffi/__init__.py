@@ -66,7 +66,7 @@ class BZ3Compressor:
                 )
                 if new_size == -1:
                     raise ValueError(
-                        "Failed to encode a block: %s", lib.bz3_strerror(self.state)
+                        "Failed to encode a block: %s" % lib.bz3_strerror(self.state)
                     )
 
                 lib.write_neutral_s32(ffi.cast("uint8_t*", self.byteswap_buf), new_size)
@@ -91,7 +91,7 @@ class BZ3Compressor:
             )
             if new_size == -1:
                 raise ValueError(
-                    "Failed to encode a block: %s", lib.bz3_strerror(self.state)
+                    "Failed to encode a block: %s" % lib.bz3_strerror(self.state)
                 )
             # ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
             # if not ret:
@@ -193,7 +193,7 @@ class BZ3Decompressor:
                 code = lib.bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
                     raise ValueError(
-                        "Failed to decode a block: %s", lib.bz3_strerror(self.state)
+                        "Failed to decode a block: %s" % lib.bz3_strerror(self.state)
                     )
                 ret.extend(ffi.unpack(ffi.cast("char*", self.buffer), old_size))
                 del self.unused[: new_size + 8]
@@ -240,7 +240,7 @@ def compress_file(input: IO, output: IO, block_size: int) -> None:
             new_size = lib.bz3_encode_block(state, buffer, len(data))
             if new_size == -1:
                 raise ValueError(
-                    "Failed to encode a block: %s", lib.bz3_strerror(state)
+                    "Failed to encode a block: %s" % lib.bz3_strerror(state)
                 )
             lib.write_neutral_s32(byteswap_buf, new_size)
             output.write(ffi.unpack(ffi.cast("char*", byteswap_buf), 4))
@@ -303,7 +303,7 @@ def decompress_file(input: IO, output: IO) -> None:
             code = lib.bz3_decode_block(state, buffer, new_size, old_size)
             if code == -1:
                 raise ValueError(
-                    "Failed to decode a block: %s", lib.bz3_strerror(state)
+                    "Failed to decode a block: %s" % lib.bz3_strerror(state)
                 )
             output.write(ffi.unpack(ffi.cast("char*", buffer), old_size))
             output.flush()
@@ -365,7 +365,7 @@ def test_file(input: IO, should_raise: bool = False) -> bool:
             if code == -1:
                 if should_raise:
                     raise ValueError(
-                        "Failed to decode a block: %s", lib.bz3_strerror(state)
+                        "Failed to decode a block: %s" % lib.bz3_strerror(state)
                     )
                 return False
         return True

@@ -20,6 +20,11 @@ for compiler, args in [
 ]:
     BUILD_ARGS[compiler] = args
 
+if sys.platform.startswith("win"):
+    openmp_arg = '-openmp'
+else:
+    openmp_arg = '-fopenmp'
+
 
 class build_ext_compiler_check(build_ext):
     def build_extensions(self):
@@ -29,6 +34,8 @@ class build_ext_compiler_check(build_ext):
             ext.extra_compile_args = args
             if self.compiler.compiler_type == "msvc":
                 ext.define_macros.extend([("restrict", "__restrict")])
+            ext.extra_compile_args.append(openmp_arg)
+            ext.extra_link_args.append(openmp_arg)
         super().build_extensions()
 
 
@@ -39,7 +46,7 @@ extensions = [
         "bz3.backends.cython._bz3",
         c_sources,
         include_dirs=["./dep/include"],
-        define_macros=[("VERSION", '"1.2.2.r4-g539278b"')],
+        define_macros=[("VERSION", '"1.2.2.r16-gafe4343"')],
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]

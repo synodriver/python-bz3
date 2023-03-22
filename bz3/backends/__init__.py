@@ -21,6 +21,8 @@ if not _should_use_cffi():
     from bz3.backends.cython import (
         BZ3Compressor,
         BZ3Decompressor,
+        BZ3OmpCompressor,
+        BZ3OmpDecompressor,
         bound,
         compress_file,
         compress_into,

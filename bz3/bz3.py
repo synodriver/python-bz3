@@ -1,7 +1,6 @@
 """
 Copyright (c) 2008-2021 synodriver <synodriver@gmail.com>
 """
-import bz2
 import io
 import os
 from builtins import open as _builtin_open
@@ -10,6 +9,11 @@ from typing import IO
 
 from bz3.backends import BZ3Compressor, BZ3Decompressor
 from bz3.compression import BaseStream, DecompressReader
+
+try:
+    from bz3.backends import BZ3OmpCompressor, BZ3OmpDecompressor
+except ImportError:
+    pass
 
 _MODE_CLOSED = 0
 _MODE_READ = 1
@@ -27,7 +31,13 @@ class BZ3File(BaseStream):
     returned as bytes, and data to be written should be given as bytes.
     """
 
-    def __init__(self, filename, mode: str = "r", block_size: int = 1024 * 1024):
+    def __init__(
+        self,
+        filename,
+        mode: str = "r",
+        block_size: int = 1024 * 1024,
+        num_threads: int = 1,
+    ):
         self._lock = RLock()
         self._fp = None  # type: IO
         self._closefp = False
@@ -38,15 +48,27 @@ class BZ3File(BaseStream):
         elif mode in ("w", "wb"):
             mode = "wb"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         elif mode in ("x", "xb"):
             mode = "xb"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         elif mode in ("a", "ab"):
             mode = "ab"
             mode_code = _MODE_WRITE
-            self._compressor = BZ3Compressor(block_size)
+            self._compressor = (
+                BZ3Compressor(block_size)
+                if num_threads == 1
+                else BZ3OmpCompressor(block_size, num_threads)
+            )
         else:
             raise ValueError("Invalid mode: %r" % (mode,))
 
@@ -61,7 +83,13 @@ class BZ3File(BaseStream):
             raise TypeError("filename must be a str, bytes, file or PathLike object")
 
         if self._mode == _MODE_READ:
-            raw = DecompressReader(self._fp, BZ3Decompressor)
+            raw = (
+                DecompressReader(self._fp, BZ3Decompressor)
+                if num_threads == 1
+                else DecompressReader(
+                    self._fp, BZ3OmpDecompressor, numthreads=num_threads
+                )
+            )
             self._buffer = io.BufferedReader(raw)
         else:
             self._pos = 0
@@ -250,6 +278,7 @@ def open(
     encoding: str = None,
     errors: str = None,
     newline: str = None,
+    num_threads: int = 1,
 ) -> BZ3File:
     """Open a bzip3-compressed file in binary or text mode.
 
@@ -282,7 +311,7 @@ def open(
             raise ValueError("Argument 'newline' not supported in binary mode")
 
     bz_mode = mode.replace("t", "")
-    binary_file = BZ3File(filename, bz_mode, block_size)
+    binary_file = BZ3File(filename, bz_mode, block_size, num_threads)
 
     if "t" in mode:
         return io.TextIOWrapper(binary_file, encoding, errors, newline)
