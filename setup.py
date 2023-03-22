@@ -20,6 +20,11 @@ for compiler, args in [
 ]:
     BUILD_ARGS[compiler] = args
 
+if sys.platform.startswith("win"):
+    openmp_arg = '-openmp'
+else:
+    openmp_arg = '-fopenmp'
+
 
 class build_ext_compiler_check(build_ext):
     def build_extensions(self):
@@ -29,6 +34,8 @@ class build_ext_compiler_check(build_ext):
             ext.extra_compile_args = args
             if self.compiler.compiler_type == "msvc":
                 ext.define_macros.extend([("restrict", "__restrict")])
+                ext.extra_compile_args.append(openmp_arg)
+                ext.extra_link_args.append(openmp_arg)
         super().build_extensions()
 
 

@@ -31,14 +31,14 @@ with open("compressed.bz3", "rb") as inp, open("output.txt", "wb") as out:
 
 print(decompress(compress(b"12121")))
 
-with bz3.open("test.bz3", "wt", encoding="utf-8") as f:
+with bz3.open("test.bz3", "wt", encoding="utf-8", num_threads=4) as f:
     f.write("test data")
 
-with bz3.open("test.bz3", "rt", encoding="utf-8") as f:
+with bz3.open("test.bz3", "rt", encoding="utf-8", num_threads=4) as f:
     print(f.read())
 ```
 - use ```BZ3_USE_CFFI``` env var to specify a backend
-
+- ```num_threads``` is only available on cython backend which have openmp support
 
 ### Public functions
 ```python
@@ -50,7 +50,7 @@ def test_file(input: IO, should_raise: bool = ...) -> bool: ...
 
 
 class BZ3File:
-    def __init__(self, filename, mode: str = ..., block_size: int = ...) -> None: ...
+    def __init__(self, filename, mode: str = ..., block_size: int = ..., num_threads: int = ...) -> None: ...
     def close(self) -> None: ...
     @property
     def closed(self): ...
