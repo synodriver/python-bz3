@@ -6,12 +6,12 @@
         "define_macros": [
             [
                 "VERSION",
-                "\"1.2.2.r4-g539278b\""
+                "\"1.2.2.r16-gafe4343\""
             ]
         ],
         "depends": [
-            "dep\\include\\common.h",
-            "dep\\include\\libbz3.h"
+            "dep/include/common.h",
+            "dep/include/libbz3.h"
         ],
         "include_dirs": [
             "./dep/include"
@@ -19,7 +19,7 @@
         "name": "bz3.backends.cython._bz3",
         "sources": [
             "bz3/backends/cython/_bz3.pyx",
-            "./dep/src\\libbz3.c"
+            "./dep/src/libbz3.c"
         ]
     },
     "module_name": "bz3.backends.cython._bz3"
@@ -984,7 +984,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "bz3\\backends\\cython\\_bz3.pyx",
+  "bz3/backends/cython/_bz3.pyx",
   "stringsource",
   "type.pxd",
 };
@@ -2360,7 +2360,7 @@ static const char __pyx_k_Invalid_shape_in_axis_d_d[] = "Invalid shape in axis %
 static const char __pyx_k_Failed_to_decode_a_block_s[] = "Failed to decode a block: %s";
 static const char __pyx_k_Failed_to_encode_a_block_s[] = "Failed to encode a block: %s";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
-static const char __pyx_k_bz3_backends_cython__bz3_pyx[] = "bz3\\backends\\cython\\_bz3.pyx";
+static const char __pyx_k_bz3_backends_cython__bz3_pyx[] = "bz3/backends/cython/_bz3.pyx";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_input_except_a_file_like_object[] = "input except a file-like object, got %s";
