@@ -1,8 +1,7 @@
 # cython: language_level=3
 # cython: cdivision=True
 cimport cython
-from cpython.bytearray cimport (PyByteArray_AS_STRING, PyByteArray_GET_SIZE,
-                                PyByteArray_Resize)
+from cpython.bytearray cimport PyByteArray_AS_STRING, PyByteArray_GET_SIZE
 from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
                             PyBytes_GET_SIZE)
 from cpython.mem cimport PyMem_Free, PyMem_Malloc
@@ -387,7 +386,7 @@ from cython.parallel cimport prange
 cdef void bz3_encode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t *sizes, int32_t numthreads):
     # sizes: read and write
     cdef int32_t i
-    for i in prange(numthreads, nogil=True, schedule="static"):
+    for i in prange(numthreads, nogil=True, schedule="static", num_threads=numthreads):
         sizes[i] = bz3_encode_block(states[i], buffers[i], sizes[i])
 
 
@@ -564,7 +563,7 @@ cdef class BZ3OmpCompressor:
 
 cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):
     cdef int32_t i
-    for i in prange(numthreads, nogil=True, schedule='static'):
+    for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):
         bz3_decode_block(states[i], buffers[i], sizes[i], orig_size[i])
 
 
@@ -692,7 +691,8 @@ cdef class BZ3OmpDecompressor:
                     if bz3_last_error(self.states[j]) != BZ3_OK:
                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
-            del self.unused[:should_delete]
+            if should_delete:
+                del self.unused[:should_delete]
         return bytes(ret)
 
     @property
