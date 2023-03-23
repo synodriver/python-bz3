@@ -1,6 +1,6 @@
 """Copied from cpython to ensure compatibility"""
 import io
-from typing import Callable, Dict, Tuple
+from typing import Any, Callable, Dict
 
 BUFFER_SIZE = io.DEFAULT_BUFFER_SIZE  # Compressed data read chunk size
 
@@ -41,7 +41,7 @@ class DecompressReader(io.RawIOBase):
         self,
         fp: io.IOBase,
         decomp_factory: Callable,
-        **decomp_args: Dict,
+        **decomp_args: Dict[str, Any],
     ):
         self._fp = fp
         self._eof = False

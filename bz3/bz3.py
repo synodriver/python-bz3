@@ -319,21 +319,33 @@ def open(
         return binary_file
 
 
-def compress(data: bytes, block_size: int = 1024 * 1024) -> bytes:
+def compress(data: bytes, block_size: int = 1024 * 1024, num_threads: int = 1) -> bytes:
     """Compress a block of data.
 
     block_size, if given, must be a number between 65 KiB and 511 MiB as bytes.
+    num_threads, which control how many threads to use. if given, must >= 1.
 
     For incremental compression, use a BZ3Compressor object instead.
     """
-    compressor = BZ3Compressor(block_size)
+    if num_threads == 1:
+        compressor = BZ3Compressor(block_size)
+    elif num_threads > 1:
+        compressor = BZ3OmpCompressor(block_size, num_threads)
+    else:
+        raise ValueError("num_threads must greater or equal to 1")
     return compressor.compress(data) + compressor.flush()
 
 
-def decompress(data: bytes) -> bytes:
+def decompress(data: bytes, num_threads: int = 1) -> bytes:
     """Decompress a block of data.
+    num_threads, which control how many threads to use. if given, must >= 1.
 
     For incremental decompression, use a BZ2Decompressor object instead.
     """
-    decomp = BZ3Decompressor()
+    if num_threads == 1:
+        decomp = BZ3Decompressor()
+    elif num_threads > 1:
+        decomp = BZ3OmpDecompressor(num_threads)
+    else:
+        raise ValueError("num_threads must greater or equal to 1")
     return decomp.decompress(data)
