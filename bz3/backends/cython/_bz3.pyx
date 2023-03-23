@@ -244,6 +244,7 @@ def compress_file(object input, object output, int32_t block_size):
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
+        buffer = NULL
 
 def decompress_file(object input, object output):
     if not PyFile_Check(input):
@@ -295,6 +296,7 @@ def decompress_file(object input, object output):
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
+        buffer = NULL
 
 cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     if not PyFile_Check(input):
@@ -351,6 +353,7 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
         bz3_free(state)
         state = NULL
         PyMem_Free(buffer)
+        buffer = NULL
 
 cpdef inline size_t bound(size_t input_size) nogil:
     return bz3_bound(input_size)
@@ -414,17 +417,23 @@ cdef class BZ3OmpCompressor:
         self.buffers = <uint8_t **>PyMem_Malloc(sizeof(uint8_t *) * numthreads)
         if not self.buffers:
             PyMem_Free(self.states)
+            self.states = NULL
             raise MemoryError
         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.sizes:
             PyMem_Free(self.states)
+            self.states = NULL
             PyMem_Free(self.buffers)
+            self.buffers = NULL
             raise MemoryError
         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.old_sizes:
             PyMem_Free(self.states)
+            self.states = NULL
             PyMem_Free(self.buffers)
+            self.buffers = NULL
             PyMem_Free(self.sizes)
+            self.sizes = NULL
             raise MemoryError
         memset(self.states, 0, sizeof(bz3_state *) * numthreads)
         memset(self.buffers, 0, sizeof(uint8_t *) * numthreads)
@@ -442,9 +451,13 @@ cdef class BZ3OmpCompressor:
             self.free_states()
             self.free_buffers()
             PyMem_Free(self.states)
+            self.states = NULL
             PyMem_Free(self.buffers)
+            self.buffers = NULL
             PyMem_Free(self.sizes)
+            self.sizes = NULL
             PyMem_Free(self.old_sizes)
+            self.old_sizes = NULL
             raise
         self.uncompressed = bytearray()
         self.have_magic_number = 0 # 还没有写入magic number
@@ -470,12 +483,16 @@ cdef class BZ3OmpCompressor:
         self.free_buffers()
         if self.states:
             PyMem_Free(self.states)
+            self.states = NULL
         if self.buffers:
             PyMem_Free(self.buffers)
+            self.buffers = NULL
         if self.sizes:
             PyMem_Free(self.sizes)
+            self.sizes = NULL
         if self.old_sizes:
             PyMem_Free(self.old_sizes)
+            self.old_sizes = NULL
 
     cpdef inline bytes compress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]
@@ -620,6 +637,7 @@ cdef class BZ3OmpDecompressor:
         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.old_sizes:
             PyMem_Free(self.sizes)
+            self.sizes = NULL
             raise MemoryError
 
     cdef inline void free_states(self):
@@ -641,12 +659,16 @@ cdef class BZ3OmpDecompressor:
         self.free_buffers()
         if self.states:
             PyMem_Free(self.states)
+            self.states = NULL
         if self.buffers:
             PyMem_Free(self.buffers)
+            self.buffers = NULL
         if self.sizes:
             PyMem_Free(self.sizes)
+            self.sizes = NULL
         if self.old_sizes:
             PyMem_Free(self.old_sizes)
+            self.old_sizes = NULL
 
     cpdef inline bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]

@@ -21,9 +21,15 @@ for compiler, args in [
     BUILD_ARGS[compiler] = args
 
 if sys.platform.startswith("win"):
-    openmp_arg = '-openmp'
+    extra_compile_args = ['-openmp']
+    extra_link_args = ['-openmp']
+elif sys.platform.startswith("darwin"):
+    os.system("brew install libomp")
+    extra_compile_args = ["-Xpreprocessor", "-fopenmp"]
+    extra_link_args = ["-L/usr/local/lib", "-lomp"]
 else:
-    openmp_arg = '-fopenmp'
+    extra_compile_args = ['-fopenmp']
+    extra_link_args = ['-fopenmp']
 
 
 class build_ext_compiler_check(build_ext):
@@ -31,11 +37,9 @@ class build_ext_compiler_check(build_ext):
         compiler = self.compiler.compiler_type
         args = BUILD_ARGS[compiler]
         for ext in self.extensions:
-            ext.extra_compile_args = args
+            ext.extra_compile_args.extend(args)
             if self.compiler.compiler_type == "msvc":
                 ext.define_macros.extend([("restrict", "__restrict")])
-            ext.extra_compile_args.append(openmp_arg)
-            ext.extra_link_args.append(openmp_arg)
         super().build_extensions()
 
 
@@ -47,6 +51,8 @@ extensions = [
         c_sources,
         include_dirs=["./dep/include"],
         define_macros=[("VERSION", '"1.2.2.r16-gafe4343"')],
+        extra_compile_args=extra_compile_args,
+        extra_link_args=extra_link_args,
     ),
 ]
 cffi_modules = ["bz3/backends/cffi/build.py:ffibuilder"]
