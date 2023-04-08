@@ -7,7 +7,7 @@ from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
 from cpython.mem cimport PyMem_Free, PyMem_Malloc
 from cpython.object cimport PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
-from libc.string cimport memcpy, memset, strncmp
+from libc.string cimport memcpy, strncmp
 
 from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
                                         bz3_compress, bz3_decode_block,
@@ -16,6 +16,8 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
                                         bz3_state, bz3_strerror, bz3_version,
                                         read_neutral_s32, write_neutral_s32)
 
+cdef extern from "Python.h":
+    void* PyMem_Calloc(size_t nelem, size_t elsize)
 
 cdef const char* magic = "BZ3v1"
 
@@ -411,10 +413,10 @@ cdef class BZ3OmpCompressor:
         if block_size < KiB(65) or block_size > MiB(511):
             raise ValueError("Block size must be between 65 KiB and 511 MiB")
         self.block_size = block_size
-        self.states = <bz3_state **>PyMem_Malloc(sizeof(bz3_state *) * numthreads) # prepare the array
+        self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
         if not self.states:
             raise MemoryError
-        self.buffers = <uint8_t **>PyMem_Malloc(sizeof(uint8_t *) * numthreads)
+        self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
         if not self.buffers:
             PyMem_Free(self.states)
             self.states = NULL
@@ -435,8 +437,6 @@ cdef class BZ3OmpCompressor:
             PyMem_Free(self.sizes)
             self.sizes = NULL
             raise MemoryError
-        memset(self.states, 0, sizeof(bz3_state *) * numthreads)
-        memset(self.buffers, 0, sizeof(uint8_t *) * numthreads)
 
         cdef uint32_t i
         try:
@@ -601,16 +601,13 @@ cdef class BZ3OmpDecompressor:
     cdef inline int init_state(self, int32_t block_size) except -1:
         """should exec only once"""
         if not self.states:
-            self.states = <bz3_state **> PyMem_Malloc(sizeof(bz3_state *) * self.numthreads)  # prepare the array
+            self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array
             if not self.states:
                 raise MemoryError
         if not self.buffers:
-            self.buffers = <uint8_t **> PyMem_Malloc(sizeof(uint8_t *) * self.numthreads)
+            self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
             if not self.buffers:
                 raise MemoryError
-
-        memset(self.states, 0, sizeof(bz3_state *) * self.numthreads)
-        memset(self.buffers, 0, sizeof(uint8_t *) * self.numthreads)
         cdef uint32_t i
         try:
             for i in range(self.numthreads):
