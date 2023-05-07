@@ -21,15 +21,15 @@ for compiler, args in [
     BUILD_ARGS[compiler] = args
 
 if sys.platform.startswith("win"):
-    extra_compile_args = ['-openmp']
-    extra_link_args = ['-openmp']
+    extra_compile_args = ["-openmp"]
+    extra_link_args = ["-openmp"]
 elif sys.platform.startswith("darwin"):
     os.system("brew install libomp")
     extra_compile_args = ["-Xpreprocessor", "-fopenmp"]
     extra_link_args = ["-L/usr/local/lib", "-lomp"]
 else:
-    extra_compile_args = ['-fopenmp']
-    extra_link_args = ['-fopenmp']
+    extra_compile_args = ["-fopenmp"]
+    extra_link_args = ["-fopenmp"]
 
 
 class build_ext_compiler_check(build_ext):

@@ -16,6 +16,7 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
                                         bz3_state, bz3_strerror, bz3_version,
                                         read_neutral_s32, write_neutral_s32)
 
+
 cdef extern from "Python.h":
     void* PyMem_Calloc(size_t nelem, size_t elsize)
 
