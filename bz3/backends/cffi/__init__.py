@@ -1,3 +1,4 @@
+import sys
 from typing import IO, Optional
 
 from bz3.backends.cffi._bz3 import ffi, lib
@@ -139,9 +140,10 @@ class BZ3Decompressor:
             self.state = ffi.NULL
             raise MemoryError("Failed to allocate memory")
 
-    def __init__(self):
+    def __init__(self, ignore_error: bool = False):
         self.unused = bytearray()
         self.have_magic_number = False  # 还没有读到magic number
+        self.ignore_error = ignore_error
 
     def __del__(self):
         if self.state != ffi.NULL:
@@ -192,9 +194,16 @@ class BZ3Decompressor:
 
                 code = lib.bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
-                    raise ValueError(
-                        "Failed to decode a block: %s" % lib.bz3_strerror(self.state)
-                    )
+                    if self.ignore_error:
+                        print(
+                            f"Writing invalid block: {lib.bz3_strerror(self.state)}",
+                            file=sys.stderr,
+                        )
+                    else:
+                        raise ValueError(
+                            "Failed to decode a block: %s"
+                            % lib.bz3_strerror(self.state)
+                        )
                 ret.extend(ffi.unpack(ffi.cast("char*", self.buffer), old_size))
                 del self.unused[: new_size + 8]
         return bytes(ret)
@@ -304,6 +313,65 @@ def decompress_file(input: IO, output: IO) -> None:
             if code == -1:
                 raise ValueError(
                     "Failed to decode a block: %s" % lib.bz3_strerror(state)
+                )
+            output.write(ffi.unpack(ffi.cast("char*", buffer), old_size))
+            output.flush()
+    finally:
+        output.flush()
+        lib.bz3_free(state)
+        lib.PyMem_Free(buffer)
+
+
+def recover_file(input: IO, output: IO) -> None:
+    if not check_file(input):
+        raise TypeError(
+            "input except a file-like object, got %s" % type(input).__name__
+        )
+    if not check_file(output):
+        raise TypeError(
+            "output except a file-like object, got %s" % type(output).__name__
+        )
+    # cdef bytes data
+    # cdef int32_t block_size
+    data: bytes = input.read(9)  # magic and block_size type: bytes len = 9
+    if len(data) < 9:
+        raise ValueError("Invalid file. Reason: Smaller than magic header")
+    if data[:5] != b"BZ3v1":
+        raise ValueError("Invalid signature")
+    block_size: int = lib.read_neutral_s32(
+        ffi.cast("uint8_t*", ffi.from_buffer(data[5:]))
+    )
+    if block_size < KiB(65) or block_size > MiB(511):
+        raise ValueError(
+            "The input file is corrupted. Reason: Invalid block size in the header"
+        )
+    state = lib.bz3_new(block_size)
+    if state == ffi.NULL:
+        raise MemoryError("Failed to create a block encoder state")
+    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(block_size + block_size // 50 + 32))
+    if buffer == ffi.NULL:
+        lib.bz3_free(state)
+        raise MemoryError("Failed to allocate memory")
+    # cdef uint8_t byteswap_buf[4]
+    # cdef int32_t new_size, old_size, code
+    try:
+        while True:
+            data = input.read(4)
+            if len(data) < 4:
+                break
+            new_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
+            data = input.read(4)
+            if len(data) < 4:
+                break
+            old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
+            data = input.read(new_size)  # type: bytes
+            if len(data) < new_size:
+                break
+            lib.memcpy(buffer, ffi.cast("uint8_t*", ffi.from_buffer(data)), new_size)
+            code = lib.bz3_decode_block(state, buffer, new_size, old_size)
+            if code == -1:
+                print(
+                    f"Writing invalid block: {lib.bz3_strerror(state)}", file=sys.stderr
                 )
             output.write(ffi.unpack(ffi.cast("char*", buffer), old_size))
             output.flush()

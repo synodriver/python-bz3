@@ -37,6 +37,7 @@ class BZ3File(BaseStream):
         mode: str = "r",
         block_size: int = 1024 * 1024,
         num_threads: int = 1,
+        ignore_error: bool = False,
     ):
         self._lock = RLock()
         self._fp = None  # type: IO
@@ -84,10 +85,13 @@ class BZ3File(BaseStream):
 
         if self._mode == _MODE_READ:
             raw = (
-                DecompressReader(self._fp, BZ3Decompressor)
+                DecompressReader(self._fp, BZ3Decompressor, ignore_error=ignore_error)
                 if num_threads == 1
                 else DecompressReader(
-                    self._fp, BZ3OmpDecompressor, numthreads=num_threads
+                    self._fp,
+                    BZ3OmpDecompressor,
+                    numthreads=num_threads,
+                    ignore_error=ignore_error,
                 )
             )
             self._buffer = io.BufferedReader(raw)
@@ -279,6 +283,7 @@ def open(
     errors: str = None,
     newline: str = None,
     num_threads: int = 1,
+    ignore_error: bool = False,
 ) -> BZ3File:
     """Open a bzip3-compressed file in binary or text mode.
 
@@ -311,7 +316,7 @@ def open(
             raise ValueError("Argument 'newline' not supported in binary mode")
 
     bz_mode = mode.replace("t", "")
-    binary_file = BZ3File(filename, bz_mode, block_size, num_threads)
+    binary_file = BZ3File(filename, bz_mode, block_size, num_threads, ignore_error)
 
     if "t" in mode:
         return io.TextIOWrapper(binary_file, encoding, errors, newline)

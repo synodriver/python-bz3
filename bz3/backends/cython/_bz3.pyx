@@ -7,6 +7,7 @@ from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
 from cpython.mem cimport PyMem_Free, PyMem_Malloc
 from cpython.object cimport PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
+from libc.stdio cimport fprintf, stderr
 from libc.string cimport memcpy, strncmp
 
 from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
@@ -129,6 +130,7 @@ cdef class BZ3Decompressor:
         readonly int32_t block_size
         bytearray unused  # 还没解压的数据
         bint have_magic_number
+        readonly bint ignore_error # 是否忽略decode错误
 
     cdef inline int init_state(self, int32_t block_size) except -1:
         """should exec only once"""
@@ -142,9 +144,10 @@ cdef class BZ3Decompressor:
             self.state = NULL
             raise MemoryError("Failed to allocate memory")
 
-    def __cinit__(self):
+    def __cinit__(self, bint ignore_error = False):
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
+        self.ignore_error = ignore_error
 
     def __dealloc__(self):
         if self.state != NULL:
@@ -185,7 +188,10 @@ cdef class BZ3Decompressor:
                 with nogil:
                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
                 if code == -1:
-                    raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
+                    if self.ignore_error:
+                        fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
+                    else:
+                        raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
                 #     raise
                 ret.extend(<bytes>self.buffer[:old_size])
@@ -292,6 +298,58 @@ def decompress_file(object input, object output):
                 code = bz3_decode_block(state, buffer, new_size, old_size)
             if code == -1:
                 raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
+            output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+            output.flush()
+    finally:
+        output.flush()
+        bz3_free(state)
+        state = NULL
+        PyMem_Free(buffer)
+        buffer = NULL
+
+def recover_file(object input, object output):
+    if not PyFile_Check(input):
+        raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+    if not PyFile_Check(output):
+        raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+    cdef bytes data
+    cdef int32_t block_size
+    data = input.read(9) # magic and block_size type: bytes len = 9
+    if PyBytes_GET_SIZE(data) < 9:
+        raise ValueError("Invalid file. Reason: Smaller than magic header")
+    if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+        raise ValueError("Invalid signature")
+    block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+    if block_size < KiB(65) or block_size > MiB(511):
+        raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+    cdef bz3_state *state = bz3_new(block_size)
+    if state == NULL:
+        raise MemoryError("Failed to create a block encoder state")
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    if buffer == NULL:
+        bz3_free(state)
+        state = NULL
+        raise MemoryError("Failed to allocate memory")
+    cdef int32_t new_size, old_size, code
+
+    try:
+        while True:
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+            data = input.read(4)
+            if PyBytes_GET_SIZE(data) < 4:
+                break
+            old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            data = input.read(new_size) # type: bytes
+            if PyBytes_GET_SIZE(data) < new_size:
+                break
+            memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+            with nogil:
+                code = bz3_decode_block(state, buffer, new_size, old_size)
+            if code == -1:
+                fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
             output.flush()
     finally:
@@ -598,6 +656,7 @@ cdef class BZ3OmpDecompressor:
         bytearray unused  # 还没解压的数据
         bint have_magic_number
         readonly uint32_t numthreads  # how many threads to use
+        readonly bint ignore_error  # 是否忽略decode错误
 
     cdef inline int init_state(self, int32_t block_size) except -1:
         """should exec only once"""
@@ -624,10 +683,11 @@ cdef class BZ3OmpDecompressor:
             raise
         self.block_size = block_size
 
-    def __cinit__(self,  uint32_t numthreads):
+    def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
         self.numthreads = numthreads
+        self.ignore_error = ignore_error
 
         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.sizes:
@@ -709,7 +769,10 @@ cdef class BZ3OmpDecompressor:
                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
                 for j in range(thread_count):
                     if bz3_last_error(self.states[j]) != BZ3_OK:
-                        raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+                        if self.ignore_error:
+                            fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
+                        else:
+                            raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
             if should_delete:
                 del self.unused[:should_delete]

@@ -6,7 +6,7 @@
         "define_macros": [
             [
                 "VERSION",
-                "\"1.2.2.r16-gafe4343\""
+                "\"1.3.0.r2-g2c8100a\""
             ]
         ],
         "depends": [
@@ -1111,7 +1111,7 @@ struct __pyx_memoryviewslice_obj;
 struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_test_file;
 struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_compress_into;
 
-/* "bz3/backends/cython/_bz3.pyx":304
+/* "bz3/backends/cython/_bz3.pyx":362
  *         buffer = NULL
  * 
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:             # <<<<<<<<<<<<<<
@@ -1123,7 +1123,7 @@ struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_test_file {
   int should_raise;
 };
 
-/* "bz3/backends/cython/_bz3.pyx":365
+/* "bz3/backends/cython/_bz3.pyx":423
  * 
  * 
  * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
@@ -1135,7 +1135,7 @@ struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_compress_into {
   uint32_t block_size;
 };
 
-/* "bz3/backends/cython/_bz3.pyx":33
+/* "bz3/backends/cython/_bz3.pyx":34
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3Compressor:             # <<<<<<<<<<<<<<
@@ -1153,7 +1153,7 @@ struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor {
 };
 
 
-/* "bz3/backends/cython/_bz3.pyx":125
+/* "bz3/backends/cython/_bz3.pyx":126
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3Decompressor:             # <<<<<<<<<<<<<<
@@ -1168,10 +1168,11 @@ struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor {
   int32_t block_size;
   PyObject *unused;
   int have_magic_number;
+  int ignore_error;
 };
 
 
-/* "bz3/backends/cython/_bz3.pyx":402
+/* "bz3/backends/cython/_bz3.pyx":460
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3OmpCompressor:             # <<<<<<<<<<<<<<
@@ -1192,7 +1193,7 @@ struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor {
 };
 
 
-/* "bz3/backends/cython/_bz3.pyx":591
+/* "bz3/backends/cython/_bz3.pyx":649
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3OmpDecompressor:             # <<<<<<<<<<<<<<
@@ -1210,6 +1211,7 @@ struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor {
   PyObject *unused;
   int have_magic_number;
   uint32_t numthreads;
+  int ignore_error;
 };
 
 
@@ -1291,7 +1293,7 @@ struct __pyx_memoryviewslice_obj {
 
 
 
-/* "bz3/backends/cython/_bz3.pyx":33
+/* "bz3/backends/cython/_bz3.pyx":34
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3Compressor:             # <<<<<<<<<<<<<<
@@ -1310,7 +1312,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
 static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *, int __pyx_skip_dispatch);
 
 
-/* "bz3/backends/cython/_bz3.pyx":125
+/* "bz3/backends/cython/_bz3.pyx":126
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3Decompressor:             # <<<<<<<<<<<<<<
@@ -1329,7 +1331,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
 static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *, int __pyx_skip_dispatch);
 
 
-/* "bz3/backends/cython/_bz3.pyx":402
+/* "bz3/backends/cython/_bz3.pyx":460
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3OmpCompressor:             # <<<<<<<<<<<<<<
@@ -1352,7 +1354,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
 static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *, int __pyx_skip_dispatch);
 
 
-/* "bz3/backends/cython/_bz3.pyx":591
+/* "bz3/backends/cython/_bz3.pyx":649
  * @cython.no_gc
  * @cython.final
  * cdef class BZ3OmpDecompressor:             # <<<<<<<<<<<<<<
@@ -1701,9 +1703,6 @@ static CYTHON_INLINE PyObject* __Pyx_decode_bytes(
         PyBytes_AS_STRING(string), PyBytes_GET_SIZE(string),
         start, stop, encoding, errors, decode_func);
 }
-
-/* KeywordStringCheck.proto */
-static int __Pyx_CheckKeywordStrings(PyObject *kwdict, const char* function_name, int kw_allowed);
 
 /* GetException.proto */
 #if CYTHON_FAST_THREAD_STATE
@@ -2341,7 +2340,9 @@ static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_byteswap_buf[] = "byteswap_buf";
+static const char __pyx_k_ignore_error[] = "ignore_error";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
+static const char __pyx_k_recover_file[] = "recover_file";
 static const char __pyx_k_should_raise[] = "should_raise";
 static const char __pyx_k_stringsource[] = "stringsource";
 static const char __pyx_k_BZ3Compressor[] = "BZ3Compressor";
@@ -2472,6 +2473,7 @@ static PyObject *__pyx_n_u_fortran;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
 static PyObject *__pyx_n_s_id;
+static PyObject *__pyx_n_s_ignore_error;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_input;
 static PyObject *__pyx_kp_u_input_except_a_file_like_object;
@@ -2504,6 +2506,7 @@ static PyObject *__pyx_n_s_pyx_unpickle_Enum;
 static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_read;
+static PyObject *__pyx_n_s_recover_file;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
@@ -2535,21 +2538,23 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_8error(st
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_12__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
+static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, int __pyx_v_ignore_error); /* proto */
 static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decompress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unused_data___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, PyObject *__pyx_v_output, int32_t __pyx_v_block_size); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, PyObject *__pyx_v_output); /* proto */
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, int __pyx_v_should_raise); /* proto */
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_input_size); /* proto */
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, uint32_t __pyx_v_block_size); /* proto */
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out); /* proto */
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12libversion(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, PyObject *__pyx_v_output); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6test_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, int __pyx_v_should_raise); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8bound(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_input_size); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10compress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, uint32_t __pyx_v_block_size); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12decompress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_14libversion(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self, int32_t __pyx_v_block_size, uint32_t __pyx_v_numthreads); /* proto */
 static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
@@ -2559,13 +2564,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10bloc
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_12__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, uint32_t __pyx_v_numthreads); /* proto */
+static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, uint32_t __pyx_v_numthreads, int __pyx_v_ignore_error); /* proto */
 static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__dealloc__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4decompress(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, __Pyx_memviewslice __pyx_v_data); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11unused_data___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6error(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10block_size___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -2663,17 +2669,19 @@ static PyObject *__pyx_tuple__36;
 static PyObject *__pyx_tuple__37;
 static PyObject *__pyx_tuple__39;
 static PyObject *__pyx_tuple__41;
-static PyObject *__pyx_tuple__42;
 static PyObject *__pyx_tuple__43;
 static PyObject *__pyx_tuple__44;
 static PyObject *__pyx_tuple__45;
 static PyObject *__pyx_tuple__46;
+static PyObject *__pyx_tuple__47;
+static PyObject *__pyx_tuple__48;
 static PyObject *__pyx_codeobj__38;
 static PyObject *__pyx_codeobj__40;
-static PyObject *__pyx_codeobj__47;
+static PyObject *__pyx_codeobj__42;
+static PyObject *__pyx_codeobj__49;
 /* Late includes */
 
-/* "bz3/backends/cython/_bz3.pyx":25
+/* "bz3/backends/cython/_bz3.pyx":26
  * cdef const char* magic = "BZ3v1"
  * 
  * cdef inline uint8_t PyFile_Check(object file):             # <<<<<<<<<<<<<<
@@ -2688,7 +2696,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("PyFile_Check", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":26
+  /* "bz3/backends/cython/_bz3.pyx":27
  * 
  * cdef inline uint8_t PyFile_Check(object file):
  *     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?             # <<<<<<<<<<<<<<
@@ -2706,7 +2714,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":27
+    /* "bz3/backends/cython/_bz3.pyx":28
  * cdef inline uint8_t PyFile_Check(object file):
  *     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?
  *         return 1             # <<<<<<<<<<<<<<
@@ -2716,7 +2724,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":26
+    /* "bz3/backends/cython/_bz3.pyx":27
  * 
  * cdef inline uint8_t PyFile_Check(object file):
  *     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?             # <<<<<<<<<<<<<<
@@ -2725,7 +2733,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":28
+  /* "bz3/backends/cython/_bz3.pyx":29
  *     if PyObject_HasAttrString(file, "read") and PyObject_HasAttrString(file, "write"):  # should we check seek method?
  *         return 1
  *     return 0             # <<<<<<<<<<<<<<
@@ -2735,7 +2743,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":25
+  /* "bz3/backends/cython/_bz3.pyx":26
  * cdef const char* magic = "BZ3v1"
  * 
  * cdef inline uint8_t PyFile_Check(object file):             # <<<<<<<<<<<<<<
@@ -2749,7 +2757,7 @@ static CYTHON_INLINE uint8_t __pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(P
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":41
+/* "bz3/backends/cython/_bz3.pyx":42
  *         bint have_magic_number
  * 
  *     def __cinit__(self, int32_t block_size):             # <<<<<<<<<<<<<<
@@ -2786,18 +2794,18 @@ static int __pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_1__cinit__(PyOb
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 41, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 42, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
     }
-    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[0]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L3_error)
+    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[0]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 41, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 42, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Compressor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2821,7 +2829,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":42
+  /* "bz3/backends/cython/_bz3.pyx":43
  * 
  *     def __cinit__(self, int32_t block_size):
  *         if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -2839,20 +2847,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":43
+    /* "bz3/backends/cython/_bz3.pyx":44
  *     def __cinit__(self, int32_t block_size):
  *         if block_size < KiB(65) or block_size > MiB(511):
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")             # <<<<<<<<<<<<<<
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 43, __pyx_L1_error)
+    __PYX_ERR(0, 44, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":42
+    /* "bz3/backends/cython/_bz3.pyx":43
  * 
  *     def __cinit__(self, int32_t block_size):
  *         if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -2861,7 +2869,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":44
+  /* "bz3/backends/cython/_bz3.pyx":45
  *         if block_size < KiB(65) or block_size > MiB(511):
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")
  *         self.block_size = block_size             # <<<<<<<<<<<<<<
@@ -2870,7 +2878,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   __pyx_v_self->block_size = __pyx_v_block_size;
 
-  /* "bz3/backends/cython/_bz3.pyx":45
+  /* "bz3/backends/cython/_bz3.pyx":46
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -2879,7 +2887,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   __pyx_v_self->state = bz3_new(__pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":46
+  /* "bz3/backends/cython/_bz3.pyx":47
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:             # <<<<<<<<<<<<<<
@@ -2889,20 +2897,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   __pyx_t_1 = ((__pyx_v_self->state == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":47
+    /* "bz3/backends/cython/_bz3.pyx":48
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:
  *             raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 47, __pyx_L1_error)
+    __PYX_ERR(0, 48, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":46
+    /* "bz3/backends/cython/_bz3.pyx":47
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:             # <<<<<<<<<<<<<<
@@ -2911,7 +2919,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":48
+  /* "bz3/backends/cython/_bz3.pyx":49
  *         if self.state == NULL:
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -2920,7 +2928,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   __pyx_v_self->buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-  /* "bz3/backends/cython/_bz3.pyx":49
+  /* "bz3/backends/cython/_bz3.pyx":50
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:             # <<<<<<<<<<<<<<
@@ -2930,7 +2938,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   __pyx_t_1 = ((__pyx_v_self->buffer == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":50
+    /* "bz3/backends/cython/_bz3.pyx":51
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:
  *             bz3_free(self.state)             # <<<<<<<<<<<<<<
@@ -2939,7 +2947,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
     bz3_free(__pyx_v_self->state);
 
-    /* "bz3/backends/cython/_bz3.pyx":51
+    /* "bz3/backends/cython/_bz3.pyx":52
  *         if self.buffer == NULL:
  *             bz3_free(self.state)
  *             self.state = NULL             # <<<<<<<<<<<<<<
@@ -2948,20 +2956,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
     __pyx_v_self->state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":52
+    /* "bz3/backends/cython/_bz3.pyx":53
  *             bz3_free(self.state)
  *             self.state = NULL
  *             raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *         self.uncompressed = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 52, __pyx_L1_error)
+    __PYX_ERR(0, 53, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":49
+    /* "bz3/backends/cython/_bz3.pyx":50
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:             # <<<<<<<<<<<<<<
@@ -2970,14 +2978,14 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":53
+  /* "bz3/backends/cython/_bz3.pyx":54
  *             self.state = NULL
  *             raise MemoryError("Failed to allocate memory")
  *         self.uncompressed = bytearray()             # <<<<<<<<<<<<<<
  *         self.have_magic_number = 0 # magic number
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_3);
   __Pyx_GOTREF(__pyx_v_self->uncompressed);
@@ -2985,7 +2993,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   __pyx_v_self->uncompressed = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":54
+  /* "bz3/backends/cython/_bz3.pyx":55
  *             raise MemoryError("Failed to allocate memory")
  *         self.uncompressed = bytearray()
  *         self.have_magic_number = 0 # magic number             # <<<<<<<<<<<<<<
@@ -2994,7 +3002,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
  */
   __pyx_v_self->have_magic_number = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":41
+  /* "bz3/backends/cython/_bz3.pyx":42
  *         bint have_magic_number
  * 
  *     def __cinit__(self, int32_t block_size):             # <<<<<<<<<<<<<<
@@ -3014,7 +3022,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor___cinit__(struc
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":56
+/* "bz3/backends/cython/_bz3.pyx":57
  *         self.have_magic_number = 0 # magic number
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3038,7 +3046,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":57
+  /* "bz3/backends/cython/_bz3.pyx":58
  * 
  *     def __dealloc__(self):
  *         if self.state != NULL:             # <<<<<<<<<<<<<<
@@ -3048,7 +3056,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
   __pyx_t_1 = ((__pyx_v_self->state != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":58
+    /* "bz3/backends/cython/_bz3.pyx":59
  *     def __dealloc__(self):
  *         if self.state != NULL:
  *             bz3_free(self.state)             # <<<<<<<<<<<<<<
@@ -3057,7 +3065,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
     bz3_free(__pyx_v_self->state);
 
-    /* "bz3/backends/cython/_bz3.pyx":59
+    /* "bz3/backends/cython/_bz3.pyx":60
  *         if self.state != NULL:
  *             bz3_free(self.state)
  *             self.state = NULL             # <<<<<<<<<<<<<<
@@ -3066,7 +3074,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
     __pyx_v_self->state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":57
+    /* "bz3/backends/cython/_bz3.pyx":58
  * 
  *     def __dealloc__(self):
  *         if self.state != NULL:             # <<<<<<<<<<<<<<
@@ -3075,7 +3083,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":60
+  /* "bz3/backends/cython/_bz3.pyx":61
  *             bz3_free(self.state)
  *             self.state = NULL
  *         if self.buffer !=NULL:             # <<<<<<<<<<<<<<
@@ -3085,7 +3093,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
   __pyx_t_1 = ((__pyx_v_self->buffer != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":61
+    /* "bz3/backends/cython/_bz3.pyx":62
  *             self.state = NULL
  *         if self.buffer !=NULL:
  *             PyMem_Free(self.buffer)             # <<<<<<<<<<<<<<
@@ -3094,7 +3102,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
     PyMem_Free(__pyx_v_self->buffer);
 
-    /* "bz3/backends/cython/_bz3.pyx":62
+    /* "bz3/backends/cython/_bz3.pyx":63
  *         if self.buffer !=NULL:
  *             PyMem_Free(self.buffer)
  *             self.buffer = NULL             # <<<<<<<<<<<<<<
@@ -3103,7 +3111,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
     __pyx_v_self->buffer = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":60
+    /* "bz3/backends/cython/_bz3.pyx":61
  *             bz3_free(self.state)
  *             self.state = NULL
  *         if self.buffer !=NULL:             # <<<<<<<<<<<<<<
@@ -3112,7 +3120,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":56
+  /* "bz3/backends/cython/_bz3.pyx":57
  *         self.have_magic_number = 0 # magic number
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -3124,7 +3132,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_2__dealloc__(s
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":64
+/* "bz3/backends/cython/_bz3.pyx":65
  *             self.buffer = NULL
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -3149,7 +3157,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":65
+  /* "bz3/backends/cython/_bz3.pyx":66
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):
  *         cdef Py_ssize_t input_size = data.shape[0]             # <<<<<<<<<<<<<<
@@ -3158,19 +3166,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
   __pyx_v_input_size = (__pyx_v_data.shape[0]);
 
-  /* "bz3/backends/cython/_bz3.pyx":67
+  /* "bz3/backends/cython/_bz3.pyx":68
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         if not self.have_magic_number:
  *             # if PyByteArray_Resize(ret, 9) < 0:
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":68
+  /* "bz3/backends/cython/_bz3.pyx":69
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()
  *         if not self.have_magic_number:             # <<<<<<<<<<<<<<
@@ -3180,24 +3188,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_t_2 = ((!(__pyx_v_self->have_magic_number != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":72
+    /* "bz3/backends/cython/_bz3.pyx":73
  *             #     raise
  *             # memcpy(PyByteArray_AS_STRING(ret), magic, 5)
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes             # <<<<<<<<<<<<<<
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
  *             self.have_magic_number = 1
  */
-    __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_3bz3_8backends_6cython_4_bz3_magic + 0, 5 - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_3bz3_8backends_6cython_4_bz3_magic + 0, 5 - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_kp_b__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_kp_b__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":73
+    /* "bz3/backends/cython/_bz3.pyx":74
  *             # memcpy(PyByteArray_AS_STRING(ret), magic, 5)
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)             # <<<<<<<<<<<<<<
@@ -3206,7 +3214,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[5]))), __pyx_v_self->block_size);
 
-    /* "bz3/backends/cython/_bz3.pyx":74
+    /* "bz3/backends/cython/_bz3.pyx":75
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
  *             self.have_magic_number = 1             # <<<<<<<<<<<<<<
@@ -3215,7 +3223,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     __pyx_v_self->have_magic_number = 1;
 
-    /* "bz3/backends/cython/_bz3.pyx":68
+    /* "bz3/backends/cython/_bz3.pyx":69
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()
  *         if not self.have_magic_number:             # <<<<<<<<<<<<<<
@@ -3224,7 +3232,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":76
+  /* "bz3/backends/cython/_bz3.pyx":77
  *             self.have_magic_number = 1
  * 
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -3234,16 +3242,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_t_2 = ((__pyx_v_input_size > 0) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":80
+    /* "bz3/backends/cython/_bz3.pyx":81
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *             self.uncompressed.extend(data)             # <<<<<<<<<<<<<<
  *             while PyByteArray_GET_SIZE(self.uncompressed)>=self.block_size:
  *                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3258,12 +3266,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
     __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":81
+    /* "bz3/backends/cython/_bz3.pyx":82
  *             # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *             self.uncompressed.extend(data)
  *             while PyByteArray_GET_SIZE(self.uncompressed)>=self.block_size:             # <<<<<<<<<<<<<<
@@ -3277,7 +3285,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (!__pyx_t_2) break;
 
-      /* "bz3/backends/cython/_bz3.pyx":82
+      /* "bz3/backends/cython/_bz3.pyx":83
  *             self.uncompressed.extend(data)
  *             while PyByteArray_GET_SIZE(self.uncompressed)>=self.block_size:
  *                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)             # <<<<<<<<<<<<<<
@@ -3289,7 +3297,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
       (void)(memcpy(__pyx_v_self->buffer, PyByteArray_AS_STRING(__pyx_t_1), ((size_t)__pyx_v_self->block_size)));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":84
+      /* "bz3/backends/cython/_bz3.pyx":85
  *                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
  *                 # make a copy
  *                 with nogil:             # <<<<<<<<<<<<<<
@@ -3304,7 +3312,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
           #endif
           /*try:*/ {
 
-            /* "bz3/backends/cython/_bz3.pyx":85
+            /* "bz3/backends/cython/_bz3.pyx":86
  *                 # make a copy
  *                 with nogil:
  *                     new_size = bz3_encode_block(self.state, self.buffer, self.block_size)             # <<<<<<<<<<<<<<
@@ -3314,7 +3322,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
             __pyx_v_new_size = bz3_encode_block(__pyx_v_self->state, __pyx_v_self->buffer, __pyx_v_self->block_size);
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":84
+          /* "bz3/backends/cython/_bz3.pyx":85
  *                 memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>self.block_size)
  *                 # make a copy
  *                 with nogil:             # <<<<<<<<<<<<<<
@@ -3333,7 +3341,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
           }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":86
+      /* "bz3/backends/cython/_bz3.pyx":87
  *                 with nogil:
  *                     new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
  *                 if new_size == -1:             # <<<<<<<<<<<<<<
@@ -3343,26 +3351,26 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
       __pyx_t_2 = ((__pyx_v_new_size == -1L) != 0);
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":87
+        /* "bz3/backends/cython/_bz3.pyx":88
  *                     new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
  *                 if new_size == -1:
  *                     raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.state))             # <<<<<<<<<<<<<<
  *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
  *                 #     raise
  */
-        __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 87, __pyx_L1_error)
+        __PYX_ERR(0, 88, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":86
+        /* "bz3/backends/cython/_bz3.pyx":87
  *                 with nogil:
  *                     new_size = bz3_encode_block(self.state, self.buffer, self.block_size)
  *                 if new_size == -1:             # <<<<<<<<<<<<<<
@@ -3371,24 +3379,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":90
+      /* "bz3/backends/cython/_bz3.pyx":91
  *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
  *                 #     raise
  *                 ret.extend((new_size + 8)*b"\x00")             # <<<<<<<<<<<<<<
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), self.block_size)
  */
-      __pyx_t_1 = __Pyx_PyInt_From_long((__pyx_v_new_size + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_long((__pyx_v_new_size + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":91
+      /* "bz3/backends/cython/_bz3.pyx":92
  *                 #     raise
  *                 ret.extend((new_size + 8)*b"\x00")
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)             # <<<<<<<<<<<<<<
@@ -3397,7 +3405,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
       write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - __pyx_v_new_size) - 8)]))), __pyx_v_new_size);
 
-      /* "bz3/backends/cython/_bz3.pyx":92
+      /* "bz3/backends/cython/_bz3.pyx":93
  *                 ret.extend((new_size + 8)*b"\x00")
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), self.block_size)             # <<<<<<<<<<<<<<
@@ -3406,7 +3414,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
       write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - __pyx_v_new_size) - 4)]))), __pyx_v_self->block_size);
 
-      /* "bz3/backends/cython/_bz3.pyx":93
+      /* "bz3/backends/cython/_bz3.pyx":94
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-8]), new_size)
  *                 write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size-4]), self.block_size)
  *                 memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size]), self.buffer, <size_t>new_size)             # <<<<<<<<<<<<<<
@@ -3415,7 +3423,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
       (void)(memcpy((&(PyByteArray_AS_STRING(__pyx_v_ret)[(PyByteArray_GET_SIZE(__pyx_v_ret) - __pyx_v_new_size)])), __pyx_v_self->buffer, ((size_t)__pyx_v_new_size)));
 
-      /* "bz3/backends/cython/_bz3.pyx":95
+      /* "bz3/backends/cython/_bz3.pyx":96
  *                 memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-new_size]), self.buffer, <size_t>new_size)
  * 
  *                 del self.uncompressed[:self.block_size]             # <<<<<<<<<<<<<<
@@ -3424,12 +3432,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
       if (unlikely(__pyx_v_self->uncompressed == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 95, __pyx_L1_error)
+        __PYX_ERR(0, 96, __pyx_L1_error)
       }
-      if (__Pyx_PyObject_DelSlice(__pyx_v_self->uncompressed, 0, __pyx_v_self->block_size, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
+      if (__Pyx_PyObject_DelSlice(__pyx_v_self->uncompressed, 0, __pyx_v_self->block_size, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":76
+    /* "bz3/backends/cython/_bz3.pyx":77
  *             self.have_magic_number = 1
  * 
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -3438,7 +3446,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":96
+  /* "bz3/backends/cython/_bz3.pyx":97
  * 
  *                 del self.uncompressed[:self.block_size]
  *         return bytes(ret)             # <<<<<<<<<<<<<<
@@ -3446,13 +3454,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  *     cpdef inline bytes flush(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":64
+  /* "bz3/backends/cython/_bz3.pyx":65
  *             self.buffer = NULL
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -3487,7 +3495,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_5compress
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("compress (wrapper)", 0);
   assert(__pyx_arg_data); {
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 64, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 65, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3511,8 +3519,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_4compress
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 64, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_compress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 65, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_compress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3530,7 +3538,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_4compress
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":98
+/* "bz3/backends/cython/_bz3.pyx":99
  *         return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
@@ -3555,7 +3563,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":99
+  /* "bz3/backends/cython/_bz3.pyx":100
  * 
  *     cpdef inline bytes flush(self):
  *         cdef bytes ret = b""             # <<<<<<<<<<<<<<
@@ -3565,7 +3573,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __Pyx_INCREF(__pyx_kp_b__6);
   __pyx_v_ret = __pyx_kp_b__6;
 
-  /* "bz3/backends/cython/_bz3.pyx":101
+  /* "bz3/backends/cython/_bz3.pyx":102
  *         cdef bytes ret = b""
  *         cdef int32_t new_size
  *         cdef int32_t old_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)             # <<<<<<<<<<<<<<
@@ -3577,7 +3585,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_v_old_size = ((int32_t)PyByteArray_GET_SIZE(__pyx_t_1));
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":102
+  /* "bz3/backends/cython/_bz3.pyx":103
  *         cdef int32_t new_size
  *         cdef int32_t old_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
  *         if self.uncompressed:             # <<<<<<<<<<<<<<
@@ -3587,7 +3595,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_t_2 = (__pyx_v_self->uncompressed != Py_None)&&(PyByteArray_GET_SIZE(__pyx_v_self->uncompressed) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":103
+    /* "bz3/backends/cython/_bz3.pyx":104
  *         cdef int32_t old_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
  *         if self.uncompressed:
  *             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>old_size)             # <<<<<<<<<<<<<<
@@ -3599,7 +3607,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
     (void)(memcpy(__pyx_v_self->buffer, PyByteArray_AS_STRING(__pyx_t_1), ((size_t)__pyx_v_old_size)));
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":104
+    /* "bz3/backends/cython/_bz3.pyx":105
  *         if self.uncompressed:
  *             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>old_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -3614,7 +3622,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
         #endif
         /*try:*/ {
 
-          /* "bz3/backends/cython/_bz3.pyx":105
+          /* "bz3/backends/cython/_bz3.pyx":106
  *             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>old_size)
  *             with nogil:
  *                 new_size = bz3_encode_block(self.state, self.buffer, old_size)             # <<<<<<<<<<<<<<
@@ -3624,7 +3632,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
           __pyx_v_new_size = bz3_encode_block(__pyx_v_self->state, __pyx_v_self->buffer, __pyx_v_old_size);
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":104
+        /* "bz3/backends/cython/_bz3.pyx":105
  *         if self.uncompressed:
  *             memcpy(self.buffer, PyByteArray_AS_STRING(self.uncompressed), <size_t>old_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -3643,7 +3651,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
         }
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":106
+    /* "bz3/backends/cython/_bz3.pyx":107
  *             with nogil:
  *                 new_size = bz3_encode_block(self.state, self.buffer, old_size)
  *             if new_size == -1:             # <<<<<<<<<<<<<<
@@ -3653,26 +3661,26 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
     __pyx_t_2 = ((__pyx_v_new_size == -1L) != 0);
     if (unlikely(__pyx_t_2)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":107
+      /* "bz3/backends/cython/_bz3.pyx":108
  *                 new_size = bz3_encode_block(self.state, self.buffer, old_size)
  *             if new_size == -1:
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.state))             # <<<<<<<<<<<<<<
  *             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
  *             if not ret:
  */
-      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 107, __pyx_L1_error)
+      __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __PYX_ERR(0, 107, __pyx_L1_error)
+      __PYX_ERR(0, 108, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":106
+      /* "bz3/backends/cython/_bz3.pyx":107
  *             with nogil:
  *                 new_size = bz3_encode_block(self.state, self.buffer, old_size)
  *             if new_size == -1:             # <<<<<<<<<<<<<<
@@ -3681,19 +3689,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":108
+    /* "bz3/backends/cython/_bz3.pyx":109
  *             if new_size == -1:
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.state))
  *             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)             # <<<<<<<<<<<<<<
  *             if not ret:
  *                 raise
  */
-    __pyx_t_1 = PyBytes_FromStringAndSize(NULL, (__pyx_v_new_size + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __pyx_t_1 = PyBytes_FromStringAndSize(NULL, (__pyx_v_new_size + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_ret, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":109
+    /* "bz3/backends/cython/_bz3.pyx":110
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.state))
  *             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
  *             if not ret:             # <<<<<<<<<<<<<<
@@ -3704,16 +3712,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
     __pyx_t_4 = ((!__pyx_t_2) != 0);
     if (unlikely(__pyx_t_4)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":110
+      /* "bz3/backends/cython/_bz3.pyx":111
  *             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
  *             if not ret:
  *                 raise             # <<<<<<<<<<<<<<
  *             write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)
  *             write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)
  */
-      __Pyx_ReraiseException(); __PYX_ERR(0, 110, __pyx_L1_error)
+      __Pyx_ReraiseException(); __PYX_ERR(0, 111, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":109
+      /* "bz3/backends/cython/_bz3.pyx":110
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.state))
  *             ret = PyBytes_FromStringAndSize(NULL, new_size + 8)
  *             if not ret:             # <<<<<<<<<<<<<<
@@ -3722,7 +3730,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":111
+    /* "bz3/backends/cython/_bz3.pyx":112
  *             if not ret:
  *                 raise
  *             write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)             # <<<<<<<<<<<<<<
@@ -3731,7 +3739,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     write_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_ret)), __pyx_v_new_size);
 
-    /* "bz3/backends/cython/_bz3.pyx":112
+    /* "bz3/backends/cython/_bz3.pyx":113
  *                 raise
  *             write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)
  *             write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)             # <<<<<<<<<<<<<<
@@ -3740,7 +3748,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     write_neutral_s32(((uint8_t *)(&(PyBytes_AS_STRING(__pyx_v_ret)[4]))), __pyx_v_old_size);
 
-    /* "bz3/backends/cython/_bz3.pyx":113
+    /* "bz3/backends/cython/_bz3.pyx":114
  *             write_neutral_s32(<uint8_t*>PyBytes_AS_STRING(ret), new_size)
  *             write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)
  *             memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer, <size_t> new_size)             # <<<<<<<<<<<<<<
@@ -3749,14 +3757,14 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
     (void)(memcpy((&(PyBytes_AS_STRING(__pyx_v_ret)[8])), __pyx_v_self->buffer, ((size_t)__pyx_v_new_size)));
 
-    /* "bz3/backends/cython/_bz3.pyx":114
+    /* "bz3/backends/cython/_bz3.pyx":115
  *             write_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(ret)[4]), old_size)
  *             memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer, <size_t> new_size)
  *             self.uncompressed.clear()             # <<<<<<<<<<<<<<
  *         return ret
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3770,12 +3778,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
     }
     __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":102
+    /* "bz3/backends/cython/_bz3.pyx":103
  *         cdef int32_t new_size
  *         cdef int32_t old_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
  *         if self.uncompressed:             # <<<<<<<<<<<<<<
@@ -3784,7 +3792,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":115
+  /* "bz3/backends/cython/_bz3.pyx":116
  *             memcpy(&(PyBytes_AS_STRING(ret)[8]), self.buffer, <size_t> new_size)
  *             self.uncompressed.clear()
  *         return ret             # <<<<<<<<<<<<<<
@@ -3796,7 +3804,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":98
+  /* "bz3/backends/cython/_bz3.pyx":99
  *         return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
@@ -3841,7 +3849,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_6flush(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3858,7 +3866,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_6flush(st
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":117
+/* "bz3/backends/cython/_bz3.pyx":118
  *         return ret
  * 
  *     cpdef inline str error(self):             # <<<<<<<<<<<<<<
@@ -3878,7 +3886,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":118
+  /* "bz3/backends/cython/_bz3.pyx":119
  * 
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -3888,7 +3896,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_t_1 = ((bz3_last_error(__pyx_v_self->state) != BZ3_OK) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":119
+    /* "bz3/backends/cython/_bz3.pyx":120
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:
  *             return (<bytes>bz3_strerror(self.state)).decode()             # <<<<<<<<<<<<<<
@@ -3896,20 +3904,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (unlikely(__pyx_t_2 == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-      __PYX_ERR(0, 119, __pyx_L1_error)
+      __PYX_ERR(0, 120, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_decode_bytes(((PyObject*)__pyx_t_2), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_decode_bytes(((PyObject*)__pyx_t_2), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":118
+    /* "bz3/backends/cython/_bz3.pyx":119
  * 
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -3918,7 +3926,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":120
+  /* "bz3/backends/cython/_bz3.pyx":121
  *         if bz3_last_error(self.state) != BZ3_OK:
  *             return (<bytes>bz3_strerror(self.state)).decode()
  *         return None             # <<<<<<<<<<<<<<
@@ -3929,7 +3937,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compres
   __pyx_r = ((PyObject*)Py_None); __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":117
+  /* "bz3/backends/cython/_bz3.pyx":118
  *         return ret
  * 
  *     cpdef inline str error(self):             # <<<<<<<<<<<<<<
@@ -3972,7 +3980,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_8error(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3989,7 +3997,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_8error(st
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":37
+/* "bz3/backends/cython/_bz3.pyx":38
  *         bz3_state * state
  *         uint8_t * buffer
  *         readonly int32_t block_size             # <<<<<<<<<<<<<<
@@ -4019,7 +4027,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_10block_s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4151,8 +4159,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_12__setst
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":133
- *         bint have_magic_number
+/* "bz3/backends/cython/_bz3.pyx":135
+ *         readonly bint ignore_error # decode
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -4169,7 +4177,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("init_state", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":135
+  /* "bz3/backends/cython/_bz3.pyx":137
  *     cdef inline int init_state(self, int32_t block_size) except -1:
  *         """should exec only once"""
  *         self.block_size = block_size             # <<<<<<<<<<<<<<
@@ -4178,7 +4186,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
   __pyx_v_self->block_size = __pyx_v_block_size;
 
-  /* "bz3/backends/cython/_bz3.pyx":136
+  /* "bz3/backends/cython/_bz3.pyx":138
  *         """should exec only once"""
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -4187,7 +4195,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
   __pyx_v_self->state = bz3_new(__pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":137
+  /* "bz3/backends/cython/_bz3.pyx":139
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:             # <<<<<<<<<<<<<<
@@ -4197,20 +4205,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
   __pyx_t_1 = ((__pyx_v_self->state == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":138
+    /* "bz3/backends/cython/_bz3.pyx":140
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:
  *             raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *         self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 138, __pyx_L1_error)
+    __PYX_ERR(0, 140, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":137
+    /* "bz3/backends/cython/_bz3.pyx":139
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:             # <<<<<<<<<<<<<<
@@ -4219,7 +4227,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":139
+  /* "bz3/backends/cython/_bz3.pyx":141
  *         if self.state == NULL:
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -4228,7 +4236,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
   __pyx_v_self->buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-  /* "bz3/backends/cython/_bz3.pyx":140
+  /* "bz3/backends/cython/_bz3.pyx":142
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:             # <<<<<<<<<<<<<<
@@ -4238,7 +4246,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
   __pyx_t_1 = ((__pyx_v_self->buffer == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":141
+    /* "bz3/backends/cython/_bz3.pyx":143
  *         self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:
  *             bz3_free(self.state)             # <<<<<<<<<<<<<<
@@ -4247,7 +4255,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
     bz3_free(__pyx_v_self->state);
 
-    /* "bz3/backends/cython/_bz3.pyx":142
+    /* "bz3/backends/cython/_bz3.pyx":144
  *         if self.buffer == NULL:
  *             bz3_free(self.state)
  *             self.state = NULL             # <<<<<<<<<<<<<<
@@ -4256,20 +4264,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
     __pyx_v_self->state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":143
+    /* "bz3/backends/cython/_bz3.pyx":145
  *             bz3_free(self.state)
  *             self.state = NULL
  *             raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  * 
- *     def __cinit__(self):
+ *     def __cinit__(self, bint ignore_error = False):
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 143, __pyx_L1_error)
+    __PYX_ERR(0, 145, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":140
+    /* "bz3/backends/cython/_bz3.pyx":142
  *             raise MemoryError("Failed to create a block encoder state")
  *         self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:             # <<<<<<<<<<<<<<
@@ -4278,8 +4286,8 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":133
- *         bint have_magic_number
+  /* "bz3/backends/cython/_bz3.pyx":135
+ *         readonly bint ignore_error # decode
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -4298,10 +4306,10 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":145
+/* "bz3/backends/cython/_bz3.pyx":147
  *             raise MemoryError("Failed to allocate memory")
  * 
- *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self, bint ignore_error = False):             # <<<<<<<<<<<<<<
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
@@ -4309,20 +4317,66 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_
 /* Python wrapper */
 static int __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_v_ignore_error;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
-  if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
-    __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
-  if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *)__pyx_v_self));
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_ignore_error,0};
+    PyObject* values[1] = {0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ignore_error);
+          if (value) { values[0] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 147, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    if (values[0]) {
+      __pyx_v_ignore_error = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_ignore_error == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L3_error)
+    } else {
+      __pyx_v_ignore_error = ((int)0);
+    }
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 147, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Decompressor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *)__pyx_v_self), __pyx_v_ignore_error);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self) {
+static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self, int __pyx_v_ignore_error) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4331,14 +4385,14 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":146
+  /* "bz3/backends/cython/_bz3.pyx":148
  * 
- *     def __cinit__(self):
+ *     def __cinit__(self, bint ignore_error = False):
  *         self.unused = bytearray()             # <<<<<<<<<<<<<<
  *         self.have_magic_number = 0 # magic number
- * 
+ *         self.ignore_error = ignore_error
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->unused);
@@ -4346,19 +4400,28 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(str
   __pyx_v_self->unused = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":147
- *     def __cinit__(self):
+  /* "bz3/backends/cython/_bz3.pyx":149
+ *     def __cinit__(self, bint ignore_error = False):
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number             # <<<<<<<<<<<<<<
+ *         self.ignore_error = ignore_error
  * 
- *     def __dealloc__(self):
  */
   __pyx_v_self->have_magic_number = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":145
+  /* "bz3/backends/cython/_bz3.pyx":150
+ *         self.unused = bytearray()
+ *         self.have_magic_number = 0 # magic number
+ *         self.ignore_error = ignore_error             # <<<<<<<<<<<<<<
+ * 
+ *     def __dealloc__(self):
+ */
+  __pyx_v_self->ignore_error = __pyx_v_ignore_error;
+
+  /* "bz3/backends/cython/_bz3.pyx":147
  *             raise MemoryError("Failed to allocate memory")
  * 
- *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self, bint ignore_error = False):             # <<<<<<<<<<<<<<
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
@@ -4375,8 +4438,8 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor___cinit__(str
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":149
- *         self.have_magic_number = 0 # magic number
+/* "bz3/backends/cython/_bz3.pyx":152
+ *         self.ignore_error = ignore_error
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         if self.state != NULL:
@@ -4399,7 +4462,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":150
+  /* "bz3/backends/cython/_bz3.pyx":153
  * 
  *     def __dealloc__(self):
  *         if self.state != NULL:             # <<<<<<<<<<<<<<
@@ -4409,7 +4472,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
   __pyx_t_1 = ((__pyx_v_self->state != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":151
+    /* "bz3/backends/cython/_bz3.pyx":154
  *     def __dealloc__(self):
  *         if self.state != NULL:
  *             bz3_free(self.state)             # <<<<<<<<<<<<<<
@@ -4418,7 +4481,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
     bz3_free(__pyx_v_self->state);
 
-    /* "bz3/backends/cython/_bz3.pyx":152
+    /* "bz3/backends/cython/_bz3.pyx":155
  *         if self.state != NULL:
  *             bz3_free(self.state)
  *             self.state = NULL             # <<<<<<<<<<<<<<
@@ -4427,7 +4490,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
     __pyx_v_self->state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":150
+    /* "bz3/backends/cython/_bz3.pyx":153
  * 
  *     def __dealloc__(self):
  *         if self.state != NULL:             # <<<<<<<<<<<<<<
@@ -4436,7 +4499,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":153
+  /* "bz3/backends/cython/_bz3.pyx":156
  *             bz3_free(self.state)
  *             self.state = NULL
  *         if self.buffer !=NULL:             # <<<<<<<<<<<<<<
@@ -4446,7 +4509,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
   __pyx_t_1 = ((__pyx_v_self->buffer != NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":154
+    /* "bz3/backends/cython/_bz3.pyx":157
  *             self.state = NULL
  *         if self.buffer !=NULL:
  *             PyMem_Free(self.buffer)             # <<<<<<<<<<<<<<
@@ -4455,7 +4518,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
     PyMem_Free(__pyx_v_self->buffer);
 
-    /* "bz3/backends/cython/_bz3.pyx":155
+    /* "bz3/backends/cython/_bz3.pyx":158
  *         if self.buffer !=NULL:
  *             PyMem_Free(self.buffer)
  *             self.buffer = NULL             # <<<<<<<<<<<<<<
@@ -4464,7 +4527,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
     __pyx_v_self->buffer = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":153
+    /* "bz3/backends/cython/_bz3.pyx":156
  *             bz3_free(self.state)
  *             self.state = NULL
  *         if self.buffer !=NULL:             # <<<<<<<<<<<<<<
@@ -4473,8 +4536,8 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":149
- *         self.have_magic_number = 0 # magic number
+  /* "bz3/backends/cython/_bz3.pyx":152
+ *         self.ignore_error = ignore_error
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         if self.state != NULL:
@@ -4485,7 +4548,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_2__dealloc__
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":157
+/* "bz3/backends/cython/_bz3.pyx":160
  *             self.buffer = NULL
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -4515,7 +4578,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":158
+  /* "bz3/backends/cython/_bz3.pyx":161
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):
  *         cdef Py_ssize_t input_size = data.shape[0]             # <<<<<<<<<<<<<<
@@ -4524,19 +4587,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
   __pyx_v_input_size = (__pyx_v_data.shape[0]);
 
-  /* "bz3/backends/cython/_bz3.pyx":160
+  /* "bz3/backends/cython/_bz3.pyx":163
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         cdef int32_t code
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         cdef int32_t new_size, old_size, block_size
  *         if input_size > 0:
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":162
+  /* "bz3/backends/cython/_bz3.pyx":165
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t new_size, old_size, block_size
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -4546,16 +4609,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
   __pyx_t_2 = ((__pyx_v_input_size > 0) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":166
+    /* "bz3/backends/cython/_bz3.pyx":169
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)             # <<<<<<<<<<<<<<
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -4570,12 +4633,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
     __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":167
+    /* "bz3/backends/cython/_bz3.pyx":170
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
@@ -4596,7 +4659,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "bz3/backends/cython/_bz3.pyx":168
+      /* "bz3/backends/cython/_bz3.pyx":171
  *             self.unused.extend(data)
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -4609,20 +4672,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":169
+        /* "bz3/backends/cython/_bz3.pyx":172
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  */
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 169, __pyx_L1_error)
+        __PYX_ERR(0, 172, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":168
+        /* "bz3/backends/cython/_bz3.pyx":171
  *             self.unused.extend(data)
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -4631,7 +4694,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":170
+      /* "bz3/backends/cython/_bz3.pyx":173
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))             # <<<<<<<<<<<<<<
@@ -4643,7 +4706,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __pyx_v_block_size = read_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_t_1)[5]))));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":171
+      /* "bz3/backends/cython/_bz3.pyx":174
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):             # <<<<<<<<<<<<<<
@@ -4661,20 +4724,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __pyx_L9_bool_binop_done:;
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":172
+        /* "bz3/backends/cython/_bz3.pyx":175
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
  *                 self.init_state(block_size)
  *                 del self.unused[:9]
  */
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 172, __pyx_L1_error)
+        __PYX_ERR(0, 175, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":171
+        /* "bz3/backends/cython/_bz3.pyx":174
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):             # <<<<<<<<<<<<<<
@@ -4683,16 +4746,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":173
+      /* "bz3/backends/cython/_bz3.pyx":176
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *                 self.init_state(block_size)             # <<<<<<<<<<<<<<
  *                 del self.unused[:9]
  *                 self.have_magic_number = 1
  */
-      __pyx_t_7 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_init_state(__pyx_v_self, __pyx_v_block_size); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_7 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_init_state(__pyx_v_self, __pyx_v_block_size); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 176, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":174
+      /* "bz3/backends/cython/_bz3.pyx":177
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *                 self.init_state(block_size)
  *                 del self.unused[:9]             # <<<<<<<<<<<<<<
@@ -4701,11 +4764,11 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       if (unlikely(__pyx_v_self->unused == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 174, __pyx_L1_error)
+        __PYX_ERR(0, 177, __pyx_L1_error)
       }
-      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, 9, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, 9, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":175
+      /* "bz3/backends/cython/_bz3.pyx":178
  *                 self.init_state(block_size)
  *                 del self.unused[:9]
  *                 self.have_magic_number = 1             # <<<<<<<<<<<<<<
@@ -4714,7 +4777,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       __pyx_v_self->have_magic_number = 1;
 
-      /* "bz3/backends/cython/_bz3.pyx":167
+      /* "bz3/backends/cython/_bz3.pyx":170
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
@@ -4723,7 +4786,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":177
+    /* "bz3/backends/cython/_bz3.pyx":180
  *                 self.have_magic_number = 1
  * 
  *             while True:             # <<<<<<<<<<<<<<
@@ -4732,7 +4795,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
     while (1) {
 
-      /* "bz3/backends/cython/_bz3.pyx":178
+      /* "bz3/backends/cython/_bz3.pyx":181
  * 
  *             while True:
  *                 if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte header             # <<<<<<<<<<<<<<
@@ -4745,7 +4808,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_2) {
 
-        /* "bz3/backends/cython/_bz3.pyx":179
+        /* "bz3/backends/cython/_bz3.pyx":182
  *             while True:
  *                 if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte header
  *                     break             # <<<<<<<<<<<<<<
@@ -4754,7 +4817,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
         goto __pyx_L12_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":178
+        /* "bz3/backends/cython/_bz3.pyx":181
  * 
  *             while True:
  *                 if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte header             # <<<<<<<<<<<<<<
@@ -4763,7 +4826,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":180
+      /* "bz3/backends/cython/_bz3.pyx":183
  *                 if PyByteArray_GET_SIZE(self.unused)<8: # 8 byte header
  *                     break
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst             # <<<<<<<<<<<<<<
@@ -4775,7 +4838,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __pyx_v_new_size = read_neutral_s32(((uint8_t *)PyByteArray_AS_STRING(__pyx_t_1)));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":181
+      /* "bz3/backends/cython/_bz3.pyx":184
  *                     break
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))             # <<<<<<<<<<<<<<
@@ -4787,7 +4850,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_t_1)[4]))));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":182
+      /* "bz3/backends/cython/_bz3.pyx":185
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #             # <<<<<<<<<<<<<<
@@ -4800,7 +4863,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_2) {
 
-        /* "bz3/backends/cython/_bz3.pyx":183
+        /* "bz3/backends/cython/_bz3.pyx":186
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  *                     break             # <<<<<<<<<<<<<<
@@ -4809,7 +4872,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
         goto __pyx_L12_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":182
+        /* "bz3/backends/cython/_bz3.pyx":185
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #             # <<<<<<<<<<<<<<
@@ -4818,7 +4881,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":184
+      /* "bz3/backends/cython/_bz3.pyx":187
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  *                     break
  *                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)             # <<<<<<<<<<<<<<
@@ -4830,7 +4893,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       (void)(memcpy(__pyx_v_self->buffer, (&(PyByteArray_AS_STRING(__pyx_t_1)[8])), ((size_t)__pyx_v_new_size)));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":185
+      /* "bz3/backends/cython/_bz3.pyx":188
  *                     break
  *                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
  *                 with nogil:             # <<<<<<<<<<<<<<
@@ -4845,17 +4908,17 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
           #endif
           /*try:*/ {
 
-            /* "bz3/backends/cython/_bz3.pyx":186
+            /* "bz3/backends/cython/_bz3.pyx":189
  *                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
  *                 with nogil:
  *                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)             # <<<<<<<<<<<<<<
  *                 if code == -1:
- *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
+ *                     if self.ignore_error:
  */
             __pyx_v_code = bz3_decode_block(__pyx_v_self->state, __pyx_v_self->buffer, __pyx_v_new_size, __pyx_v_old_size);
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":185
+          /* "bz3/backends/cython/_bz3.pyx":188
  *                     break
  *                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
  *                 with nogil:             # <<<<<<<<<<<<<<
@@ -4874,59 +4937,91 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
           }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":187
+      /* "bz3/backends/cython/_bz3.pyx":190
  *                 with nogil:
  *                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
  *                 if code == -1:             # <<<<<<<<<<<<<<
- *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
- *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
+ *                     if self.ignore_error:
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
  */
       __pyx_t_2 = ((__pyx_v_code == -1L) != 0);
-      if (unlikely(__pyx_t_2)) {
+      if (__pyx_t_2) {
 
-        /* "bz3/backends/cython/_bz3.pyx":188
+        /* "bz3/backends/cython/_bz3.pyx":191
  *                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
  *                 if code == -1:
- *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))             # <<<<<<<<<<<<<<
+ *                     if self.ignore_error:             # <<<<<<<<<<<<<<
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
+ *                     else:
+ */
+        __pyx_t_2 = (__pyx_v_self->ignore_error != 0);
+        if (likely(__pyx_t_2)) {
+
+          /* "bz3/backends/cython/_bz3.pyx":192
+ *                 if code == -1:
+ *                     if self.ignore_error:
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
+ */
+          (void)(fprintf(stderr, ((char const *)"Writing invalid block: %s\n"), bz3_strerror(__pyx_v_self->state)));
+
+          /* "bz3/backends/cython/_bz3.pyx":191
+ *                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+ *                 if code == -1:
+ *                     if self.ignore_error:             # <<<<<<<<<<<<<<
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
+ *                     else:
+ */
+          goto __pyx_L21;
+        }
+
+        /* "bz3/backends/cython/_bz3.pyx":194
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
+ *                     else:
+ *                         raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))             # <<<<<<<<<<<<<<
  *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
  *                 #     raise
  */
-        __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 188, __pyx_L1_error)
+        /*else*/ {
+          __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+          __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_3);
+          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_1);
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __PYX_ERR(0, 194, __pyx_L1_error)
+        }
+        __pyx_L21:;
 
-        /* "bz3/backends/cython/_bz3.pyx":187
+        /* "bz3/backends/cython/_bz3.pyx":190
  *                 with nogil:
  *                     code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
  *                 if code == -1:             # <<<<<<<<<<<<<<
- *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(self.state))
- *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
+ *                     if self.ignore_error:
+ *                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":191
+      /* "bz3/backends/cython/_bz3.pyx":197
  *                 # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + old_size) < 0:
  *                 #     raise
  *                 ret.extend(<bytes>self.buffer[:old_size])             # <<<<<<<<<<<<<<
  *                 # memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-old_size]), self.buffer, <size_t>old_size)
  *                 del self.unused[:new_size+8]
  */
-      __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_self->buffer) + 0, __pyx_v_old_size - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_self->buffer) + 0, __pyx_v_old_size - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 191, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 197, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":193
+      /* "bz3/backends/cython/_bz3.pyx":199
  *                 ret.extend(<bytes>self.buffer[:old_size])
  *                 # memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-old_size]), self.buffer, <size_t>old_size)
  *                 del self.unused[:new_size+8]             # <<<<<<<<<<<<<<
@@ -4935,13 +5030,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
       if (unlikely(__pyx_v_self->unused == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 193, __pyx_L1_error)
+        __PYX_ERR(0, 199, __pyx_L1_error)
       }
-      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, (__pyx_v_new_size + 8), NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 193, __pyx_L1_error)
+      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, (__pyx_v_new_size + 8), NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 199, __pyx_L1_error)
     }
     __pyx_L12_break:;
 
-    /* "bz3/backends/cython/_bz3.pyx":162
+    /* "bz3/backends/cython/_bz3.pyx":165
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t new_size, old_size, block_size
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -4950,7 +5045,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":194
+  /* "bz3/backends/cython/_bz3.pyx":200
  *                 # memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-old_size]), self.buffer, <size_t>old_size)
  *                 del self.unused[:new_size+8]
  *         return bytes(ret)             # <<<<<<<<<<<<<<
@@ -4958,13 +5053,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":157
+  /* "bz3/backends/cython/_bz3.pyx":160
  *             self.buffer = NULL
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -4999,7 +5094,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_5decomp
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("decompress (wrapper)", 0);
   assert(__pyx_arg_data); {
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 157, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 160, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5023,8 +5118,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decomp
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 157, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_decompress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 160, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_decompress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5042,7 +5137,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decomp
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":197
+/* "bz3/backends/cython/_bz3.pyx":203
  * 
  *     @property
  *     def unused_data(self):             # <<<<<<<<<<<<<<
@@ -5072,7 +5167,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unuse
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":199
+  /* "bz3/backends/cython/_bz3.pyx":205
  *     def unused_data(self):
  *         """Data found after the end of the compressed stream."""
  *         return bytes(self.unused)             # <<<<<<<<<<<<<<
@@ -5080,13 +5175,13 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unuse
  *     cpdef inline str error(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_self->unused); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_self->unused); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":197
+  /* "bz3/backends/cython/_bz3.pyx":203
  * 
  *     @property
  *     def unused_data(self):             # <<<<<<<<<<<<<<
@@ -5105,7 +5200,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_11unuse
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":201
+/* "bz3/backends/cython/_bz3.pyx":207
  *         return bytes(self.unused)
  * 
  *     cpdef inline str error(self):             # <<<<<<<<<<<<<<
@@ -5125,7 +5220,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":202
+  /* "bz3/backends/cython/_bz3.pyx":208
  * 
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -5135,7 +5230,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
   __pyx_t_1 = ((bz3_last_error(__pyx_v_self->state) != BZ3_OK) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":203
+    /* "bz3/backends/cython/_bz3.pyx":209
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:
  *             return (<bytes> bz3_strerror(self.state)).decode()             # <<<<<<<<<<<<<<
@@ -5143,20 +5238,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_self->state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (unlikely(__pyx_t_2 == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-      __PYX_ERR(0, 203, __pyx_L1_error)
+      __PYX_ERR(0, 209, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_decode_bytes(((PyObject*)__pyx_t_2), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_decode_bytes(((PyObject*)__pyx_t_2), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":202
+    /* "bz3/backends/cython/_bz3.pyx":208
  * 
  *     cpdef inline str error(self):
  *         if bz3_last_error(self.state) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -5165,7 +5260,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":204
+  /* "bz3/backends/cython/_bz3.pyx":210
  *         if bz3_last_error(self.state) != BZ3_OK:
  *             return (<bytes> bz3_strerror(self.state)).decode()
  *         return None             # <<<<<<<<<<<<<<
@@ -5176,7 +5271,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
   __pyx_r = ((PyObject*)Py_None); __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":201
+  /* "bz3/backends/cython/_bz3.pyx":207
  *         return bytes(self.unused)
  * 
  *     cpdef inline str error(self):             # <<<<<<<<<<<<<<
@@ -5219,7 +5314,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error(
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5236,7 +5331,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error(
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":129
+/* "bz3/backends/cython/_bz3.pyx":130
  *         bz3_state * state
  *         uint8_t * buffer
  *         readonly int32_t block_size             # <<<<<<<<<<<<<<
@@ -5266,7 +5361,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5276,6 +5371,53 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Decompressor.block_size.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":133
+ *         bytearray unused  #
+ *         bint have_magic_number
+ *         readonly bint ignore_error # decode             # <<<<<<<<<<<<<<
+ * 
+ *     cdef inline int init_state(self, int32_t block_size) except -1:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->ignore_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 133, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3Decompressor.ignore_error.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5398,7 +5540,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10__set
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":207
+/* "bz3/backends/cython/_bz3.pyx":213
  * 
  * 
  * def compress_file(object input, object output, int32_t block_size):             # <<<<<<<<<<<<<<
@@ -5445,17 +5587,17 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_1compress_file(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, 1); __PYX_ERR(0, 207, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, 1); __PYX_ERR(0, 213, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_block_size)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, 2); __PYX_ERR(0, 207, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, 2); __PYX_ERR(0, 213, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "compress_file") < 0)) __PYX_ERR(0, 207, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "compress_file") < 0)) __PYX_ERR(0, 213, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -5466,11 +5608,11 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_1compress_file(PyObject *
     }
     __pyx_v_input = values[0];
     __pyx_v_output = values[1];
-    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[2]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L3_error)
+    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[2]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 207, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("compress_file", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 213, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.compress_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5512,7 +5654,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress_file", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":208
+  /* "bz3/backends/cython/_bz3.pyx":214
  * 
  * def compress_file(object input, object output, int32_t block_size):
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -5522,26 +5664,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_input) != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":209
+    /* "bz3/backends/cython/_bz3.pyx":215
  * def compress_file(object input, object output, int32_t block_size):
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(output):
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 209, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 215, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 209, __pyx_L1_error)
+    __PYX_ERR(0, 215, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":208
+    /* "bz3/backends/cython/_bz3.pyx":214
  * 
  * def compress_file(object input, object output, int32_t block_size):
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -5550,7 +5692,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":210
+  /* "bz3/backends/cython/_bz3.pyx":216
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
@@ -5560,26 +5702,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_output) != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":211
+    /* "bz3/backends/cython/_bz3.pyx":217
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)             # <<<<<<<<<<<<<<
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_output)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_output)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_output_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_output_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 217, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 211, __pyx_L1_error)
+    __PYX_ERR(0, 217, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":210
+    /* "bz3/backends/cython/_bz3.pyx":216
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
@@ -5588,7 +5730,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":212
+  /* "bz3/backends/cython/_bz3.pyx":218
  *     if not PyFile_Check(output):
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
  *     cdef bz3_state *state = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -5597,7 +5739,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   __pyx_v_state = bz3_new(__pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":213
+  /* "bz3/backends/cython/_bz3.pyx":219
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -5607,20 +5749,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   __pyx_t_1 = ((__pyx_v_state == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":214
+    /* "bz3/backends/cython/_bz3.pyx":220
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 214, __pyx_L1_error)
+    __PYX_ERR(0, 220, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":213
+    /* "bz3/backends/cython/_bz3.pyx":219
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -5629,7 +5771,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":215
+  /* "bz3/backends/cython/_bz3.pyx":221
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -5638,7 +5780,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   __pyx_v_buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-  /* "bz3/backends/cython/_bz3.pyx":216
+  /* "bz3/backends/cython/_bz3.pyx":222
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -5648,7 +5790,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   __pyx_t_1 = ((__pyx_v_buffer == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":217
+    /* "bz3/backends/cython/_bz3.pyx":223
  *     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -5657,7 +5799,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
     bz3_free(__pyx_v_state);
 
-    /* "bz3/backends/cython/_bz3.pyx":218
+    /* "bz3/backends/cython/_bz3.pyx":224
  *     if buffer == NULL:
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -5666,16 +5808,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
     __pyx_v_state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":219
+    /* "bz3/backends/cython/_bz3.pyx":225
  *         bz3_free(state)
  *         state = NULL
  *         raise MemoryError             # <<<<<<<<<<<<<<
  *     cdef bytes data
  *     cdef int32_t new_size
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 219, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 225, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":216
+    /* "bz3/backends/cython/_bz3.pyx":222
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -5684,14 +5826,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":224
+  /* "bz3/backends/cython/_bz3.pyx":230
  *     cdef uint8_t byteswap_buf[4]
  * 
  *     output.write(b"BZ3v1")             # <<<<<<<<<<<<<<
  *     write_neutral_s32(byteswap_buf, block_size)
  *     output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5705,12 +5847,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   }
   __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_n_b_BZ3v1) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_n_b_BZ3v1);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":225
+  /* "bz3/backends/cython/_bz3.pyx":231
  * 
  *     output.write(b"BZ3v1")
  *     write_neutral_s32(byteswap_buf, block_size)             # <<<<<<<<<<<<<<
@@ -5719,16 +5861,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   write_neutral_s32(__pyx_v_byteswap_buf, __pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":226
+  /* "bz3/backends/cython/_bz3.pyx":232
  *     output.write(b"BZ3v1")
  *     write_neutral_s32(byteswap_buf, block_size)
  *     output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header             # <<<<<<<<<<<<<<
  *     cdef int32_t old_size
  *     try:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5743,12 +5885,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 226, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":228
+  /* "bz3/backends/cython/_bz3.pyx":234
  *     output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))  # magic header
  *     cdef int32_t old_size
  *     try:             # <<<<<<<<<<<<<<
@@ -5757,7 +5899,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   /*try:*/ {
 
-    /* "bz3/backends/cython/_bz3.pyx":229
+    /* "bz3/backends/cython/_bz3.pyx":235
  *     cdef int32_t old_size
  *     try:
  *         while True:             # <<<<<<<<<<<<<<
@@ -5766,16 +5908,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
     while (1) {
 
-      /* "bz3/backends/cython/_bz3.pyx":230
+      /* "bz3/backends/cython/_bz3.pyx":236
  *     try:
  *         while True:
  *             data = input.read(block_size)             # <<<<<<<<<<<<<<
  *             if not data:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 230, __pyx_L8_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_block_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 230, __pyx_L8_error)
+      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_block_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 236, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5790,14 +5932,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L8_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 236, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 230, __pyx_L8_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 236, __pyx_L8_error)
       __Pyx_XDECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":231
+      /* "bz3/backends/cython/_bz3.pyx":237
  *         while True:
  *             data = input.read(block_size)
  *             if not data:             # <<<<<<<<<<<<<<
@@ -5808,7 +5950,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_6 = ((!__pyx_t_1) != 0);
       if (__pyx_t_6) {
 
-        /* "bz3/backends/cython/_bz3.pyx":232
+        /* "bz3/backends/cython/_bz3.pyx":238
  *             data = input.read(block_size)
  *             if not data:
  *                 break             # <<<<<<<<<<<<<<
@@ -5817,7 +5959,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
         goto __pyx_L11_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":231
+        /* "bz3/backends/cython/_bz3.pyx":237
  *         while True:
  *             data = input.read(block_size)
  *             if not data:             # <<<<<<<<<<<<<<
@@ -5826,7 +5968,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":233
+      /* "bz3/backends/cython/_bz3.pyx":239
  *             if not data:
  *                 break
  *             old_size = <int32_t>PyBytes_GET_SIZE(data)             # <<<<<<<<<<<<<<
@@ -5835,7 +5977,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       __pyx_v_old_size = ((int32_t)PyBytes_GET_SIZE(__pyx_v_data));
 
-      /* "bz3/backends/cython/_bz3.pyx":234
+      /* "bz3/backends/cython/_bz3.pyx":240
  *                 break
  *             old_size = <int32_t>PyBytes_GET_SIZE(data)
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t>old_size)             # <<<<<<<<<<<<<<
@@ -5844,7 +5986,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       (void)(memcpy(__pyx_v_buffer, PyBytes_AS_STRING(__pyx_v_data), ((size_t)__pyx_v_old_size)));
 
-      /* "bz3/backends/cython/_bz3.pyx":235
+      /* "bz3/backends/cython/_bz3.pyx":241
  *             old_size = <int32_t>PyBytes_GET_SIZE(data)
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t>old_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -5859,7 +6001,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
           #endif
           /*try:*/ {
 
-            /* "bz3/backends/cython/_bz3.pyx":236
+            /* "bz3/backends/cython/_bz3.pyx":242
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t>old_size)
  *             with nogil:
  *                 new_size = bz3_encode_block(state, buffer, old_size)             # <<<<<<<<<<<<<<
@@ -5869,7 +6011,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
             __pyx_v_new_size = bz3_encode_block(__pyx_v_state, __pyx_v_buffer, __pyx_v_old_size);
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":235
+          /* "bz3/backends/cython/_bz3.pyx":241
  *             old_size = <int32_t>PyBytes_GET_SIZE(data)
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t>old_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -5888,7 +6030,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
           }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":237
+      /* "bz3/backends/cython/_bz3.pyx":243
  *             with nogil:
  *                 new_size = bz3_encode_block(state, buffer, old_size)
  *             if new_size == -1:             # <<<<<<<<<<<<<<
@@ -5898,26 +6040,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_6 = ((__pyx_v_new_size == -1L) != 0);
       if (unlikely(__pyx_t_6)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":238
+        /* "bz3/backends/cython/_bz3.pyx":244
  *                 new_size = bz3_encode_block(state, buffer, old_size)
  *             if new_size == -1:
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(state))             # <<<<<<<<<<<<<<
  *             write_neutral_s32(byteswap_buf, new_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  */
-        __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L8_error)
+        __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L8_error)
+        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L8_error)
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_Raise(__pyx_t_2, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __PYX_ERR(0, 238, __pyx_L8_error)
+        __PYX_ERR(0, 244, __pyx_L8_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":237
+        /* "bz3/backends/cython/_bz3.pyx":243
  *             with nogil:
  *                 new_size = bz3_encode_block(state, buffer, old_size)
  *             if new_size == -1:             # <<<<<<<<<<<<<<
@@ -5926,7 +6068,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":239
+      /* "bz3/backends/cython/_bz3.pyx":245
  *             if new_size == -1:
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(state))
  *             write_neutral_s32(byteswap_buf, new_size)             # <<<<<<<<<<<<<<
@@ -5935,16 +6077,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       write_neutral_s32(__pyx_v_byteswap_buf, __pyx_v_new_size);
 
-      /* "bz3/backends/cython/_bz3.pyx":240
+      /* "bz3/backends/cython/_bz3.pyx":246
  *                 raise ValueError("Failed to encode a block: %s" % bz3_strerror(state))
  *             write_neutral_s32(byteswap_buf, new_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))             # <<<<<<<<<<<<<<
  *             write_neutral_s32(byteswap_buf, old_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L8_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L8_error)
+      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5959,12 +6101,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L8_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 246, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":241
+      /* "bz3/backends/cython/_bz3.pyx":247
  *             write_neutral_s32(byteswap_buf, new_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  *             write_neutral_s32(byteswap_buf, old_size)             # <<<<<<<<<<<<<<
@@ -5973,16 +6115,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       write_neutral_s32(__pyx_v_byteswap_buf, __pyx_v_old_size);
 
-      /* "bz3/backends/cython/_bz3.pyx":242
+      /* "bz3/backends/cython/_bz3.pyx":248
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  *             write_neutral_s32(byteswap_buf, old_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))             # <<<<<<<<<<<<<<
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
  *             output.flush()
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L8_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 248, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L8_error)
+      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)(&(__pyx_v_byteswap_buf[0]))), 4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 248, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5997,21 +6139,21 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L8_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 248, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":243
+      /* "bz3/backends/cython/_bz3.pyx":249
  *             write_neutral_s32(byteswap_buf, old_size)
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))             # <<<<<<<<<<<<<<
  *             output.flush()
  *     finally:
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 243, __pyx_L8_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)__pyx_v_buffer), __pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 243, __pyx_L8_error)
+      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)__pyx_v_buffer), __pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 249, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6026,19 +6168,19 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L8_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 249, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":244
+      /* "bz3/backends/cython/_bz3.pyx":250
  *             output.write(PyBytes_FromStringAndSize(<char*>&byteswap_buf[0], 4))
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, new_size))
  *             output.flush()             # <<<<<<<<<<<<<<
  *     finally:
  *         output.flush()
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L8_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 250, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6052,7 +6194,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L8_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -6060,7 +6202,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
     __pyx_L11_break:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":246
+  /* "bz3/backends/cython/_bz3.pyx":252
  *             output.flush()
  *     finally:
  *         output.flush()             # <<<<<<<<<<<<<<
@@ -6069,7 +6211,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
   /*finally:*/ {
     /*normal exit:*/{
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6083,12 +6225,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 246, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":247
+      /* "bz3/backends/cython/_bz3.pyx":253
  *     finally:
  *         output.flush()
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -6097,7 +6239,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       bz3_free(__pyx_v_state);
 
-      /* "bz3/backends/cython/_bz3.pyx":248
+      /* "bz3/backends/cython/_bz3.pyx":254
  *         output.flush()
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -6106,7 +6248,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       __pyx_v_state = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":249
+      /* "bz3/backends/cython/_bz3.pyx":255
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -6115,7 +6257,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
       PyMem_Free(__pyx_v_buffer);
 
-      /* "bz3/backends/cython/_bz3.pyx":250
+      /* "bz3/backends/cython/_bz3.pyx":256
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -6145,14 +6287,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
       __pyx_t_7 = __pyx_lineno; __pyx_t_8 = __pyx_clineno; __pyx_t_9 = __pyx_filename;
       {
 
-        /* "bz3/backends/cython/_bz3.pyx":246
+        /* "bz3/backends/cython/_bz3.pyx":252
  *             output.flush()
  *     finally:
  *         output.flush()             # <<<<<<<<<<<<<<
  *         bz3_free(state)
  *         state = NULL
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L20_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L20_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6166,12 +6308,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 246, __pyx_L20_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L20_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "bz3/backends/cython/_bz3.pyx":247
+        /* "bz3/backends/cython/_bz3.pyx":253
  *     finally:
  *         output.flush()
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -6180,7 +6322,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
         bz3_free(__pyx_v_state);
 
-        /* "bz3/backends/cython/_bz3.pyx":248
+        /* "bz3/backends/cython/_bz3.pyx":254
  *         output.flush()
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -6189,7 +6331,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
         __pyx_v_state = NULL;
 
-        /* "bz3/backends/cython/_bz3.pyx":249
+        /* "bz3/backends/cython/_bz3.pyx":255
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -6198,7 +6340,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
  */
         PyMem_Free(__pyx_v_buffer);
 
-        /* "bz3/backends/cython/_bz3.pyx":250
+        /* "bz3/backends/cython/_bz3.pyx":256
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -6236,7 +6378,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
     __pyx_L9:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":207
+  /* "bz3/backends/cython/_bz3.pyx":213
  * 
  * 
  * def compress_file(object input, object output, int32_t block_size):             # <<<<<<<<<<<<<<
@@ -6261,7 +6403,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_compress_file(CYTHON_UNUS
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":252
+/* "bz3/backends/cython/_bz3.pyx":258
  *         buffer = NULL
  * 
  * def decompress_file(object input, object output):             # <<<<<<<<<<<<<<
@@ -6305,11 +6447,11 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_3decompress_file(PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("decompress_file", 1, 2, 2, 1); __PYX_ERR(0, 252, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("decompress_file", 1, 2, 2, 1); __PYX_ERR(0, 258, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "decompress_file") < 0)) __PYX_ERR(0, 252, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "decompress_file") < 0)) __PYX_ERR(0, 258, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6322,7 +6464,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_3decompress_file(PyObject
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("decompress_file", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 252, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("decompress_file", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 258, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.decompress_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6365,7 +6507,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress_file", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":253
+  /* "bz3/backends/cython/_bz3.pyx":259
  * 
  * def decompress_file(object input, object output):
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -6375,26 +6517,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_input) != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":254
+    /* "bz3/backends/cython/_bz3.pyx":260
  * def decompress_file(object input, object output):
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(output):
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 260, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 254, __pyx_L1_error)
+    __PYX_ERR(0, 260, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":253
+    /* "bz3/backends/cython/_bz3.pyx":259
  * 
  * def decompress_file(object input, object output):
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -6403,7 +6545,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":255
+  /* "bz3/backends/cython/_bz3.pyx":261
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
@@ -6413,26 +6555,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_output) != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":256
+    /* "bz3/backends/cython/_bz3.pyx":262
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):
  *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)             # <<<<<<<<<<<<<<
  *     cdef bytes data
  *     cdef int32_t block_size
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_output)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_output)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 262, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_output_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_output_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 262, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 262, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 256, __pyx_L1_error)
+    __PYX_ERR(0, 262, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":255
+    /* "bz3/backends/cython/_bz3.pyx":261
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
@@ -6441,14 +6583,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":259
+  /* "bz3/backends/cython/_bz3.pyx":265
  *     cdef bytes data
  *     cdef int32_t block_size
  *     data = input.read(9) # magic and block_size type: bytes len = 9             # <<<<<<<<<<<<<<
  *     if PyBytes_GET_SIZE(data) < 9:
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6462,14 +6604,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   }
   __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_9) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_9);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 265, __pyx_L1_error)
   __pyx_v_data = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":260
+  /* "bz3/backends/cython/_bz3.pyx":266
  *     cdef int32_t block_size
  *     data = input.read(9) # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
@@ -6479,20 +6621,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 9) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":261
+    /* "bz3/backends/cython/_bz3.pyx":267
  *     data = input.read(9) # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")             # <<<<<<<<<<<<<<
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         raise ValueError("Invalid signature")
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 261, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 261, __pyx_L1_error)
+    __PYX_ERR(0, 267, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":260
+    /* "bz3/backends/cython/_bz3.pyx":266
  *     cdef int32_t block_size
  *     data = input.read(9) # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
@@ -6501,7 +6643,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":262
+  /* "bz3/backends/cython/_bz3.pyx":268
  *     if PyBytes_GET_SIZE(data) < 9:
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -6511,20 +6653,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((strncmp(PyBytes_AS_STRING(__pyx_v_data), __pyx_v_3bz3_8backends_6cython_4_bz3_magic, 5) != 0) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":263
+    /* "bz3/backends/cython/_bz3.pyx":269
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 269, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 263, __pyx_L1_error)
+    __PYX_ERR(0, 269, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":262
+    /* "bz3/backends/cython/_bz3.pyx":268
  *     if PyBytes_GET_SIZE(data) < 9:
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -6533,7 +6675,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":264
+  /* "bz3/backends/cython/_bz3.pyx":270
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         raise ValueError("Invalid signature")
  *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))             # <<<<<<<<<<<<<<
@@ -6542,7 +6684,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   __pyx_v_block_size = read_neutral_s32(((uint8_t *)(&(PyBytes_AS_STRING(__pyx_v_data)[5]))));
 
-  /* "bz3/backends/cython/_bz3.pyx":265
+  /* "bz3/backends/cython/_bz3.pyx":271
  *         raise ValueError("Invalid signature")
  *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -6560,20 +6702,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_L8_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":266
+    /* "bz3/backends/cython/_bz3.pyx":272
  *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):
  *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 266, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 272, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 266, __pyx_L1_error)
+    __PYX_ERR(0, 272, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":265
+    /* "bz3/backends/cython/_bz3.pyx":271
  *         raise ValueError("Invalid signature")
  *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -6582,7 +6724,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":267
+  /* "bz3/backends/cython/_bz3.pyx":273
  *     if block_size < KiB(65) or block_size > MiB(511):
  *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *     cdef bz3_state *state = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -6591,7 +6733,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   __pyx_v_state = bz3_new(__pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":268
+  /* "bz3/backends/cython/_bz3.pyx":274
  *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -6601,20 +6743,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((__pyx_v_state == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":269
+    /* "bz3/backends/cython/_bz3.pyx":275
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 269, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 275, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 269, __pyx_L1_error)
+    __PYX_ERR(0, 275, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":268
+    /* "bz3/backends/cython/_bz3.pyx":274
  *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -6623,7 +6765,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":270
+  /* "bz3/backends/cython/_bz3.pyx":276
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -6632,7 +6774,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   __pyx_v_buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-  /* "bz3/backends/cython/_bz3.pyx":271
+  /* "bz3/backends/cython/_bz3.pyx":277
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -6642,7 +6784,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __pyx_t_1 = ((__pyx_v_buffer == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":272
+    /* "bz3/backends/cython/_bz3.pyx":278
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -6651,7 +6793,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
     bz3_free(__pyx_v_state);
 
-    /* "bz3/backends/cython/_bz3.pyx":273
+    /* "bz3/backends/cython/_bz3.pyx":279
  *     if buffer == NULL:
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -6660,20 +6802,20 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
     __pyx_v_state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":274
+    /* "bz3/backends/cython/_bz3.pyx":280
  *         bz3_free(state)
  *         state = NULL
  *         raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *     cdef int32_t new_size, old_size, code
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 274, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 274, __pyx_L1_error)
+    __PYX_ERR(0, 280, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":271
+    /* "bz3/backends/cython/_bz3.pyx":277
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -6682,7 +6824,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":277
+  /* "bz3/backends/cython/_bz3.pyx":283
  *     cdef int32_t new_size, old_size, code
  * 
  *     try:             # <<<<<<<<<<<<<<
@@ -6691,7 +6833,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   /*try:*/ {
 
-    /* "bz3/backends/cython/_bz3.pyx":278
+    /* "bz3/backends/cython/_bz3.pyx":284
  * 
  *     try:
  *         while True:             # <<<<<<<<<<<<<<
@@ -6700,14 +6842,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
     while (1) {
 
-      /* "bz3/backends/cython/_bz3.pyx":279
+      /* "bz3/backends/cython/_bz3.pyx":285
  *     try:
  *         while True:
  *             data = input.read(4)             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 279, __pyx_L13_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 285, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6721,14 +6863,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 279, __pyx_L13_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 285, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 279, __pyx_L13_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 285, __pyx_L13_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":280
+      /* "bz3/backends/cython/_bz3.pyx":286
  *         while True:
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -6738,7 +6880,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":281
+        /* "bz3/backends/cython/_bz3.pyx":287
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
@@ -6747,7 +6889,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         goto __pyx_L16_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":280
+        /* "bz3/backends/cython/_bz3.pyx":286
  *         while True:
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -6756,7 +6898,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":282
+      /* "bz3/backends/cython/_bz3.pyx":288
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
@@ -6765,14 +6907,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       __pyx_v_new_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
 
-      /* "bz3/backends/cython/_bz3.pyx":283
+      /* "bz3/backends/cython/_bz3.pyx":289
  *                 break
  *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
  *             data = input.read(4)             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 283, __pyx_L13_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6786,14 +6928,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 283, __pyx_L13_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 289, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 283, __pyx_L13_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 289, __pyx_L13_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":284
+      /* "bz3/backends/cython/_bz3.pyx":290
  *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -6803,7 +6945,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":285
+        /* "bz3/backends/cython/_bz3.pyx":291
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
@@ -6812,7 +6954,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         goto __pyx_L16_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":284
+        /* "bz3/backends/cython/_bz3.pyx":290
  *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -6821,7 +6963,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":286
+      /* "bz3/backends/cython/_bz3.pyx":292
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
@@ -6830,16 +6972,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
 
-      /* "bz3/backends/cython/_bz3.pyx":287
+      /* "bz3/backends/cython/_bz3.pyx":293
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size) # type: bytes             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 287, __pyx_L13_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 293, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 287, __pyx_L13_error)
+      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 293, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_6 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6854,14 +6996,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 287, __pyx_L13_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 293, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 287, __pyx_L13_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 293, __pyx_L13_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":288
+      /* "bz3/backends/cython/_bz3.pyx":294
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size) # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
@@ -6871,7 +7013,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < __pyx_v_new_size) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":289
+        /* "bz3/backends/cython/_bz3.pyx":295
  *             data = input.read(new_size) # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break             # <<<<<<<<<<<<<<
@@ -6880,7 +7022,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         goto __pyx_L16_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":288
+        /* "bz3/backends/cython/_bz3.pyx":294
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size) # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
@@ -6889,7 +7031,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":290
+      /* "bz3/backends/cython/_bz3.pyx":296
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)             # <<<<<<<<<<<<<<
@@ -6898,7 +7040,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       (void)(memcpy(__pyx_v_buffer, PyBytes_AS_STRING(__pyx_v_data), ((size_t)__pyx_v_new_size)));
 
-      /* "bz3/backends/cython/_bz3.pyx":291
+      /* "bz3/backends/cython/_bz3.pyx":297
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6913,7 +7055,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
           #endif
           /*try:*/ {
 
-            /* "bz3/backends/cython/_bz3.pyx":292
+            /* "bz3/backends/cython/_bz3.pyx":298
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)             # <<<<<<<<<<<<<<
@@ -6923,7 +7065,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
             __pyx_v_code = bz3_decode_block(__pyx_v_state, __pyx_v_buffer, __pyx_v_new_size, __pyx_v_old_size);
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":291
+          /* "bz3/backends/cython/_bz3.pyx":297
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -6942,7 +7084,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
           }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":293
+      /* "bz3/backends/cython/_bz3.pyx":299
  *             with nogil:
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)
  *             if code == -1:             # <<<<<<<<<<<<<<
@@ -6952,26 +7094,26 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_1 = ((__pyx_v_code == -1L) != 0);
       if (unlikely(__pyx_t_1)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":294
+        /* "bz3/backends/cython/_bz3.pyx":300
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)
  *             if code == -1:
  *                 raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))             # <<<<<<<<<<<<<<
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
  *             output.flush()
  */
-        __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L13_error)
+        __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 300, __pyx_L13_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L13_error)
+        __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 300, __pyx_L13_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L13_error)
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 300, __pyx_L13_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_Raise(__pyx_t_2, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __PYX_ERR(0, 294, __pyx_L13_error)
+        __PYX_ERR(0, 300, __pyx_L13_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":293
+        /* "bz3/backends/cython/_bz3.pyx":299
  *             with nogil:
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)
  *             if code == -1:             # <<<<<<<<<<<<<<
@@ -6980,16 +7122,16 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":295
+      /* "bz3/backends/cython/_bz3.pyx":301
  *             if code == -1:
  *                 raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))             # <<<<<<<<<<<<<<
  *             output.flush()
  *     finally:
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 295, __pyx_L13_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 301, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)__pyx_v_buffer), __pyx_v_old_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 295, __pyx_L13_error)
+      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)__pyx_v_buffer), __pyx_v_old_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 301, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_6 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7004,19 +7146,19 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 295, __pyx_L13_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 301, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":296
+      /* "bz3/backends/cython/_bz3.pyx":302
  *                 raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
  *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
  *             output.flush()             # <<<<<<<<<<<<<<
  *     finally:
  *         output.flush()
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 296, __pyx_L13_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 302, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7030,7 +7172,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 296, __pyx_L13_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 302, __pyx_L13_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7038,7 +7180,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
     __pyx_L16_break:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":298
+  /* "bz3/backends/cython/_bz3.pyx":304
  *             output.flush()
  *     finally:
  *         output.flush()             # <<<<<<<<<<<<<<
@@ -7047,7 +7189,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
   /*finally:*/ {
     /*normal exit:*/{
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 298, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 304, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7061,12 +7203,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 304, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":299
+      /* "bz3/backends/cython/_bz3.pyx":305
  *     finally:
  *         output.flush()
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -7075,7 +7217,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       bz3_free(__pyx_v_state);
 
-      /* "bz3/backends/cython/_bz3.pyx":300
+      /* "bz3/backends/cython/_bz3.pyx":306
  *         output.flush()
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -7084,7 +7226,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       __pyx_v_state = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":301
+      /* "bz3/backends/cython/_bz3.pyx":307
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -7093,7 +7235,975 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
       PyMem_Free(__pyx_v_buffer);
 
-      /* "bz3/backends/cython/_bz3.pyx":302
+      /* "bz3/backends/cython/_bz3.pyx":308
+ *         state = NULL
+ *         PyMem_Free(buffer)
+ *         buffer = NULL             # <<<<<<<<<<<<<<
+ * 
+ * def recover_file(object input, object output):
+ */
+      __pyx_v_buffer = NULL;
+      goto __pyx_L14;
+    }
+    __pyx_L13_error:;
+    /*exception exit:*/{
+      __Pyx_PyThreadState_declare
+      __Pyx_PyThreadState_assign
+      __pyx_t_10 = 0; __pyx_t_11 = 0; __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0;
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
+      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_10, &__pyx_t_11, &__pyx_t_12) < 0)) __Pyx_ErrFetch(&__pyx_t_10, &__pyx_t_11, &__pyx_t_12);
+      __Pyx_XGOTREF(__pyx_t_10);
+      __Pyx_XGOTREF(__pyx_t_11);
+      __Pyx_XGOTREF(__pyx_t_12);
+      __Pyx_XGOTREF(__pyx_t_13);
+      __Pyx_XGOTREF(__pyx_t_14);
+      __Pyx_XGOTREF(__pyx_t_15);
+      __pyx_t_7 = __pyx_lineno; __pyx_t_8 = __pyx_clineno; __pyx_t_9 = __pyx_filename;
+      {
+
+        /* "bz3/backends/cython/_bz3.pyx":304
+ *             output.flush()
+ *     finally:
+ *         output.flush()             # <<<<<<<<<<<<<<
+ *         bz3_free(state)
+ *         state = NULL
+ */
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 304, __pyx_L27_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __pyx_t_4 = NULL;
+        if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+          __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+          if (likely(__pyx_t_4)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+            __Pyx_INCREF(__pyx_t_4);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_3, function);
+          }
+        }
+        __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 304, __pyx_L27_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+        /* "bz3/backends/cython/_bz3.pyx":305
+ *     finally:
+ *         output.flush()
+ *         bz3_free(state)             # <<<<<<<<<<<<<<
+ *         state = NULL
+ *         PyMem_Free(buffer)
+ */
+        bz3_free(__pyx_v_state);
+
+        /* "bz3/backends/cython/_bz3.pyx":306
+ *         output.flush()
+ *         bz3_free(state)
+ *         state = NULL             # <<<<<<<<<<<<<<
+ *         PyMem_Free(buffer)
+ *         buffer = NULL
+ */
+        __pyx_v_state = NULL;
+
+        /* "bz3/backends/cython/_bz3.pyx":307
+ *         bz3_free(state)
+ *         state = NULL
+ *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
+ *         buffer = NULL
+ * 
+ */
+        PyMem_Free(__pyx_v_buffer);
+
+        /* "bz3/backends/cython/_bz3.pyx":308
+ *         state = NULL
+ *         PyMem_Free(buffer)
+ *         buffer = NULL             # <<<<<<<<<<<<<<
+ * 
+ * def recover_file(object input, object output):
+ */
+        __pyx_v_buffer = NULL;
+      }
+      if (PY_MAJOR_VERSION >= 3) {
+        __Pyx_XGIVEREF(__pyx_t_13);
+        __Pyx_XGIVEREF(__pyx_t_14);
+        __Pyx_XGIVEREF(__pyx_t_15);
+        __Pyx_ExceptionReset(__pyx_t_13, __pyx_t_14, __pyx_t_15);
+      }
+      __Pyx_XGIVEREF(__pyx_t_10);
+      __Pyx_XGIVEREF(__pyx_t_11);
+      __Pyx_XGIVEREF(__pyx_t_12);
+      __Pyx_ErrRestore(__pyx_t_10, __pyx_t_11, __pyx_t_12);
+      __pyx_t_10 = 0; __pyx_t_11 = 0; __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0;
+      __pyx_lineno = __pyx_t_7; __pyx_clineno = __pyx_t_8; __pyx_filename = __pyx_t_9;
+      goto __pyx_L1_error;
+      __pyx_L27_error:;
+      if (PY_MAJOR_VERSION >= 3) {
+        __Pyx_XGIVEREF(__pyx_t_13);
+        __Pyx_XGIVEREF(__pyx_t_14);
+        __Pyx_XGIVEREF(__pyx_t_15);
+        __Pyx_ExceptionReset(__pyx_t_13, __pyx_t_14, __pyx_t_15);
+      }
+      __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+      __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
+      __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0;
+      goto __pyx_L1_error;
+    }
+    __pyx_L14:;
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":258
+ *         buffer = NULL
+ * 
+ * def decompress_file(object input, object output):             # <<<<<<<<<<<<<<
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.decompress_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_data);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":310
+ *         buffer = NULL
+ * 
+ * def recover_file(object input, object output):             # <<<<<<<<<<<<<<
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5recover_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_4recover_file[] = "recover_file(input, output)";
+static PyMethodDef __pyx_mdef_3bz3_8backends_6cython_4_bz3_5recover_file = {"recover_file", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_5recover_file, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_4recover_file};
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5recover_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_input = 0;
+  PyObject *__pyx_v_output = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("recover_file (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_input,&__pyx_n_s_output,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_input)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("recover_file", 1, 2, 2, 1); __PYX_ERR(0, 310, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "recover_file") < 0)) __PYX_ERR(0, 310, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_input = values[0];
+    __pyx_v_output = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("recover_file", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 310, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.recover_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(__pyx_self, __pyx_v_input, __pyx_v_output);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, PyObject *__pyx_v_output) {
+  PyObject *__pyx_v_data = 0;
+  int32_t __pyx_v_block_size;
+  struct bz3_state *__pyx_v_state;
+  uint8_t *__pyx_v_buffer;
+  int32_t __pyx_v_new_size;
+  int32_t __pyx_v_old_size;
+  int32_t __pyx_v_code;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  char const *__pyx_t_9;
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
+  PyObject *__pyx_t_14 = NULL;
+  PyObject *__pyx_t_15 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("recover_file", 0);
+
+  /* "bz3/backends/cython/_bz3.pyx":311
+ * 
+ * def recover_file(object input, object output):
+ *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ *     if not PyFile_Check(output):
+ */
+  __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_input) != 0)) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":312
+ * def recover_file(object input, object output):
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)             # <<<<<<<<<<<<<<
+ *     if not PyFile_Check(output):
+ *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+ */
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 312, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":311
+ * 
+ * def recover_file(object input, object output):
+ *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ *     if not PyFile_Check(output):
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":313
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
+ *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+ *     cdef bytes data
+ */
+  __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_output) != 0)) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":314
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ *     if not PyFile_Check(output):
+ *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)             # <<<<<<<<<<<<<<
+ *     cdef bytes data
+ *     cdef int32_t block_size
+ */
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_output)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 314, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_output_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 314, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 314, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 314, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":313
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ *     if not PyFile_Check(output):             # <<<<<<<<<<<<<<
+ *         raise TypeError("output except a file-like object, got %s" % type(output).__name__)
+ *     cdef bytes data
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":317
+ *     cdef bytes data
+ *     cdef int32_t block_size
+ *     data = input.read(9) # magic and block_size type: bytes len = 9             # <<<<<<<<<<<<<<
+ *     if PyBytes_GET_SIZE(data) < 9:
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ */
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 317, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_9) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_9);
+  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 317, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 317, __pyx_L1_error)
+  __pyx_v_data = ((PyObject*)__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "bz3/backends/cython/_bz3.pyx":318
+ *     cdef int32_t block_size
+ *     data = input.read(9) # magic and block_size type: bytes len = 9
+ *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+ */
+  __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 9) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":319
+ *     data = input.read(9) # magic and block_size type: bytes len = 9
+ *     if PyBytes_GET_SIZE(data) < 9:
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")             # <<<<<<<<<<<<<<
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+ *         raise ValueError("Invalid signature")
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 319, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 319, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":318
+ *     cdef int32_t block_size
+ *     data = input.read(9) # magic and block_size type: bytes len = 9
+ *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":320
+ *     if PyBytes_GET_SIZE(data) < 9:
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
+ *         raise ValueError("Invalid signature")
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ */
+  __pyx_t_1 = ((strncmp(PyBytes_AS_STRING(__pyx_v_data), __pyx_v_3bz3_8backends_6cython_4_bz3_magic, 5) != 0) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":321
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+ *         raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ *     if block_size < KiB(65) or block_size > MiB(511):
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 321, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 321, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":320
+ *     if PyBytes_GET_SIZE(data) < 9:
+ *         raise ValueError("Invalid file. Reason: Smaller than magic header")
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
+ *         raise ValueError("Invalid signature")
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":322
+ *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
+ *         raise ValueError("Invalid signature")
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))             # <<<<<<<<<<<<<<
+ *     if block_size < KiB(65) or block_size > MiB(511):
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ */
+  __pyx_v_block_size = read_neutral_s32(((uint8_t *)(&(PyBytes_AS_STRING(__pyx_v_data)[5]))));
+
+  /* "bz3/backends/cython/_bz3.pyx":323
+ *         raise ValueError("Invalid signature")
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ *     cdef bz3_state *state = bz3_new(block_size)
+ */
+  __pyx_t_5 = ((__pyx_v_block_size < KiB(65)) != 0);
+  if (!__pyx_t_5) {
+  } else {
+    __pyx_t_1 = __pyx_t_5;
+    goto __pyx_L8_bool_binop_done;
+  }
+  __pyx_t_5 = ((__pyx_v_block_size > MiB(0x1FF)) != 0);
+  __pyx_t_1 = __pyx_t_5;
+  __pyx_L8_bool_binop_done:;
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":324
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ *     if block_size < KiB(65) or block_size > MiB(511):
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
+ *     cdef bz3_state *state = bz3_new(block_size)
+ *     if state == NULL:
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 324, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 324, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":323
+ *         raise ValueError("Invalid signature")
+ *     block_size = read_neutral_s32(<uint8_t*>&(PyBytes_AS_STRING(data)[5]))
+ *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ *     cdef bz3_state *state = bz3_new(block_size)
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":325
+ *     if block_size < KiB(65) or block_size > MiB(511):
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ *     cdef bz3_state *state = bz3_new(block_size)             # <<<<<<<<<<<<<<
+ *     if state == NULL:
+ *         raise MemoryError("Failed to create a block encoder state")
+ */
+  __pyx_v_state = bz3_new(__pyx_v_block_size);
+
+  /* "bz3/backends/cython/_bz3.pyx":326
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ *     cdef bz3_state *state = bz3_new(block_size)
+ *     if state == NULL:             # <<<<<<<<<<<<<<
+ *         raise MemoryError("Failed to create a block encoder state")
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ */
+  __pyx_t_1 = ((__pyx_v_state == NULL) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":327
+ *     cdef bz3_state *state = bz3_new(block_size)
+ *     if state == NULL:
+ *         raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ *     if buffer == NULL:
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 327, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 327, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":326
+ *         raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
+ *     cdef bz3_state *state = bz3_new(block_size)
+ *     if state == NULL:             # <<<<<<<<<<<<<<
+ *         raise MemoryError("Failed to create a block encoder state")
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":328
+ *     if state == NULL:
+ *         raise MemoryError("Failed to create a block encoder state")
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
+ *     if buffer == NULL:
+ *         bz3_free(state)
+ */
+  __pyx_v_buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
+
+  /* "bz3/backends/cython/_bz3.pyx":329
+ *         raise MemoryError("Failed to create a block encoder state")
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ *     if buffer == NULL:             # <<<<<<<<<<<<<<
+ *         bz3_free(state)
+ *         state = NULL
+ */
+  __pyx_t_1 = ((__pyx_v_buffer == NULL) != 0);
+  if (unlikely(__pyx_t_1)) {
+
+    /* "bz3/backends/cython/_bz3.pyx":330
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ *     if buffer == NULL:
+ *         bz3_free(state)             # <<<<<<<<<<<<<<
+ *         state = NULL
+ *         raise MemoryError("Failed to allocate memory")
+ */
+    bz3_free(__pyx_v_state);
+
+    /* "bz3/backends/cython/_bz3.pyx":331
+ *     if buffer == NULL:
+ *         bz3_free(state)
+ *         state = NULL             # <<<<<<<<<<<<<<
+ *         raise MemoryError("Failed to allocate memory")
+ *     cdef int32_t new_size, old_size, code
+ */
+    __pyx_v_state = NULL;
+
+    /* "bz3/backends/cython/_bz3.pyx":332
+ *         bz3_free(state)
+ *         state = NULL
+ *         raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
+ *     cdef int32_t new_size, old_size, code
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 332, __pyx_L1_error)
+
+    /* "bz3/backends/cython/_bz3.pyx":329
+ *         raise MemoryError("Failed to create a block encoder state")
+ *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+ *     if buffer == NULL:             # <<<<<<<<<<<<<<
+ *         bz3_free(state)
+ *         state = NULL
+ */
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":335
+ *     cdef int32_t new_size, old_size, code
+ * 
+ *     try:             # <<<<<<<<<<<<<<
+ *         while True:
+ *             data = input.read(4)
+ */
+  /*try:*/ {
+
+    /* "bz3/backends/cython/_bz3.pyx":336
+ * 
+ *     try:
+ *         while True:             # <<<<<<<<<<<<<<
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:
+ */
+    while (1) {
+
+      /* "bz3/backends/cython/_bz3.pyx":337
+ *     try:
+ *         while True:
+ *             data = input.read(4)             # <<<<<<<<<<<<<<
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 337, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_4)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_4);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 337, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 337, __pyx_L13_error)
+      __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
+      __pyx_t_2 = 0;
+
+      /* "bz3/backends/cython/_bz3.pyx":338
+ *         while True:
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
+ *                 break
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ */
+      __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
+      if (__pyx_t_1) {
+
+        /* "bz3/backends/cython/_bz3.pyx":339
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break             # <<<<<<<<<<<<<<
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ *             data = input.read(4)
+ */
+        goto __pyx_L16_break;
+
+        /* "bz3/backends/cython/_bz3.pyx":338
+ *         while True:
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
+ *                 break
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ */
+      }
+
+      /* "bz3/backends/cython/_bz3.pyx":340
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:
+ */
+      __pyx_v_new_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
+
+      /* "bz3/backends/cython/_bz3.pyx":341
+ *                 break
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ *             data = input.read(4)             # <<<<<<<<<<<<<<
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 341, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_4)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_4);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 341, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 341, __pyx_L13_error)
+      __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
+      __pyx_t_2 = 0;
+
+      /* "bz3/backends/cython/_bz3.pyx":342
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
+ *                 break
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ */
+      __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
+      if (__pyx_t_1) {
+
+        /* "bz3/backends/cython/_bz3.pyx":343
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break             # <<<<<<<<<<<<<<
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ *             data = input.read(new_size) # type: bytes
+ */
+        goto __pyx_L16_break;
+
+        /* "bz3/backends/cython/_bz3.pyx":342
+ *             new_size = read_neutral_s32(<uint8_t*>PyBytes_AS_STRING(data))
+ *             data = input.read(4)
+ *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
+ *                 break
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ */
+      }
+
+      /* "bz3/backends/cython/_bz3.pyx":344
+ *             if PyBytes_GET_SIZE(data) < 4:
+ *                 break
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
+ *             data = input.read(new_size) # type: bytes
+ *             if PyBytes_GET_SIZE(data) < new_size:
+ */
+      __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
+
+      /* "bz3/backends/cython/_bz3.pyx":345
+ *                 break
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ *             data = input.read(new_size) # type: bytes             # <<<<<<<<<<<<<<
+ *             if PyBytes_GET_SIZE(data) < new_size:
+ *                 break
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 345, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_6 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_6)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_6);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 345, __pyx_L13_error)
+      __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
+      __pyx_t_2 = 0;
+
+      /* "bz3/backends/cython/_bz3.pyx":346
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ *             data = input.read(new_size) # type: bytes
+ *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
+ *                 break
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ */
+      __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < __pyx_v_new_size) != 0);
+      if (__pyx_t_1) {
+
+        /* "bz3/backends/cython/_bz3.pyx":347
+ *             data = input.read(new_size) # type: bytes
+ *             if PyBytes_GET_SIZE(data) < new_size:
+ *                 break             # <<<<<<<<<<<<<<
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ *             with nogil:
+ */
+        goto __pyx_L16_break;
+
+        /* "bz3/backends/cython/_bz3.pyx":346
+ *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+ *             data = input.read(new_size) # type: bytes
+ *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
+ *                 break
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ */
+      }
+
+      /* "bz3/backends/cython/_bz3.pyx":348
+ *             if PyBytes_GET_SIZE(data) < new_size:
+ *                 break
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)             # <<<<<<<<<<<<<<
+ *             with nogil:
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ */
+      (void)(memcpy(__pyx_v_buffer, PyBytes_AS_STRING(__pyx_v_data), ((size_t)__pyx_v_new_size)));
+
+      /* "bz3/backends/cython/_bz3.pyx":349
+ *                 break
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ *             with nogil:             # <<<<<<<<<<<<<<
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ *             if code == -1:
+ */
+      {
+          #ifdef WITH_THREAD
+          PyThreadState *_save;
+          Py_UNBLOCK_THREADS
+          __Pyx_FastGIL_Remember();
+          #endif
+          /*try:*/ {
+
+            /* "bz3/backends/cython/_bz3.pyx":350
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ *             with nogil:
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)             # <<<<<<<<<<<<<<
+ *             if code == -1:
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
+ */
+            __pyx_v_code = bz3_decode_block(__pyx_v_state, __pyx_v_buffer, __pyx_v_new_size, __pyx_v_old_size);
+          }
+
+          /* "bz3/backends/cython/_bz3.pyx":349
+ *                 break
+ *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
+ *             with nogil:             # <<<<<<<<<<<<<<
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ *             if code == -1:
+ */
+          /*finally:*/ {
+            /*normal exit:*/{
+              #ifdef WITH_THREAD
+              __Pyx_FastGIL_Forget();
+              Py_BLOCK_THREADS
+              #endif
+              goto __pyx_L24;
+            }
+            __pyx_L24:;
+          }
+      }
+
+      /* "bz3/backends/cython/_bz3.pyx":351
+ *             with nogil:
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ *             if code == -1:             # <<<<<<<<<<<<<<
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
+ *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+ */
+      __pyx_t_1 = ((__pyx_v_code == -1L) != 0);
+      if (__pyx_t_1) {
+
+        /* "bz3/backends/cython/_bz3.pyx":352
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ *             if code == -1:
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))             # <<<<<<<<<<<<<<
+ *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+ *             output.flush()
+ */
+        (void)(fprintf(stderr, ((char const *)"Writing invalid block: %s\n"), bz3_strerror(__pyx_v_state)));
+
+        /* "bz3/backends/cython/_bz3.pyx":351
+ *             with nogil:
+ *                 code = bz3_decode_block(state, buffer, new_size, old_size)
+ *             if code == -1:             # <<<<<<<<<<<<<<
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
+ *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+ */
+      }
+
+      /* "bz3/backends/cython/_bz3.pyx":353
+ *             if code == -1:
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
+ *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))             # <<<<<<<<<<<<<<
+ *             output.flush()
+ *     finally:
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_write); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 353, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = PyBytes_FromStringAndSize(((char *)__pyx_v_buffer), __pyx_v_old_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 353, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_6 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_6)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_6);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+      /* "bz3/backends/cython/_bz3.pyx":354
+ *                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
+ *             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
+ *             output.flush()             # <<<<<<<<<<<<<<
+ *     finally:
+ *         output.flush()
+ */
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_4)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_4);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 354, __pyx_L13_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    }
+    __pyx_L16_break:;
+  }
+
+  /* "bz3/backends/cython/_bz3.pyx":356
+ *             output.flush()
+ *     finally:
+ *         output.flush()             # <<<<<<<<<<<<<<
+ *         bz3_free(state)
+ *         state = NULL
+ */
+  /*finally:*/ {
+    /*normal exit:*/{
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_4)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_4);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 356, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+      /* "bz3/backends/cython/_bz3.pyx":357
+ *     finally:
+ *         output.flush()
+ *         bz3_free(state)             # <<<<<<<<<<<<<<
+ *         state = NULL
+ *         PyMem_Free(buffer)
+ */
+      bz3_free(__pyx_v_state);
+
+      /* "bz3/backends/cython/_bz3.pyx":358
+ *         output.flush()
+ *         bz3_free(state)
+ *         state = NULL             # <<<<<<<<<<<<<<
+ *         PyMem_Free(buffer)
+ *         buffer = NULL
+ */
+      __pyx_v_state = NULL;
+
+      /* "bz3/backends/cython/_bz3.pyx":359
+ *         bz3_free(state)
+ *         state = NULL
+ *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
+ *         buffer = NULL
+ * 
+ */
+      PyMem_Free(__pyx_v_buffer);
+
+      /* "bz3/backends/cython/_bz3.pyx":360
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -7123,14 +8233,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       __pyx_t_7 = __pyx_lineno; __pyx_t_8 = __pyx_clineno; __pyx_t_9 = __pyx_filename;
       {
 
-        /* "bz3/backends/cython/_bz3.pyx":298
+        /* "bz3/backends/cython/_bz3.pyx":356
  *             output.flush()
  *     finally:
  *         output.flush()             # <<<<<<<<<<<<<<
  *         bz3_free(state)
  *         state = NULL
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 298, __pyx_L27_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_output, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L27_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7144,12 +8254,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 298, __pyx_L27_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 356, __pyx_L27_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "bz3/backends/cython/_bz3.pyx":299
+        /* "bz3/backends/cython/_bz3.pyx":357
  *     finally:
  *         output.flush()
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -7158,7 +8268,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         bz3_free(__pyx_v_state);
 
-        /* "bz3/backends/cython/_bz3.pyx":300
+        /* "bz3/backends/cython/_bz3.pyx":358
  *         output.flush()
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -7167,7 +8277,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         __pyx_v_state = NULL;
 
-        /* "bz3/backends/cython/_bz3.pyx":301
+        /* "bz3/backends/cython/_bz3.pyx":359
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -7176,7 +8286,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  */
         PyMem_Free(__pyx_v_buffer);
 
-        /* "bz3/backends/cython/_bz3.pyx":302
+        /* "bz3/backends/cython/_bz3.pyx":360
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -7214,10 +8324,10 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
     __pyx_L14:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":252
+  /* "bz3/backends/cython/_bz3.pyx":310
  *         buffer = NULL
  * 
- * def decompress_file(object input, object output):             # <<<<<<<<<<<<<<
+ * def recover_file(object input, object output):             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
@@ -7230,7 +8340,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("bz3.backends.cython._bz3.decompress_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.recover_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_data);
@@ -7239,7 +8349,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":304
+/* "bz3/backends/cython/_bz3.pyx":362
  *         buffer = NULL
  * 
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:             # <<<<<<<<<<<<<<
@@ -7247,7 +8357,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
 
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject *__pyx_v_input, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_test_file *__pyx_optional_args) {
   int __pyx_v_should_raise = ((int)0);
   PyObject *__pyx_v_data = 0;
@@ -7284,7 +8394,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":305
+  /* "bz3/backends/cython/_bz3.pyx":363
  * 
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -7294,26 +8404,26 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_t_1 = ((!(__pyx_f_3bz3_8backends_6cython_4_bz3_PyFile_Check(__pyx_v_input) != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":306
+    /* "bz3/backends/cython/_bz3.pyx":364
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)             # <<<<<<<<<<<<<<
  *     cdef bytes data
  *     cdef int32_t block_size
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 306, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)Py_TYPE(__pyx_v_input)), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 306, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_input_except_a_file_like_object, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 306, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 306, __pyx_L1_error)
+    __PYX_ERR(0, 364, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":305
+    /* "bz3/backends/cython/_bz3.pyx":363
  * 
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
  *     if not PyFile_Check(input):             # <<<<<<<<<<<<<<
@@ -7322,14 +8432,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":309
+  /* "bz3/backends/cython/_bz3.pyx":367
  *     cdef bytes data
  *     cdef int32_t block_size
  *     data = input.read(9)  # magic and block_size type: bytes len = 9             # <<<<<<<<<<<<<<
  *     if PyBytes_GET_SIZE(data) < 9:
  *         if should_raise:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 367, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7343,14 +8453,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   }
   __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_9) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_9);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 309, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 367, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 309, __pyx_L1_error)
+  if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 367, __pyx_L1_error)
   __pyx_v_data = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":310
+  /* "bz3/backends/cython/_bz3.pyx":368
  *     cdef int32_t block_size
  *     data = input.read(9)  # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
@@ -7360,7 +8470,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 9) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":311
+    /* "bz3/backends/cython/_bz3.pyx":369
  *     data = input.read(9)  # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7370,20 +8480,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_t_1 = (__pyx_v_should_raise != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":312
+      /* "bz3/backends/cython/_bz3.pyx":370
  *     if PyBytes_GET_SIZE(data) < 9:
  *         if should_raise:
  *             raise ValueError("Invalid file. Reason: Smaller than magic header")             # <<<<<<<<<<<<<<
  *         return 0
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  */
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __PYX_ERR(0, 312, __pyx_L1_error)
+      __PYX_ERR(0, 370, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":311
+      /* "bz3/backends/cython/_bz3.pyx":369
  *     data = input.read(9)  # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7392,7 +8502,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":313
+    /* "bz3/backends/cython/_bz3.pyx":371
  *         if should_raise:
  *             raise ValueError("Invalid file. Reason: Smaller than magic header")
  *         return 0             # <<<<<<<<<<<<<<
@@ -7402,7 +8512,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":310
+    /* "bz3/backends/cython/_bz3.pyx":368
  *     cdef int32_t block_size
  *     data = input.read(9)  # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:             # <<<<<<<<<<<<<<
@@ -7411,7 +8521,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":314
+  /* "bz3/backends/cython/_bz3.pyx":372
  *             raise ValueError("Invalid file. Reason: Smaller than magic header")
  *         return 0
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -7421,7 +8531,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_t_1 = ((strncmp(PyBytes_AS_STRING(__pyx_v_data), __pyx_v_3bz3_8backends_6cython_4_bz3_magic, 5) != 0) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":315
+    /* "bz3/backends/cython/_bz3.pyx":373
  *         return 0
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7431,20 +8541,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_t_1 = (__pyx_v_should_raise != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":316
+      /* "bz3/backends/cython/_bz3.pyx":374
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         if should_raise:
  *             raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *         return 0
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
  */
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 316, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 374, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __PYX_ERR(0, 316, __pyx_L1_error)
+      __PYX_ERR(0, 374, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":315
+      /* "bz3/backends/cython/_bz3.pyx":373
  *         return 0
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7453,7 +8563,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":317
+    /* "bz3/backends/cython/_bz3.pyx":375
  *         if should_raise:
  *             raise ValueError("Invalid signature")
  *         return 0             # <<<<<<<<<<<<<<
@@ -7463,7 +8573,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":314
+    /* "bz3/backends/cython/_bz3.pyx":372
  *             raise ValueError("Invalid file. Reason: Smaller than magic header")
  *         return 0
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -7472,7 +8582,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":318
+  /* "bz3/backends/cython/_bz3.pyx":376
  *             raise ValueError("Invalid signature")
  *         return 0
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))             # <<<<<<<<<<<<<<
@@ -7481,7 +8591,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   __pyx_v_block_size = read_neutral_s32(((uint8_t *)(&(PyBytes_AS_STRING(__pyx_v_data)[5]))));
 
-  /* "bz3/backends/cython/_bz3.pyx":319
+  /* "bz3/backends/cython/_bz3.pyx":377
  *         return 0
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -7499,7 +8609,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_L9_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":320
+    /* "bz3/backends/cython/_bz3.pyx":378
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7509,20 +8619,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_t_1 = (__pyx_v_should_raise != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":321
+      /* "bz3/backends/cython/_bz3.pyx":379
  *     if block_size < KiB(65) or block_size > MiB(511):
  *         if should_raise:
  *             raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
  *         return 0
  *     cdef bz3_state *state = bz3_new(block_size)
  */
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 321, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 379, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __PYX_ERR(0, 321, __pyx_L1_error)
+      __PYX_ERR(0, 379, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":320
+      /* "bz3/backends/cython/_bz3.pyx":378
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):
  *         if should_raise:             # <<<<<<<<<<<<<<
@@ -7531,7 +8641,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":322
+    /* "bz3/backends/cython/_bz3.pyx":380
  *         if should_raise:
  *             raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *         return 0             # <<<<<<<<<<<<<<
@@ -7541,7 +8651,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":319
+    /* "bz3/backends/cython/_bz3.pyx":377
  *         return 0
  *     block_size = read_neutral_s32(<uint8_t *> &(PyBytes_AS_STRING(data)[5]))
  *     if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -7550,7 +8660,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":323
+  /* "bz3/backends/cython/_bz3.pyx":381
  *             raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *         return 0
  *     cdef bz3_state *state = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -7559,7 +8669,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   __pyx_v_state = bz3_new(__pyx_v_block_size);
 
-  /* "bz3/backends/cython/_bz3.pyx":324
+  /* "bz3/backends/cython/_bz3.pyx":382
  *         return 0
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -7569,20 +8679,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_t_1 = ((__pyx_v_state == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":325
+    /* "bz3/backends/cython/_bz3.pyx":383
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 325, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 325, __pyx_L1_error)
+    __PYX_ERR(0, 383, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":324
+    /* "bz3/backends/cython/_bz3.pyx":382
  *         return 0
  *     cdef bz3_state *state = bz3_new(block_size)
  *     if state == NULL:             # <<<<<<<<<<<<<<
@@ -7591,7 +8701,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":326
+  /* "bz3/backends/cython/_bz3.pyx":384
  *     if state == NULL:
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -7600,7 +8710,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   __pyx_v_buffer = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-  /* "bz3/backends/cython/_bz3.pyx":327
+  /* "bz3/backends/cython/_bz3.pyx":385
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -7610,7 +8720,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
   __pyx_t_1 = ((__pyx_v_buffer == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":328
+    /* "bz3/backends/cython/_bz3.pyx":386
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -7619,7 +8729,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     bz3_free(__pyx_v_state);
 
-    /* "bz3/backends/cython/_bz3.pyx":329
+    /* "bz3/backends/cython/_bz3.pyx":387
  *     if buffer == NULL:
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -7628,20 +8738,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     __pyx_v_state = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":330
+    /* "bz3/backends/cython/_bz3.pyx":388
  *         bz3_free(state)
  *         state = NULL
  *         raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *     cdef int32_t new_size, old_size, code
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 330, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 388, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 330, __pyx_L1_error)
+    __PYX_ERR(0, 388, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":327
+    /* "bz3/backends/cython/_bz3.pyx":385
  *         raise MemoryError("Failed to create a block encoder state")
  *     cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *     if buffer == NULL:             # <<<<<<<<<<<<<<
@@ -7650,7 +8760,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":333
+  /* "bz3/backends/cython/_bz3.pyx":391
  *     cdef int32_t new_size, old_size, code
  * 
  *     try:             # <<<<<<<<<<<<<<
@@ -7659,7 +8769,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
   /*try:*/ {
 
-    /* "bz3/backends/cython/_bz3.pyx":334
+    /* "bz3/backends/cython/_bz3.pyx":392
  * 
  *     try:
  *         while True:             # <<<<<<<<<<<<<<
@@ -7668,14 +8778,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
     while (1) {
 
-      /* "bz3/backends/cython/_bz3.pyx":335
+      /* "bz3/backends/cython/_bz3.pyx":393
  *     try:
  *         while True:
  *             data = input.read(4)             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 335, __pyx_L15_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 393, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7689,14 +8799,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 335, __pyx_L15_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 393, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 335, __pyx_L15_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 393, __pyx_L15_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":336
+      /* "bz3/backends/cython/_bz3.pyx":394
  *         while True:
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -7706,7 +8816,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":337
+        /* "bz3/backends/cython/_bz3.pyx":395
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
@@ -7715,7 +8825,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         goto __pyx_L18_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":336
+        /* "bz3/backends/cython/_bz3.pyx":394
  *         while True:
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -7724,7 +8834,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":338
+      /* "bz3/backends/cython/_bz3.pyx":396
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             new_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
@@ -7733,14 +8843,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       __pyx_v_new_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
 
-      /* "bz3/backends/cython/_bz3.pyx":339
+      /* "bz3/backends/cython/_bz3.pyx":397
  *                 break
  *             new_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(4)             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 339, __pyx_L15_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 397, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7754,14 +8864,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       }
       __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_int_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_4);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 339, __pyx_L15_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 397, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 339, __pyx_L15_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 397, __pyx_L15_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":340
+      /* "bz3/backends/cython/_bz3.pyx":398
  *             new_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -7771,7 +8881,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < 4) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":341
+        /* "bz3/backends/cython/_bz3.pyx":399
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
@@ -7780,7 +8890,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         goto __pyx_L18_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":340
+        /* "bz3/backends/cython/_bz3.pyx":398
  *             new_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(4)
  *             if PyBytes_GET_SIZE(data) < 4:             # <<<<<<<<<<<<<<
@@ -7789,7 +8899,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":342
+      /* "bz3/backends/cython/_bz3.pyx":400
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
@@ -7798,16 +8908,16 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
 
-      /* "bz3/backends/cython/_bz3.pyx":343
+      /* "bz3/backends/cython/_bz3.pyx":401
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size)  # type: bytes             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 343, __pyx_L15_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_input, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 401, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 343, __pyx_L15_error)
+      __pyx_t_4 = __Pyx_PyInt_From_int32_t(__pyx_v_new_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 401, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_6 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7822,14 +8932,14 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       __pyx_t_2 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_6, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 343, __pyx_L15_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 401, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 343, __pyx_L15_error)
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 401, __pyx_L15_error)
       __Pyx_DECREF_SET(__pyx_v_data, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":344
+      /* "bz3/backends/cython/_bz3.pyx":402
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size)  # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
@@ -7839,7 +8949,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       __pyx_t_1 = ((PyBytes_GET_SIZE(__pyx_v_data) < __pyx_v_new_size) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":345
+        /* "bz3/backends/cython/_bz3.pyx":403
  *             data = input.read(new_size)  # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break             # <<<<<<<<<<<<<<
@@ -7848,7 +8958,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         goto __pyx_L18_break;
 
-        /* "bz3/backends/cython/_bz3.pyx":344
+        /* "bz3/backends/cython/_bz3.pyx":402
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
  *             data = input.read(new_size)  # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:             # <<<<<<<<<<<<<<
@@ -7857,7 +8967,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":346
+      /* "bz3/backends/cython/_bz3.pyx":404
  *             if PyBytes_GET_SIZE(data) < new_size:
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)             # <<<<<<<<<<<<<<
@@ -7866,7 +8976,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       (void)(memcpy(__pyx_v_buffer, PyBytes_AS_STRING(__pyx_v_data), ((size_t)__pyx_v_new_size)));
 
-      /* "bz3/backends/cython/_bz3.pyx":347
+      /* "bz3/backends/cython/_bz3.pyx":405
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -7881,7 +8991,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
           #endif
           /*try:*/ {
 
-            /* "bz3/backends/cython/_bz3.pyx":348
+            /* "bz3/backends/cython/_bz3.pyx":406
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)             # <<<<<<<<<<<<<<
@@ -7891,7 +9001,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
             __pyx_v_code = bz3_decode_block(__pyx_v_state, __pyx_v_buffer, __pyx_v_new_size, __pyx_v_old_size);
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":347
+          /* "bz3/backends/cython/_bz3.pyx":405
  *                 break
  *             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -7910,7 +9020,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
           }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":350
+      /* "bz3/backends/cython/_bz3.pyx":408
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)
  *             # print(f"newsize {new_size} oldsize {old_size}") # todo
  *             if code == -1:             # <<<<<<<<<<<<<<
@@ -7920,7 +9030,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       __pyx_t_1 = ((__pyx_v_code == -1L) != 0);
       if (__pyx_t_1) {
 
-        /* "bz3/backends/cython/_bz3.pyx":351
+        /* "bz3/backends/cython/_bz3.pyx":409
  *             # print(f"newsize {new_size} oldsize {old_size}") # todo
  *             if code == -1:
  *                 if should_raise:             # <<<<<<<<<<<<<<
@@ -7930,26 +9040,26 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
         __pyx_t_1 = (__pyx_v_should_raise != 0);
         if (unlikely(__pyx_t_1)) {
 
-          /* "bz3/backends/cython/_bz3.pyx":352
+          /* "bz3/backends/cython/_bz3.pyx":410
  *             if code == -1:
  *                 if should_raise:
  *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))             # <<<<<<<<<<<<<<
  *                 return 0
  *         return 1
  */
-          __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L15_error)
+          __pyx_t_2 = __Pyx_PyBytes_FromString(bz3_strerror(__pyx_v_state)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 352, __pyx_L15_error)
+          __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_a_block_s, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 410, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L15_error)
+          __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_Raise(__pyx_t_2, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          __PYX_ERR(0, 352, __pyx_L15_error)
+          __PYX_ERR(0, 410, __pyx_L15_error)
 
-          /* "bz3/backends/cython/_bz3.pyx":351
+          /* "bz3/backends/cython/_bz3.pyx":409
  *             # print(f"newsize {new_size} oldsize {old_size}") # todo
  *             if code == -1:
  *                 if should_raise:             # <<<<<<<<<<<<<<
@@ -7958,7 +9068,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":353
+        /* "bz3/backends/cython/_bz3.pyx":411
  *                 if should_raise:
  *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
  *                 return 0             # <<<<<<<<<<<<<<
@@ -7968,7 +9078,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
         __pyx_r = 0;
         goto __pyx_L14_return;
 
-        /* "bz3/backends/cython/_bz3.pyx":350
+        /* "bz3/backends/cython/_bz3.pyx":408
  *                 code = bz3_decode_block(state, buffer, new_size, old_size)
  *             # print(f"newsize {new_size} oldsize {old_size}") # todo
  *             if code == -1:             # <<<<<<<<<<<<<<
@@ -7979,7 +9089,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     }
     __pyx_L18_break:;
 
-    /* "bz3/backends/cython/_bz3.pyx":354
+    /* "bz3/backends/cython/_bz3.pyx":412
  *                     raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
  *                 return 0
  *         return 1             # <<<<<<<<<<<<<<
@@ -7990,7 +9100,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     goto __pyx_L14_return;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":356
+  /* "bz3/backends/cython/_bz3.pyx":414
  *         return 1
  *     finally:
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -8019,7 +9129,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       {
         bz3_free(__pyx_v_state);
 
-        /* "bz3/backends/cython/_bz3.pyx":357
+        /* "bz3/backends/cython/_bz3.pyx":415
  *     finally:
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -8028,7 +9138,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         __pyx_v_state = NULL;
 
-        /* "bz3/backends/cython/_bz3.pyx":358
+        /* "bz3/backends/cython/_bz3.pyx":416
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -8037,7 +9147,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
         PyMem_Free(__pyx_v_buffer);
 
-        /* "bz3/backends/cython/_bz3.pyx":359
+        /* "bz3/backends/cython/_bz3.pyx":417
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -8063,7 +9173,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     __pyx_L14_return: {
       __pyx_t_1 = __pyx_r;
 
-      /* "bz3/backends/cython/_bz3.pyx":356
+      /* "bz3/backends/cython/_bz3.pyx":414
  *         return 1
  *     finally:
  *         bz3_free(state)             # <<<<<<<<<<<<<<
@@ -8072,7 +9182,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       bz3_free(__pyx_v_state);
 
-      /* "bz3/backends/cython/_bz3.pyx":357
+      /* "bz3/backends/cython/_bz3.pyx":415
  *     finally:
  *         bz3_free(state)
  *         state = NULL             # <<<<<<<<<<<<<<
@@ -8081,7 +9191,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       __pyx_v_state = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":358
+      /* "bz3/backends/cython/_bz3.pyx":416
  *         bz3_free(state)
  *         state = NULL
  *         PyMem_Free(buffer)             # <<<<<<<<<<<<<<
@@ -8090,7 +9200,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  */
       PyMem_Free(__pyx_v_buffer);
 
-      /* "bz3/backends/cython/_bz3.pyx":359
+      /* "bz3/backends/cython/_bz3.pyx":417
  *         state = NULL
  *         PyMem_Free(buffer)
  *         buffer = NULL             # <<<<<<<<<<<<<<
@@ -8103,7 +9213,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":304
+  /* "bz3/backends/cython/_bz3.pyx":362
  *         buffer = NULL
  * 
  * cpdef inline bint test_file(object input, bint should_raise = False) except? 0:             # <<<<<<<<<<<<<<
@@ -8126,9 +9236,9 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_3bz3_8backends_6cython_4_bz3_4test_file[] = "test_file(input, bool should_raise=False) -> bool";
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_6test_file[] = "test_file(input, bool should_raise=False) -> bool";
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7test_file(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_input = 0;
   int __pyx_v_should_raise;
   int __pyx_lineno = 0;
@@ -8164,7 +9274,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file(PyObject *__py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "test_file") < 0)) __PYX_ERR(0, 304, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "test_file") < 0)) __PYX_ERR(0, 362, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8177,27 +9287,27 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file(PyObject *__py
     }
     __pyx_v_input = values[0];
     if (values[1]) {
-      __pyx_v_should_raise = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_should_raise == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 304, __pyx_L3_error)
+      __pyx_v_should_raise = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_should_raise == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 362, __pyx_L3_error)
     } else {
       __pyx_v_should_raise = ((int)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("test_file", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 304, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("test_file", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 362, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.test_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(__pyx_self, __pyx_v_input, __pyx_v_should_raise);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_6test_file(__pyx_self, __pyx_v_input, __pyx_v_should_raise);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, int __pyx_v_should_raise) {
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6test_file(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_input, int __pyx_v_should_raise) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -8210,8 +9320,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(CYTHON_UNUSED 
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.should_raise = __pyx_v_should_raise;
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(__pyx_v_input, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((int)0) && PyErr_Occurred())) __PYX_ERR(0, 304, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(__pyx_v_input, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((int)0) && PyErr_Occurred())) __PYX_ERR(0, 362, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 362, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -8228,7 +9338,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":361
+/* "bz3/backends/cython/_bz3.pyx":419
  *         buffer = NULL
  * 
  * cpdef inline size_t bound(size_t input_size) nogil:             # <<<<<<<<<<<<<<
@@ -8236,11 +9346,11 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4test_file(CYTHON_UNUSED 
  * 
  */
 
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size); /*proto*/
 static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_bound(size_t __pyx_v_input_size, CYTHON_UNUSED int __pyx_skip_dispatch) {
   size_t __pyx_r;
 
-  /* "bz3/backends/cython/_bz3.pyx":362
+  /* "bz3/backends/cython/_bz3.pyx":420
  * 
  * cpdef inline size_t bound(size_t input_size) nogil:
  *     return bz3_bound(input_size)             # <<<<<<<<<<<<<<
@@ -8250,7 +9360,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_bound(size_t __
   __pyx_r = bz3_bound(__pyx_v_input_size);
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":361
+  /* "bz3/backends/cython/_bz3.pyx":419
  *         buffer = NULL
  * 
  * cpdef inline size_t bound(size_t input_size) nogil:             # <<<<<<<<<<<<<<
@@ -8264,9 +9374,9 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_bound(size_t __
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size); /*proto*/
-static char __pyx_doc_3bz3_8backends_6cython_4_bz3_6bound[] = "bound(size_t input_size) -> size_t";
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size) {
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_8bound[] = "bound(size_t input_size) -> size_t";
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9bound(PyObject *__pyx_self, PyObject *__pyx_arg_input_size) {
   size_t __pyx_v_input_size;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -8275,7 +9385,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound(PyObject *__pyx_se
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("bound (wrapper)", 0);
   assert(__pyx_arg_input_size); {
-    __pyx_v_input_size = __Pyx_PyInt_As_size_t(__pyx_arg_input_size); if (unlikely((__pyx_v_input_size == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 361, __pyx_L3_error)
+    __pyx_v_input_size = __Pyx_PyInt_As_size_t(__pyx_arg_input_size); if (unlikely((__pyx_v_input_size == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 419, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8283,14 +9393,14 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound(PyObject *__pyx_se
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(__pyx_self, ((size_t)__pyx_v_input_size));
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_8bound(__pyx_self, ((size_t)__pyx_v_input_size));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_input_size) {
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8bound(CYTHON_UNUSED PyObject *__pyx_self, size_t __pyx_v_input_size) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8299,7 +9409,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("bound", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_FromSize_t(__pyx_f_3bz3_8backends_6cython_4_bz3_bound(__pyx_v_input_size, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_FromSize_t(__pyx_f_3bz3_8backends_6cython_4_bz3_bound(__pyx_v_input_size, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 419, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8316,7 +9426,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":365
+/* "bz3/backends/cython/_bz3.pyx":423
  * 
  * 
  * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
@@ -8324,7 +9434,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_6bound(CYTHON_UNUSED PyOb
  *         size_t out_size = <size_t>out.shape[0]
  */
 
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(__Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_3bz3_8backends_6cython_4_bz3_compress_into *__pyx_optional_args) {
   uint32_t __pyx_v_block_size = ((uint32_t)0xF4240);
   size_t __pyx_v_out_size;
@@ -8346,7 +9456,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":367
+  /* "bz3/backends/cython/_bz3.pyx":425
  * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]             # <<<<<<<<<<<<<<
@@ -8355,7 +9465,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
  */
   __pyx_v_out_size = ((size_t)(__pyx_v_out.shape[0]));
 
-  /* "bz3/backends/cython/_bz3.pyx":369
+  /* "bz3/backends/cython/_bz3.pyx":427
  *         size_t out_size = <size_t>out.shape[0]
  *         int bzerr
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -8370,7 +9480,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
       #endif
       /*try:*/ {
 
-        /* "bz3/backends/cython/_bz3.pyx":370
+        /* "bz3/backends/cython/_bz3.pyx":428
  *         int bzerr
  *     with nogil:
  *         bzerr = bz3_compress(block_size, &data[0], &out[0], <size_t>data.shape[0], &out_size)             # <<<<<<<<<<<<<<
@@ -8382,7 +9492,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
         __pyx_v_bzerr = bz3_compress(__pyx_v_block_size, (&(*((uint8_t const  *) ( /* dim=0 */ ((char *) (((uint8_t const  *) __pyx_v_data.data) + __pyx_t_1)) )))), (&(*((uint8_t *) ( /* dim=0 */ ((char *) (((uint8_t *) __pyx_v_out.data) + __pyx_t_2)) )))), ((size_t)(__pyx_v_data.shape[0])), (&__pyx_v_out_size));
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":369
+      /* "bz3/backends/cython/_bz3.pyx":427
  *         size_t out_size = <size_t>out.shape[0]
  *         int bzerr
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -8401,7 +9511,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
       }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":371
+  /* "bz3/backends/cython/_bz3.pyx":429
  *     with nogil:
  *         bzerr = bz3_compress(block_size, &data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -8411,26 +9521,26 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
   __pyx_t_3 = ((__pyx_v_bzerr != BZ3_OK) != 0);
   if (unlikely(__pyx_t_3)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":372
+    /* "bz3/backends/cython/_bz3.pyx":430
  *         bzerr = bz3_compress(block_size, &data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:
  *         raise ValueError(f"bz3_compress() failed with error code {bzerr}")             # <<<<<<<<<<<<<<
  *     return out_size
  * 
  */
-    __pyx_t_4 = __Pyx_PyUnicode_From_int(__pyx_v_bzerr, 0, ' ', 'd'); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyUnicode_From_int(__pyx_v_bzerr, 0, ' ', 'd'); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 430, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_kp_u_bz3_compress_failed_with_error_c, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 372, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_kp_u_bz3_compress_failed_with_error_c, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 430, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 430, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 372, __pyx_L1_error)
+    __PYX_ERR(0, 430, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":371
+    /* "bz3/backends/cython/_bz3.pyx":429
  *     with nogil:
  *         bzerr = bz3_compress(block_size, &data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -8439,7 +9549,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":373
+  /* "bz3/backends/cython/_bz3.pyx":431
  *     if bzerr != BZ3_OK:
  *         raise ValueError(f"bz3_compress() failed with error code {bzerr}")
  *     return out_size             # <<<<<<<<<<<<<<
@@ -8449,7 +9559,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
   __pyx_r = __pyx_v_out_size;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":365
+  /* "bz3/backends/cython/_bz3.pyx":423
  * 
  * 
  * cpdef inline size_t compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size = 1000000) except? 0:             # <<<<<<<<<<<<<<
@@ -8469,9 +9579,9 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_3bz3_8backends_6cython_4_bz3_8compress_into[] = "compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size=1000000) -> size_t";
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_10compress_into[] = "compress_into(const uint8_t[::1] data, uint8_t[::1] out, uint32_t block_size=1000000) -> size_t";
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11compress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_data = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out = { 0, 0, { 0 }, { 0 }, { 0 } };
   uint32_t __pyx_v_block_size;
@@ -8506,7 +9616,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_out)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("compress_into", 0, 2, 3, 1); __PYX_ERR(0, 365, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("compress_into", 0, 2, 3, 1); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -8516,7 +9626,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "compress_into") < 0)) __PYX_ERR(0, 365, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "compress_into") < 0)) __PYX_ERR(0, 423, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8528,30 +9638,30 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into(PyObject *
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(values[0], 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 365, __pyx_L3_error)
-    __pyx_v_out = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_out.memview)) __PYX_ERR(0, 365, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(values[0], 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 423, __pyx_L3_error)
+    __pyx_v_out = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_out.memview)) __PYX_ERR(0, 423, __pyx_L3_error)
     if (values[2]) {
-      __pyx_v_block_size = __Pyx_PyInt_As_uint32_t(values[2]); if (unlikely((__pyx_v_block_size == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 365, __pyx_L3_error)
+      __pyx_v_block_size = __Pyx_PyInt_As_uint32_t(values[2]); if (unlikely((__pyx_v_block_size == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
     } else {
       __pyx_v_block_size = ((uint32_t)0xF4240);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("compress_into", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 365, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("compress_into", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 423, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.compress_into", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(__pyx_self, __pyx_v_data, __pyx_v_out, __pyx_v_block_size);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_10compress_into(__pyx_self, __pyx_v_data, __pyx_v_out, __pyx_v_block_size);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, uint32_t __pyx_v_block_size) {
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10compress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, uint32_t __pyx_v_block_size) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   size_t __pyx_t_1;
@@ -8562,12 +9672,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNU
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress_into", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 365, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 365, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 423, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 423, __pyx_L1_error) }
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.block_size = __pyx_v_block_size;
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(__pyx_v_data, __pyx_v_out, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 365, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 365, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_compress_into(__pyx_v_data, __pyx_v_out, 0, &__pyx_t_2); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -8586,7 +9696,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":375
+/* "bz3/backends/cython/_bz3.pyx":433
  *     return out_size
  * 
  * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:             # <<<<<<<<<<<<<<
@@ -8594,7 +9704,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_8compress_into(CYTHON_UNU
  *         size_t out_size = <size_t>out.shape[0]
  */
 
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into(__Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out, CYTHON_UNUSED int __pyx_skip_dispatch) {
   size_t __pyx_v_out_size;
   int __pyx_v_bzerr;
@@ -8610,7 +9720,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress_into", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":377
+  /* "bz3/backends/cython/_bz3.pyx":435
  * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:
  *     cdef:
  *         size_t out_size = <size_t>out.shape[0]             # <<<<<<<<<<<<<<
@@ -8619,7 +9729,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
  */
   __pyx_v_out_size = ((size_t)(__pyx_v_out.shape[0]));
 
-  /* "bz3/backends/cython/_bz3.pyx":379
+  /* "bz3/backends/cython/_bz3.pyx":437
  *         size_t out_size = <size_t>out.shape[0]
  *         int bzerr
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -8634,7 +9744,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
       #endif
       /*try:*/ {
 
-        /* "bz3/backends/cython/_bz3.pyx":380
+        /* "bz3/backends/cython/_bz3.pyx":438
  *         int bzerr
  *     with nogil:
  *         bzerr = bz3_decompress(&data[0], &out[0], <size_t>data.shape[0], &out_size)             # <<<<<<<<<<<<<<
@@ -8646,7 +9756,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
         __pyx_v_bzerr = bz3_decompress((&(*((uint8_t const  *) ( /* dim=0 */ ((char *) (((uint8_t const  *) __pyx_v_data.data) + __pyx_t_1)) )))), (&(*((uint8_t *) ( /* dim=0 */ ((char *) (((uint8_t *) __pyx_v_out.data) + __pyx_t_2)) )))), ((size_t)(__pyx_v_data.shape[0])), (&__pyx_v_out_size));
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":379
+      /* "bz3/backends/cython/_bz3.pyx":437
  *         size_t out_size = <size_t>out.shape[0]
  *         int bzerr
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -8665,7 +9775,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
       }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":381
+  /* "bz3/backends/cython/_bz3.pyx":439
  *     with nogil:
  *         bzerr = bz3_decompress(&data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -8675,26 +9785,26 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
   __pyx_t_3 = ((__pyx_v_bzerr != BZ3_OK) != 0);
   if (unlikely(__pyx_t_3)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":382
+    /* "bz3/backends/cython/_bz3.pyx":440
  *         bzerr = bz3_decompress(&data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:
  *         raise ValueError(f"bz3_decompress() failed with error code {bzerr}")             # <<<<<<<<<<<<<<
  *     return out_size
  * 
  */
-    __pyx_t_4 = __Pyx_PyUnicode_From_int(__pyx_v_bzerr, 0, ' ', 'd'); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 382, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyUnicode_From_int(__pyx_v_bzerr, 0, ' ', 'd'); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 440, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_kp_u_bz3_decompress_failed_with_error, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 382, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_kp_u_bz3_decompress_failed_with_error, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 440, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 382, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 440, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_Raise(__pyx_t_4, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __PYX_ERR(0, 382, __pyx_L1_error)
+    __PYX_ERR(0, 440, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":381
+    /* "bz3/backends/cython/_bz3.pyx":439
  *     with nogil:
  *         bzerr = bz3_decompress(&data[0], &out[0], <size_t>data.shape[0], &out_size)
  *     if bzerr != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -8703,7 +9813,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":383
+  /* "bz3/backends/cython/_bz3.pyx":441
  *     if bzerr != BZ3_OK:
  *         raise ValueError(f"bz3_decompress() failed with error code {bzerr}")
  *     return out_size             # <<<<<<<<<<<<<<
@@ -8713,7 +9823,7 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
   __pyx_r = __pyx_v_out_size;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":375
+  /* "bz3/backends/cython/_bz3.pyx":433
  *     return out_size
  * 
  * cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) except? 0:             # <<<<<<<<<<<<<<
@@ -8733,9 +9843,9 @@ static CYTHON_INLINE size_t __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_3bz3_8backends_6cython_4_bz3_10decompress_into[] = "decompress_into(const uint8_t[::1] data, uint8_t[::1] out) -> size_t";
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_12decompress_into[] = "decompress_into(const uint8_t[::1] data, uint8_t[::1] out) -> size_t";
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13decompress_into(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_data = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_lineno = 0;
@@ -8767,11 +9877,11 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into(PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_out)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("decompress_into", 1, 2, 2, 1); __PYX_ERR(0, 375, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("decompress_into", 1, 2, 2, 1); __PYX_ERR(0, 433, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "decompress_into") < 0)) __PYX_ERR(0, 375, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "decompress_into") < 0)) __PYX_ERR(0, 433, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -8779,25 +9889,25 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into(PyObjec
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(values[0], 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 375, __pyx_L3_error)
-    __pyx_v_out = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_out.memview)) __PYX_ERR(0, 375, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(values[0], 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 433, __pyx_L3_error)
+    __pyx_v_out = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_out.memview)) __PYX_ERR(0, 433, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("decompress_into", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 375, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("decompress_into", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 433, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.decompress_into", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(__pyx_self, __pyx_v_data, __pyx_v_out);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_12decompress_into(__pyx_self, __pyx_v_data, __pyx_v_out);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out) {
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12decompress_into(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_data, __Pyx_memviewslice __pyx_v_out) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   size_t __pyx_t_1;
@@ -8807,10 +9917,10 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress_into", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 375, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 375, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into(__pyx_v_data, __pyx_v_out, 0); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 375, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 375, __pyx_L1_error)
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 433, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_out.memview)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 433, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_decompress_into(__pyx_v_data, __pyx_v_out, 0); if (unlikely(__pyx_t_1 == ((size_t)0) && PyErr_Occurred())) __PYX_ERR(0, 433, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_FromSize_t(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 433, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -8829,7 +9939,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":385
+/* "bz3/backends/cython/_bz3.pyx":443
  *     return out_size
  * 
  * cpdef inline str libversion():             # <<<<<<<<<<<<<<
@@ -8837,7 +9947,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_10decompress_into(CYTHON_
  * 
  */
 
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_libversion(CYTHON_UNUSED int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8848,7 +9958,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_libversion(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("libversion", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":386
+  /* "bz3/backends/cython/_bz3.pyx":444
  * 
  * cpdef inline str libversion():
  *     return (<bytes>bz3_version()).decode()             # <<<<<<<<<<<<<<
@@ -8856,20 +9966,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_libversion(C
  * # openmp
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_version()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 386, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_version()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-    __PYX_ERR(0, 386, __pyx_L1_error)
+    __PYX_ERR(0, 444, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 386, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":385
+  /* "bz3/backends/cython/_bz3.pyx":443
  *     return out_size
  * 
  * cpdef inline str libversion():             # <<<<<<<<<<<<<<
@@ -8890,20 +10000,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_libversion(C
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_3bz3_8backends_6cython_4_bz3_12libversion[] = "libversion() -> unicode";
-static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_13libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_3bz3_8backends_6cython_4_bz3_14libversion[] = "libversion() -> unicode";
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_15libversion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("libversion (wrapper)", 0);
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_12libversion(__pyx_self);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_14libversion(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12libversion(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_14libversion(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8912,7 +10022,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12libversion(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("libversion", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_libversion(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_libversion(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 443, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8929,7 +10039,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_12libversion(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":392
+/* "bz3/backends/cython/_bz3.pyx":450
  * 
  * 
  * cdef void bz3_encode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t *sizes, int32_t numthreads):             # <<<<<<<<<<<<<<
@@ -8945,7 +10055,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
   int32_t __pyx_t_3;
   __Pyx_RefNannySetupContext("bz3_encode_blocks", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":395
+  /* "bz3/backends/cython/_bz3.pyx":453
  *     # sizes: read and write
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule="static", num_threads=numthreads):             # <<<<<<<<<<<<<<
@@ -8982,7 +10092,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
                         {
                             __pyx_v_i = (int32_t)(0 + 1 * __pyx_t_2);
 
-                            /* "bz3/backends/cython/_bz3.pyx":396
+                            /* "bz3/backends/cython/_bz3.pyx":454
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule="static", num_threads=numthreads):
  *         sizes[i] = bz3_encode_block(states[i], buffers[i], sizes[i])             # <<<<<<<<<<<<<<
@@ -9003,7 +10113,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
         #endif
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":395
+      /* "bz3/backends/cython/_bz3.pyx":453
  *     # sizes: read and write
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule="static", num_threads=numthreads):             # <<<<<<<<<<<<<<
@@ -9022,7 +10132,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
       }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":392
+  /* "bz3/backends/cython/_bz3.pyx":450
  * 
  * 
  * cdef void bz3_encode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t *sizes, int32_t numthreads):             # <<<<<<<<<<<<<<
@@ -9034,7 +10144,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(struct bz3_st
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":413
+/* "bz3/backends/cython/_bz3.pyx":471
  *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):             # <<<<<<<<<<<<<<
@@ -9076,11 +10186,11 @@ static int __pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_1__cinit__(P
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_numthreads)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(0, 413, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(0, 471, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 413, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 471, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9088,12 +10198,12 @@ static int __pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_1__cinit__(P
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[0]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 413, __pyx_L3_error)
-    __pyx_v_numthreads = __Pyx_PyInt_As_uint32_t(values[1]); if (unlikely((__pyx_v_numthreads == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 413, __pyx_L3_error)
+    __pyx_v_block_size = __Pyx_PyInt_As_int32_t(values[0]); if (unlikely((__pyx_v_block_size == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 471, __pyx_L3_error)
+    __pyx_v_numthreads = __Pyx_PyInt_As_uint32_t(values[1]); if (unlikely((__pyx_v_numthreads == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 471, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 413, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 471, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpCompressor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9126,7 +10236,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":414
+  /* "bz3/backends/cython/_bz3.pyx":472
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):
  *         if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -9144,20 +10254,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":415
+    /* "bz3/backends/cython/_bz3.pyx":473
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):
  *         if block_size < KiB(65) or block_size > MiB(511):
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")             # <<<<<<<<<<<<<<
  *         self.block_size = block_size
  *         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 473, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 415, __pyx_L1_error)
+    __PYX_ERR(0, 473, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":414
+    /* "bz3/backends/cython/_bz3.pyx":472
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):
  *         if block_size < KiB(65) or block_size > MiB(511):             # <<<<<<<<<<<<<<
@@ -9166,7 +10276,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":416
+  /* "bz3/backends/cython/_bz3.pyx":474
  *         if block_size < KiB(65) or block_size > MiB(511):
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")
  *         self.block_size = block_size             # <<<<<<<<<<<<<<
@@ -9175,7 +10285,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->block_size = __pyx_v_block_size;
 
-  /* "bz3/backends/cython/_bz3.pyx":417
+  /* "bz3/backends/cython/_bz3.pyx":475
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")
  *         self.block_size = block_size
  *         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array             # <<<<<<<<<<<<<<
@@ -9184,7 +10294,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->states = ((struct bz3_state **)PyMem_Calloc(((size_t)__pyx_v_numthreads), (sizeof(struct bz3_state *))));
 
-  /* "bz3/backends/cython/_bz3.pyx":418
+  /* "bz3/backends/cython/_bz3.pyx":476
  *         self.block_size = block_size
  *         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
  *         if not self.states:             # <<<<<<<<<<<<<<
@@ -9194,16 +10304,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_t_1 = ((!(__pyx_v_self->states != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":419
+    /* "bz3/backends/cython/_bz3.pyx":477
  *         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
  *         if not self.states:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
  *         if not self.buffers:
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 419, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 477, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":418
+    /* "bz3/backends/cython/_bz3.pyx":476
  *         self.block_size = block_size
  *         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
  *         if not self.states:             # <<<<<<<<<<<<<<
@@ -9212,7 +10322,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":420
+  /* "bz3/backends/cython/_bz3.pyx":478
  *         if not self.states:
  *             raise MemoryError
  *         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))             # <<<<<<<<<<<<<<
@@ -9221,7 +10331,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->buffers = ((uint8_t **)PyMem_Calloc(((size_t)__pyx_v_numthreads), (sizeof(uint8_t *))));
 
-  /* "bz3/backends/cython/_bz3.pyx":421
+  /* "bz3/backends/cython/_bz3.pyx":479
  *             raise MemoryError
  *         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
  *         if not self.buffers:             # <<<<<<<<<<<<<<
@@ -9231,7 +10341,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_t_1 = ((!(__pyx_v_self->buffers != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":422
+    /* "bz3/backends/cython/_bz3.pyx":480
  *         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
  *         if not self.buffers:
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -9240,7 +10350,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->states);
 
-    /* "bz3/backends/cython/_bz3.pyx":423
+    /* "bz3/backends/cython/_bz3.pyx":481
  *         if not self.buffers:
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -9249,16 +10359,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->states = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":424
+    /* "bz3/backends/cython/_bz3.pyx":482
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 424, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 482, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":421
+    /* "bz3/backends/cython/_bz3.pyx":479
  *             raise MemoryError
  *         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
  *         if not self.buffers:             # <<<<<<<<<<<<<<
@@ -9267,7 +10377,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":425
+  /* "bz3/backends/cython/_bz3.pyx":483
  *             self.states = NULL
  *             raise MemoryError
  *         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)             # <<<<<<<<<<<<<<
@@ -9276,7 +10386,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->sizes = ((int32_t *)PyMem_Malloc(((sizeof(int32_t)) * __pyx_v_numthreads)));
 
-  /* "bz3/backends/cython/_bz3.pyx":426
+  /* "bz3/backends/cython/_bz3.pyx":484
  *             raise MemoryError
  *         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:             # <<<<<<<<<<<<<<
@@ -9286,7 +10396,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_t_1 = ((!(__pyx_v_self->sizes != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":427
+    /* "bz3/backends/cython/_bz3.pyx":485
  *         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -9295,7 +10405,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->states);
 
-    /* "bz3/backends/cython/_bz3.pyx":428
+    /* "bz3/backends/cython/_bz3.pyx":486
  *         if not self.sizes:
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -9304,7 +10414,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->states = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":429
+    /* "bz3/backends/cython/_bz3.pyx":487
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *             PyMem_Free(self.buffers)             # <<<<<<<<<<<<<<
@@ -9313,7 +10423,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->buffers);
 
-    /* "bz3/backends/cython/_bz3.pyx":430
+    /* "bz3/backends/cython/_bz3.pyx":488
  *             self.states = NULL
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL             # <<<<<<<<<<<<<<
@@ -9322,16 +10432,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->buffers = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":431
+    /* "bz3/backends/cython/_bz3.pyx":489
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 431, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 489, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":426
+    /* "bz3/backends/cython/_bz3.pyx":484
  *             raise MemoryError
  *         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:             # <<<<<<<<<<<<<<
@@ -9340,7 +10450,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":432
+  /* "bz3/backends/cython/_bz3.pyx":490
  *             self.buffers = NULL
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)             # <<<<<<<<<<<<<<
@@ -9349,7 +10459,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->old_sizes = ((int32_t *)PyMem_Malloc(((sizeof(int32_t)) * __pyx_v_numthreads)));
 
-  /* "bz3/backends/cython/_bz3.pyx":433
+  /* "bz3/backends/cython/_bz3.pyx":491
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:             # <<<<<<<<<<<<<<
@@ -9359,7 +10469,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_t_1 = ((!(__pyx_v_self->old_sizes != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":434
+    /* "bz3/backends/cython/_bz3.pyx":492
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -9368,7 +10478,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->states);
 
-    /* "bz3/backends/cython/_bz3.pyx":435
+    /* "bz3/backends/cython/_bz3.pyx":493
  *         if not self.old_sizes:
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -9377,7 +10487,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->states = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":436
+    /* "bz3/backends/cython/_bz3.pyx":494
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *             PyMem_Free(self.buffers)             # <<<<<<<<<<<<<<
@@ -9386,7 +10496,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->buffers);
 
-    /* "bz3/backends/cython/_bz3.pyx":437
+    /* "bz3/backends/cython/_bz3.pyx":495
  *             self.states = NULL
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL             # <<<<<<<<<<<<<<
@@ -9395,7 +10505,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->buffers = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":438
+    /* "bz3/backends/cython/_bz3.pyx":496
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *             PyMem_Free(self.sizes)             # <<<<<<<<<<<<<<
@@ -9404,7 +10514,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     PyMem_Free(__pyx_v_self->sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":439
+    /* "bz3/backends/cython/_bz3.pyx":497
  *             self.buffers = NULL
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL             # <<<<<<<<<<<<<<
@@ -9413,16 +10523,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     __pyx_v_self->sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":440
+    /* "bz3/backends/cython/_bz3.pyx":498
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *             raise MemoryError             # <<<<<<<<<<<<<<
  * 
  *         cdef uint32_t i
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 440, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 498, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":433
+    /* "bz3/backends/cython/_bz3.pyx":491
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:             # <<<<<<<<<<<<<<
@@ -9431,7 +10541,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":443
+  /* "bz3/backends/cython/_bz3.pyx":501
  * 
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -9447,7 +10557,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
     __Pyx_XGOTREF(__pyx_t_6);
     /*try:*/ {
 
-      /* "bz3/backends/cython/_bz3.pyx":444
+      /* "bz3/backends/cython/_bz3.pyx":502
  *         cdef uint32_t i
  *         try:
  *             for i in range(numthreads):             # <<<<<<<<<<<<<<
@@ -9459,7 +10569,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
       for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_i = __pyx_t_9;
 
-        /* "bz3/backends/cython/_bz3.pyx":445
+        /* "bz3/backends/cython/_bz3.pyx":503
  *         try:
  *             for i in range(numthreads):
  *                 self.states[i] = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -9468,7 +10578,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
         (__pyx_v_self->states[__pyx_v_i]) = bz3_new(__pyx_v_block_size);
 
-        /* "bz3/backends/cython/_bz3.pyx":446
+        /* "bz3/backends/cython/_bz3.pyx":504
  *             for i in range(numthreads):
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:             # <<<<<<<<<<<<<<
@@ -9478,20 +10588,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
         __pyx_t_1 = (((__pyx_v_self->states[__pyx_v_i]) == NULL) != 0);
         if (unlikely(__pyx_t_1)) {
 
-          /* "bz3/backends/cython/_bz3.pyx":447
+          /* "bz3/backends/cython/_bz3.pyx":505
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:
  *                     raise MemoryError("Failed to create a block encoder state")  # todo             # <<<<<<<<<<<<<<
  *                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:
  */
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L10_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 505, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_Raise(__pyx_t_3, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __PYX_ERR(0, 447, __pyx_L10_error)
+          __PYX_ERR(0, 505, __pyx_L10_error)
 
-          /* "bz3/backends/cython/_bz3.pyx":446
+          /* "bz3/backends/cython/_bz3.pyx":504
  *             for i in range(numthreads):
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:             # <<<<<<<<<<<<<<
@@ -9500,7 +10610,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":448
+        /* "bz3/backends/cython/_bz3.pyx":506
  *                 if self.states[i] == NULL:
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -9509,7 +10619,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
         (__pyx_v_self->buffers[__pyx_v_i]) = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-        /* "bz3/backends/cython/_bz3.pyx":449
+        /* "bz3/backends/cython/_bz3.pyx":507
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:             # <<<<<<<<<<<<<<
@@ -9519,20 +10629,20 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
         __pyx_t_1 = (((__pyx_v_self->buffers[__pyx_v_i]) == NULL) != 0);
         if (unlikely(__pyx_t_1)) {
 
-          /* "bz3/backends/cython/_bz3.pyx":450
+          /* "bz3/backends/cython/_bz3.pyx":508
  *                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:
  *                     raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *         except:
  *             self.free_states()
  */
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 450, __pyx_L10_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 508, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_Raise(__pyx_t_3, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __PYX_ERR(0, 450, __pyx_L10_error)
+          __PYX_ERR(0, 508, __pyx_L10_error)
 
-          /* "bz3/backends/cython/_bz3.pyx":449
+          /* "bz3/backends/cython/_bz3.pyx":507
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:             # <<<<<<<<<<<<<<
@@ -9542,7 +10652,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
         }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":443
+      /* "bz3/backends/cython/_bz3.pyx":501
  * 
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -9557,7 +10667,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
     __pyx_L10_error:;
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":451
+    /* "bz3/backends/cython/_bz3.pyx":509
  *                 if self.buffers[i] == NULL:
  *                     raise MemoryError("Failed to allocate memory")
  *         except:             # <<<<<<<<<<<<<<
@@ -9566,12 +10676,12 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
     /*except:*/ {
       __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpCompressor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_10, &__pyx_t_11) < 0) __PYX_ERR(0, 451, __pyx_L12_except_error)
+      if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_10, &__pyx_t_11) < 0) __PYX_ERR(0, 509, __pyx_L12_except_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_GOTREF(__pyx_t_11);
 
-      /* "bz3/backends/cython/_bz3.pyx":452
+      /* "bz3/backends/cython/_bz3.pyx":510
  *                     raise MemoryError("Failed to allocate memory")
  *         except:
  *             self.free_states()             # <<<<<<<<<<<<<<
@@ -9580,7 +10690,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_free_states(__pyx_v_self);
 
-      /* "bz3/backends/cython/_bz3.pyx":453
+      /* "bz3/backends/cython/_bz3.pyx":511
  *         except:
  *             self.free_states()
  *             self.free_buffers()             # <<<<<<<<<<<<<<
@@ -9589,7 +10699,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_free_buffers(__pyx_v_self);
 
-      /* "bz3/backends/cython/_bz3.pyx":454
+      /* "bz3/backends/cython/_bz3.pyx":512
  *             self.free_states()
  *             self.free_buffers()
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -9598,7 +10708,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       PyMem_Free(__pyx_v_self->states);
 
-      /* "bz3/backends/cython/_bz3.pyx":455
+      /* "bz3/backends/cython/_bz3.pyx":513
  *             self.free_buffers()
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -9607,7 +10717,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_v_self->states = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":456
+      /* "bz3/backends/cython/_bz3.pyx":514
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *             PyMem_Free(self.buffers)             # <<<<<<<<<<<<<<
@@ -9616,7 +10726,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       PyMem_Free(__pyx_v_self->buffers);
 
-      /* "bz3/backends/cython/_bz3.pyx":457
+      /* "bz3/backends/cython/_bz3.pyx":515
  *             self.states = NULL
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL             # <<<<<<<<<<<<<<
@@ -9625,7 +10735,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_v_self->buffers = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":458
+      /* "bz3/backends/cython/_bz3.pyx":516
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *             PyMem_Free(self.sizes)             # <<<<<<<<<<<<<<
@@ -9634,7 +10744,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       PyMem_Free(__pyx_v_self->sizes);
 
-      /* "bz3/backends/cython/_bz3.pyx":459
+      /* "bz3/backends/cython/_bz3.pyx":517
  *             self.buffers = NULL
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL             # <<<<<<<<<<<<<<
@@ -9643,7 +10753,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_v_self->sizes = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":460
+      /* "bz3/backends/cython/_bz3.pyx":518
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *             PyMem_Free(self.old_sizes)             # <<<<<<<<<<<<<<
@@ -9652,7 +10762,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       PyMem_Free(__pyx_v_self->old_sizes);
 
-      /* "bz3/backends/cython/_bz3.pyx":461
+      /* "bz3/backends/cython/_bz3.pyx":519
  *             self.sizes = NULL
  *             PyMem_Free(self.old_sizes)
  *             self.old_sizes = NULL             # <<<<<<<<<<<<<<
@@ -9661,7 +10771,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
       __pyx_v_self->old_sizes = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":462
+      /* "bz3/backends/cython/_bz3.pyx":520
  *             PyMem_Free(self.old_sizes)
  *             self.old_sizes = NULL
  *             raise             # <<<<<<<<<<<<<<
@@ -9673,11 +10783,11 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
       __Pyx_XGIVEREF(__pyx_t_11);
       __Pyx_ErrRestoreWithState(__pyx_t_3, __pyx_t_10, __pyx_t_11);
       __pyx_t_3 = 0; __pyx_t_10 = 0; __pyx_t_11 = 0; 
-      __PYX_ERR(0, 462, __pyx_L12_except_error)
+      __PYX_ERR(0, 520, __pyx_L12_except_error)
     }
     __pyx_L12_except_error:;
 
-    /* "bz3/backends/cython/_bz3.pyx":443
+    /* "bz3/backends/cython/_bz3.pyx":501
  * 
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -9692,14 +10802,14 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
     __pyx_L15_try_end:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":463
+  /* "bz3/backends/cython/_bz3.pyx":521
  *             self.old_sizes = NULL
  *             raise
  *         self.uncompressed = bytearray()             # <<<<<<<<<<<<<<
  *         self.have_magic_number = 0 # magic number
  *         self.numthreads = numthreads
  */
-  __pyx_t_11 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 463, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 521, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_GIVEREF(__pyx_t_11);
   __Pyx_GOTREF(__pyx_v_self->uncompressed);
@@ -9707,7 +10817,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   __pyx_v_self->uncompressed = ((PyObject*)__pyx_t_11);
   __pyx_t_11 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":464
+  /* "bz3/backends/cython/_bz3.pyx":522
  *             raise
  *         self.uncompressed = bytearray()
  *         self.have_magic_number = 0 # magic number             # <<<<<<<<<<<<<<
@@ -9716,7 +10826,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->have_magic_number = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":465
+  /* "bz3/backends/cython/_bz3.pyx":523
  *         self.uncompressed = bytearray()
  *         self.have_magic_number = 0 # magic number
  *         self.numthreads = numthreads             # <<<<<<<<<<<<<<
@@ -9725,7 +10835,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
  */
   __pyx_v_self->numthreads = __pyx_v_numthreads;
 
-  /* "bz3/backends/cython/_bz3.pyx":413
+  /* "bz3/backends/cython/_bz3.pyx":471
  *         readonly uint32_t numthreads  # how many threads to use
  * 
  *     def __cinit__(self, int32_t block_size, uint32_t numthreads):             # <<<<<<<<<<<<<<
@@ -9747,7 +10857,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor___cinit__(st
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":467
+/* "bz3/backends/cython/_bz3.pyx":525
  *         self.numthreads = numthreads
  * 
  *     cdef inline void free_states(self):             # <<<<<<<<<<<<<<
@@ -9764,7 +10874,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("free_states", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":469
+  /* "bz3/backends/cython/_bz3.pyx":527
  *     cdef inline void free_states(self):
  *         cdef uint32_t i
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -9776,7 +10886,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "bz3/backends/cython/_bz3.pyx":470
+    /* "bz3/backends/cython/_bz3.pyx":528
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.states[i]:             # <<<<<<<<<<<<<<
@@ -9786,7 +10896,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
     __pyx_t_4 = ((__pyx_v_self->states[__pyx_v_i]) != 0);
     if (__pyx_t_4) {
 
-      /* "bz3/backends/cython/_bz3.pyx":471
+      /* "bz3/backends/cython/_bz3.pyx":529
  *         for i in range(self.numthreads):
  *             if self.states[i]:
  *                 bz3_free(self.states[i])             # <<<<<<<<<<<<<<
@@ -9795,7 +10905,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
  */
       bz3_free((__pyx_v_self->states[__pyx_v_i]));
 
-      /* "bz3/backends/cython/_bz3.pyx":472
+      /* "bz3/backends/cython/_bz3.pyx":530
  *             if self.states[i]:
  *                 bz3_free(self.states[i])
  *                 self.states[i] = NULL             # <<<<<<<<<<<<<<
@@ -9804,7 +10914,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
  */
       (__pyx_v_self->states[__pyx_v_i]) = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":470
+      /* "bz3/backends/cython/_bz3.pyx":528
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.states[i]:             # <<<<<<<<<<<<<<
@@ -9814,7 +10924,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":467
+  /* "bz3/backends/cython/_bz3.pyx":525
  *         self.numthreads = numthreads
  * 
  *     cdef inline void free_states(self):             # <<<<<<<<<<<<<<
@@ -9826,7 +10936,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":474
+/* "bz3/backends/cython/_bz3.pyx":532
  *                 self.states[i] = NULL
  * 
  *     cdef inline void free_buffers(self):             # <<<<<<<<<<<<<<
@@ -9843,7 +10953,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("free_buffers", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":476
+  /* "bz3/backends/cython/_bz3.pyx":534
  *     cdef inline void free_buffers(self):
  *         cdef uint32_t i
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -9855,7 +10965,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "bz3/backends/cython/_bz3.pyx":477
+    /* "bz3/backends/cython/_bz3.pyx":535
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:             # <<<<<<<<<<<<<<
@@ -9865,7 +10975,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
     __pyx_t_4 = ((__pyx_v_self->buffers[__pyx_v_i]) != 0);
     if (__pyx_t_4) {
 
-      /* "bz3/backends/cython/_bz3.pyx":478
+      /* "bz3/backends/cython/_bz3.pyx":536
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:
  *                 PyMem_Free(self.buffers[i])             # <<<<<<<<<<<<<<
@@ -9874,7 +10984,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
  */
       PyMem_Free((__pyx_v_self->buffers[__pyx_v_i]));
 
-      /* "bz3/backends/cython/_bz3.pyx":479
+      /* "bz3/backends/cython/_bz3.pyx":537
  *             if self.buffers[i]:
  *                 PyMem_Free(self.buffers[i])
  *                 self.buffers[i] = NULL             # <<<<<<<<<<<<<<
@@ -9883,7 +10993,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
  */
       (__pyx_v_self->buffers[__pyx_v_i]) = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":477
+      /* "bz3/backends/cython/_bz3.pyx":535
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:             # <<<<<<<<<<<<<<
@@ -9893,7 +11003,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":474
+  /* "bz3/backends/cython/_bz3.pyx":532
  *                 self.states[i] = NULL
  * 
  *     cdef inline void free_buffers(self):             # <<<<<<<<<<<<<<
@@ -9905,7 +11015,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompresso
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":481
+/* "bz3/backends/cython/_bz3.pyx":539
  *                 self.buffers[i] = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -9929,7 +11039,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":483
+  /* "bz3/backends/cython/_bz3.pyx":541
  *     def __dealloc__(self):
  *         cdef uint32_t i
  *         self.free_states()             # <<<<<<<<<<<<<<
@@ -9938,7 +11048,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_free_states(__pyx_v_self);
 
-  /* "bz3/backends/cython/_bz3.pyx":484
+  /* "bz3/backends/cython/_bz3.pyx":542
  *         cdef uint32_t i
  *         self.free_states()
  *         self.free_buffers()             # <<<<<<<<<<<<<<
@@ -9947,7 +11057,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_free_buffers(__pyx_v_self);
 
-  /* "bz3/backends/cython/_bz3.pyx":485
+  /* "bz3/backends/cython/_bz3.pyx":543
  *         self.free_states()
  *         self.free_buffers()
  *         if self.states:             # <<<<<<<<<<<<<<
@@ -9957,7 +11067,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   __pyx_t_1 = (__pyx_v_self->states != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":486
+    /* "bz3/backends/cython/_bz3.pyx":544
  *         self.free_buffers()
  *         if self.states:
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -9966,7 +11076,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     PyMem_Free(__pyx_v_self->states);
 
-    /* "bz3/backends/cython/_bz3.pyx":487
+    /* "bz3/backends/cython/_bz3.pyx":545
  *         if self.states:
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -9975,7 +11085,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     __pyx_v_self->states = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":485
+    /* "bz3/backends/cython/_bz3.pyx":543
  *         self.free_states()
  *         self.free_buffers()
  *         if self.states:             # <<<<<<<<<<<<<<
@@ -9984,7 +11094,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":488
+  /* "bz3/backends/cython/_bz3.pyx":546
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *         if self.buffers:             # <<<<<<<<<<<<<<
@@ -9994,7 +11104,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   __pyx_t_1 = (__pyx_v_self->buffers != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":489
+    /* "bz3/backends/cython/_bz3.pyx":547
  *             self.states = NULL
  *         if self.buffers:
  *             PyMem_Free(self.buffers)             # <<<<<<<<<<<<<<
@@ -10003,7 +11113,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     PyMem_Free(__pyx_v_self->buffers);
 
-    /* "bz3/backends/cython/_bz3.pyx":490
+    /* "bz3/backends/cython/_bz3.pyx":548
  *         if self.buffers:
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL             # <<<<<<<<<<<<<<
@@ -10012,7 +11122,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     __pyx_v_self->buffers = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":488
+    /* "bz3/backends/cython/_bz3.pyx":546
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *         if self.buffers:             # <<<<<<<<<<<<<<
@@ -10021,7 +11131,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":491
+  /* "bz3/backends/cython/_bz3.pyx":549
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *         if self.sizes:             # <<<<<<<<<<<<<<
@@ -10031,7 +11141,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   __pyx_t_1 = (__pyx_v_self->sizes != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":492
+    /* "bz3/backends/cython/_bz3.pyx":550
  *             self.buffers = NULL
  *         if self.sizes:
  *             PyMem_Free(self.sizes)             # <<<<<<<<<<<<<<
@@ -10040,7 +11150,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     PyMem_Free(__pyx_v_self->sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":493
+    /* "bz3/backends/cython/_bz3.pyx":551
  *         if self.sizes:
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL             # <<<<<<<<<<<<<<
@@ -10049,7 +11159,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     __pyx_v_self->sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":491
+    /* "bz3/backends/cython/_bz3.pyx":549
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *         if self.sizes:             # <<<<<<<<<<<<<<
@@ -10058,7 +11168,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":494
+  /* "bz3/backends/cython/_bz3.pyx":552
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *         if self.old_sizes:             # <<<<<<<<<<<<<<
@@ -10068,7 +11178,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   __pyx_t_1 = (__pyx_v_self->old_sizes != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":495
+    /* "bz3/backends/cython/_bz3.pyx":553
  *             self.sizes = NULL
  *         if self.old_sizes:
  *             PyMem_Free(self.old_sizes)             # <<<<<<<<<<<<<<
@@ -10077,7 +11187,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     PyMem_Free(__pyx_v_self->old_sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":496
+    /* "bz3/backends/cython/_bz3.pyx":554
  *         if self.old_sizes:
  *             PyMem_Free(self.old_sizes)
  *             self.old_sizes = NULL             # <<<<<<<<<<<<<<
@@ -10086,7 +11196,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
     __pyx_v_self->old_sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":494
+    /* "bz3/backends/cython/_bz3.pyx":552
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *         if self.old_sizes:             # <<<<<<<<<<<<<<
@@ -10095,7 +11205,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":481
+  /* "bz3/backends/cython/_bz3.pyx":539
  *                 self.buffers[i] = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -10107,7 +11217,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_2__dealloc_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":498
+/* "bz3/backends/cython/_bz3.pyx":556
  *             self.old_sizes = NULL
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -10137,7 +11247,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":499
+  /* "bz3/backends/cython/_bz3.pyx":557
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):
  *         cdef Py_ssize_t input_size = data.shape[0]             # <<<<<<<<<<<<<<
@@ -10146,19 +11256,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   __pyx_v_input_size = (__pyx_v_data.shape[0]);
 
-  /* "bz3/backends/cython/_bz3.pyx":501
+  /* "bz3/backends/cython/_bz3.pyx":559
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         cdef int32_t all_blocks_size = self.block_size * self.numthreads
  *         if not self.have_magic_number:
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 501, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 559, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":502
+  /* "bz3/backends/cython/_bz3.pyx":560
  *         cdef int32_t new_size
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t all_blocks_size = self.block_size * self.numthreads             # <<<<<<<<<<<<<<
@@ -10167,7 +11277,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   __pyx_v_all_blocks_size = (__pyx_v_self->block_size * __pyx_v_self->numthreads);
 
-  /* "bz3/backends/cython/_bz3.pyx":503
+  /* "bz3/backends/cython/_bz3.pyx":561
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t all_blocks_size = self.block_size * self.numthreads
  *         if not self.have_magic_number:             # <<<<<<<<<<<<<<
@@ -10177,24 +11287,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   __pyx_t_2 = ((!(__pyx_v_self->have_magic_number != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":507
+    /* "bz3/backends/cython/_bz3.pyx":565
  *             #     raise
  *             # memcpy(PyByteArray_AS_STRING(ret), magic, 5)
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes             # <<<<<<<<<<<<<<
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
  *             self.have_magic_number = 1
  */
-    __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_3bz3_8backends_6cython_4_bz3_magic + 0, 5 - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_3bz3_8backends_6cython_4_bz3_magic + 0, 5 - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 565, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_kp_b__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_kp_b__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 565, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 565, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":508
+    /* "bz3/backends/cython/_bz3.pyx":566
  *             # memcpy(PyByteArray_AS_STRING(ret), magic, 5)
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)             # <<<<<<<<<<<<<<
@@ -10203,7 +11313,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[5]))), __pyx_v_self->block_size);
 
-    /* "bz3/backends/cython/_bz3.pyx":509
+    /* "bz3/backends/cython/_bz3.pyx":567
  *             ret.extend(<bytes>magic[:5]+b"\x00\x00\x00\x00")  # 9 bytes
  *             write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[5]), self.block_size)
  *             self.have_magic_number = 1             # <<<<<<<<<<<<<<
@@ -10212,7 +11322,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     __pyx_v_self->have_magic_number = 1;
 
-    /* "bz3/backends/cython/_bz3.pyx":503
+    /* "bz3/backends/cython/_bz3.pyx":561
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t all_blocks_size = self.block_size * self.numthreads
  *         if not self.have_magic_number:             # <<<<<<<<<<<<<<
@@ -10221,7 +11331,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":511
+  /* "bz3/backends/cython/_bz3.pyx":569
  *             self.have_magic_number = 1
  *         cdef uint32_t i
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -10231,16 +11341,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   __pyx_t_2 = ((__pyx_v_input_size > 0) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":515
+    /* "bz3/backends/cython/_bz3.pyx":573
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *             self.uncompressed.extend(data)             # <<<<<<<<<<<<<<
  *             if PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # able to perform a compress
  *                 while PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # ensure fill all blocks
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 515, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 573, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 515, __pyx_L1_error)
+    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 573, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -10255,12 +11365,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 515, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 573, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":516
+    /* "bz3/backends/cython/_bz3.pyx":574
  *             # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *             self.uncompressed.extend(data)
  *             if PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # able to perform a compress             # <<<<<<<<<<<<<<
@@ -10273,7 +11383,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "bz3/backends/cython/_bz3.pyx":517
+      /* "bz3/backends/cython/_bz3.pyx":575
  *             self.uncompressed.extend(data)
  *             if PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # able to perform a compress
  *                 while PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # ensure fill all blocks             # <<<<<<<<<<<<<<
@@ -10287,7 +11397,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         if (!__pyx_t_2) break;
 
-        /* "bz3/backends/cython/_bz3.pyx":518
+        /* "bz3/backends/cython/_bz3.pyx":576
  *             if PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # able to perform a compress
  *                 while PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # ensure fill all blocks
  *                     for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -10299,7 +11409,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
         for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
           __pyx_v_i = __pyx_t_8;
 
-          /* "bz3/backends/cython/_bz3.pyx":519
+          /* "bz3/backends/cython/_bz3.pyx":577
  *                 while PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # ensure fill all blocks
  *                     for i in range(self.numthreads):
  *                         self.sizes[i] = self.block_size  # fill the sizes array             # <<<<<<<<<<<<<<
@@ -10309,7 +11419,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
           __pyx_t_9 = __pyx_v_self->block_size;
           (__pyx_v_self->sizes[__pyx_v_i]) = __pyx_t_9;
 
-          /* "bz3/backends/cython/_bz3.pyx":520
+          /* "bz3/backends/cython/_bz3.pyx":578
  *                     for i in range(self.numthreads):
  *                         self.sizes[i] = self.block_size  # fill the sizes array
  *                         memcpy(self.buffers[i], &PyByteArray_AS_STRING(self.uncompressed)[i*self.block_size], <size_t>self.block_size)             # <<<<<<<<<<<<<<
@@ -10322,7 +11432,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":522
+        /* "bz3/backends/cython/_bz3.pyx":580
  *                         memcpy(self.buffers[i], &PyByteArray_AS_STRING(self.uncompressed)[i*self.block_size], <size_t>self.block_size)
  *                         # make a copy
  *                     bz3_encode_blocks(self.states, self.buffers, self.sizes, <int32_t>self.numthreads)             # <<<<<<<<<<<<<<
@@ -10331,7 +11441,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
         __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(__pyx_v_self->states, __pyx_v_self->buffers, __pyx_v_self->sizes, ((int32_t)__pyx_v_self->numthreads));
 
-        /* "bz3/backends/cython/_bz3.pyx":523
+        /* "bz3/backends/cython/_bz3.pyx":581
  *                         # make a copy
  *                     bz3_encode_blocks(self.states, self.buffers, self.sizes, <int32_t>self.numthreads)
  *                     for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -10343,7 +11453,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
         for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
           __pyx_v_i = __pyx_t_8;
 
-          /* "bz3/backends/cython/_bz3.pyx":524
+          /* "bz3/backends/cython/_bz3.pyx":582
  *                     bz3_encode_blocks(self.states, self.buffers, self.sizes, <int32_t>self.numthreads)
  *                     for i in range(self.numthreads):
  *                         if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -10353,26 +11463,26 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
           __pyx_t_2 = ((bz3_last_error((__pyx_v_self->states[__pyx_v_i])) != BZ3_OK) != 0);
           if (unlikely(__pyx_t_2)) {
 
-            /* "bz3/backends/cython/_bz3.pyx":525
+            /* "bz3/backends/cython/_bz3.pyx":583
  *                     for i in range(self.numthreads):
  *                         if bz3_last_error(self.states[i]) != BZ3_OK:
  *                             raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.states[i]))             # <<<<<<<<<<<<<<
  *                         # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
  *                         #     raise
  */
-            __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 583, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 525, __pyx_L1_error)
+            __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 583, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 583, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_Raise(__pyx_t_1, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __PYX_ERR(0, 525, __pyx_L1_error)
+            __PYX_ERR(0, 583, __pyx_L1_error)
 
-            /* "bz3/backends/cython/_bz3.pyx":524
+            /* "bz3/backends/cython/_bz3.pyx":582
  *                     bz3_encode_blocks(self.states, self.buffers, self.sizes, <int32_t>self.numthreads)
  *                     for i in range(self.numthreads):
  *                         if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -10381,24 +11491,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
           }
 
-          /* "bz3/backends/cython/_bz3.pyx":528
+          /* "bz3/backends/cython/_bz3.pyx":586
  *                         # if PyByteArray_Resize(ret, PyByteArray_GET_SIZE(ret) + new_size + 8) < 0:
  *                         #     raise
  *                         ret.extend((self.sizes[i] + 8)*b"\x00")             # <<<<<<<<<<<<<<
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-8]), self.sizes[i])
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-4]), self.block_size)
  */
-          __pyx_t_1 = __Pyx_PyInt_From_long(((__pyx_v_self->sizes[__pyx_v_i]) + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_long(((__pyx_v_self->sizes[__pyx_v_i]) + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 586, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 528, __pyx_L1_error)
+          __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 586, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 586, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "bz3/backends/cython/_bz3.pyx":529
+          /* "bz3/backends/cython/_bz3.pyx":587
  *                         #     raise
  *                         ret.extend((self.sizes[i] + 8)*b"\x00")
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-8]), self.sizes[i])             # <<<<<<<<<<<<<<
@@ -10407,7 +11517,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
           write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_i])) - 8)]))), (__pyx_v_self->sizes[__pyx_v_i]));
 
-          /* "bz3/backends/cython/_bz3.pyx":530
+          /* "bz3/backends/cython/_bz3.pyx":588
  *                         ret.extend((self.sizes[i] + 8)*b"\x00")
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-8]), self.sizes[i])
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-4]), self.block_size)             # <<<<<<<<<<<<<<
@@ -10416,7 +11526,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
           write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_i])) - 4)]))), __pyx_v_self->block_size);
 
-          /* "bz3/backends/cython/_bz3.pyx":531
+          /* "bz3/backends/cython/_bz3.pyx":589
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-8]), self.sizes[i])
  *                         write_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]-4]), self.block_size)
  *                         memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]]), self.buffers[i], <size_t>self.sizes[i])             # <<<<<<<<<<<<<<
@@ -10426,7 +11536,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
           (void)(memcpy((&(PyByteArray_AS_STRING(__pyx_v_ret)[(PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_i]))])), (__pyx_v_self->buffers[__pyx_v_i]), ((size_t)(__pyx_v_self->sizes[__pyx_v_i]))));
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":533
+        /* "bz3/backends/cython/_bz3.pyx":591
  *                         memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]]), self.buffers[i], <size_t>self.sizes[i])
  * 
  *                     del self.uncompressed[:all_blocks_size]             # <<<<<<<<<<<<<<
@@ -10435,12 +11545,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
         if (unlikely(__pyx_v_self->uncompressed == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 533, __pyx_L1_error)
+          __PYX_ERR(0, 591, __pyx_L1_error)
         }
-        if (__Pyx_PyObject_DelSlice(__pyx_v_self->uncompressed, 0, __pyx_v_all_blocks_size, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 533, __pyx_L1_error)
+        if (__Pyx_PyObject_DelSlice(__pyx_v_self->uncompressed, 0, __pyx_v_all_blocks_size, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":516
+      /* "bz3/backends/cython/_bz3.pyx":574
  *             # memcpy(&(PyByteArray_AS_STRING(self.uncompressed)[PyByteArray_GET_SIZE(self.uncompressed)-input_size]), &data[0], input_size) # todo? direct copy to bytearray
  *             self.uncompressed.extend(data)
  *             if PyByteArray_GET_SIZE(self.uncompressed) >= all_blocks_size:  # able to perform a compress             # <<<<<<<<<<<<<<
@@ -10449,7 +11559,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":534
+    /* "bz3/backends/cython/_bz3.pyx":592
  * 
  *                     del self.uncompressed[:all_blocks_size]
  *             return bytes(ret)             # <<<<<<<<<<<<<<
@@ -10457,13 +11567,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  *     cpdef inline bytes flush(self):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 534, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 592, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "bz3/backends/cython/_bz3.pyx":511
+    /* "bz3/backends/cython/_bz3.pyx":569
  *             self.have_magic_number = 1
  *         cdef uint32_t i
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -10472,7 +11582,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":498
+  /* "bz3/backends/cython/_bz3.pyx":556
  *             self.old_sizes = NULL
  * 
  *     cpdef inline bytes compress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -10509,7 +11619,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_5compr
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("compress (wrapper)", 0);
   assert(__pyx_arg_data); {
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 498, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 556, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10533,8 +11643,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compr
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("compress", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 498, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_compress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 556, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_compress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 556, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -10552,7 +11662,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compr
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":536
+/* "bz3/backends/cython/_bz3.pyx":594
  *             return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
@@ -10581,19 +11691,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":537
+  /* "bz3/backends/cython/_bz3.pyx":595
  * 
  *     cpdef inline bytes flush(self):
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         cdef int32_t new_size
  *         cdef int32_t remain_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 595, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":539
+  /* "bz3/backends/cython/_bz3.pyx":597
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t new_size
  *         cdef int32_t remain_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)             # <<<<<<<<<<<<<<
@@ -10605,7 +11715,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   __pyx_v_remain_size = ((int32_t)PyByteArray_GET_SIZE(__pyx_t_1));
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":541
+  /* "bz3/backends/cython/_bz3.pyx":599
  *         cdef int32_t remain_size = <int32_t>PyByteArray_GET_SIZE(self.uncompressed)
  *         cdef:
  *             int i = 0  # thread count             # <<<<<<<<<<<<<<
@@ -10614,7 +11724,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   __pyx_v_i = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":543
+  /* "bz3/backends/cython/_bz3.pyx":601
  *             int i = 0  # thread count
  *             int j
  *         if self.uncompressed:  # will perform a compress             # <<<<<<<<<<<<<<
@@ -10624,7 +11734,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   __pyx_t_2 = (__pyx_v_self->uncompressed != Py_None)&&(PyByteArray_GET_SIZE(__pyx_v_self->uncompressed) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":544
+    /* "bz3/backends/cython/_bz3.pyx":602
  *             int j
  *         if self.uncompressed:  # will perform a compress
  *             while self.block_size * (i+1) < remain_size:             # <<<<<<<<<<<<<<
@@ -10635,7 +11745,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       __pyx_t_2 = (((__pyx_v_self->block_size * (__pyx_v_i + 1)) < __pyx_v_remain_size) != 0);
       if (!__pyx_t_2) break;
 
-      /* "bz3/backends/cython/_bz3.pyx":546
+      /* "bz3/backends/cython/_bz3.pyx":604
  *             while self.block_size * (i+1) < remain_size:
  *                 memcpy(self.buffers[i],
  *                        &PyByteArray_AS_STRING(self.uncompressed)[i*self.block_size],             # <<<<<<<<<<<<<<
@@ -10645,7 +11755,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       __pyx_t_1 = __pyx_v_self->uncompressed;
       __Pyx_INCREF(__pyx_t_1);
 
-      /* "bz3/backends/cython/_bz3.pyx":545
+      /* "bz3/backends/cython/_bz3.pyx":603
  *         if self.uncompressed:  # will perform a compress
  *             while self.block_size * (i+1) < remain_size:
  *                 memcpy(self.buffers[i],             # <<<<<<<<<<<<<<
@@ -10655,7 +11765,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       (void)(memcpy((__pyx_v_self->buffers[__pyx_v_i]), (&(PyByteArray_AS_STRING(__pyx_t_1)[(__pyx_v_i * __pyx_v_self->block_size)])), ((size_t)__pyx_v_self->block_size)));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":548
+      /* "bz3/backends/cython/_bz3.pyx":606
  *                        &PyByteArray_AS_STRING(self.uncompressed)[i*self.block_size],
  *                        <size_t>self.block_size)
  *                 self.sizes[i] = self.old_sizes[i] = self.block_size             # <<<<<<<<<<<<<<
@@ -10666,7 +11776,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       (__pyx_v_self->sizes[__pyx_v_i]) = __pyx_t_3;
       (__pyx_v_self->old_sizes[__pyx_v_i]) = __pyx_t_3;
 
-      /* "bz3/backends/cython/_bz3.pyx":550
+      /* "bz3/backends/cython/_bz3.pyx":608
  *                 self.sizes[i] = self.old_sizes[i] = self.block_size
  *                 # old_sizes[i] = self.block_size
  *                 i += 1             # <<<<<<<<<<<<<<
@@ -10676,7 +11786,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       __pyx_v_i = (__pyx_v_i + 1);
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":552
+    /* "bz3/backends/cython/_bz3.pyx":610
  *                 i += 1
  *             memcpy(self.buffers[i],
  *                    &PyByteArray_AS_STRING(self.uncompressed)[i * self.block_size],             # <<<<<<<<<<<<<<
@@ -10686,7 +11796,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     __pyx_t_1 = __pyx_v_self->uncompressed;
     __Pyx_INCREF(__pyx_t_1);
 
-    /* "bz3/backends/cython/_bz3.pyx":551
+    /* "bz3/backends/cython/_bz3.pyx":609
  *                 # old_sizes[i] = self.block_size
  *                 i += 1
  *             memcpy(self.buffers[i],             # <<<<<<<<<<<<<<
@@ -10696,7 +11806,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     (void)(memcpy((__pyx_v_self->buffers[__pyx_v_i]), (&(PyByteArray_AS_STRING(__pyx_t_1)[(__pyx_v_i * __pyx_v_self->block_size)])), ((size_t)(__pyx_v_remain_size - (__pyx_v_i * __pyx_v_self->block_size)))));
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":554
+    /* "bz3/backends/cython/_bz3.pyx":612
  *                    &PyByteArray_AS_STRING(self.uncompressed)[i * self.block_size],
  *                    <size_t> (remain_size-i*self.block_size))  # fill as many blocks as possible
  *             self.sizes[i] = self.old_sizes[i] = remain_size-i*self.block_size             # <<<<<<<<<<<<<<
@@ -10707,7 +11817,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     (__pyx_v_self->sizes[__pyx_v_i]) = __pyx_t_3;
     (__pyx_v_self->old_sizes[__pyx_v_i]) = __pyx_t_3;
 
-    /* "bz3/backends/cython/_bz3.pyx":556
+    /* "bz3/backends/cython/_bz3.pyx":614
  *             self.sizes[i] = self.old_sizes[i] = remain_size-i*self.block_size
  *             # old_sizes[i] = remain_size-i*self.block_size
  *             i += 1             # <<<<<<<<<<<<<<
@@ -10716,7 +11826,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "bz3/backends/cython/_bz3.pyx":557
+    /* "bz3/backends/cython/_bz3.pyx":615
  *             # old_sizes[i] = remain_size-i*self.block_size
  *             i += 1
  *             bz3_encode_blocks(self.states, self.buffers, self.sizes, i)             # <<<<<<<<<<<<<<
@@ -10725,7 +11835,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_encode_blocks(__pyx_v_self->states, __pyx_v_self->buffers, __pyx_v_self->sizes, __pyx_v_i);
 
-    /* "bz3/backends/cython/_bz3.pyx":558
+    /* "bz3/backends/cython/_bz3.pyx":616
  *             i += 1
  *             bz3_encode_blocks(self.states, self.buffers, self.sizes, i)
  *             for j in range(i):  # state index             # <<<<<<<<<<<<<<
@@ -10737,7 +11847,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "bz3/backends/cython/_bz3.pyx":559
+      /* "bz3/backends/cython/_bz3.pyx":617
  *             bz3_encode_blocks(self.states, self.buffers, self.sizes, i)
  *             for j in range(i):  # state index
  *                 if bz3_last_error(self.states[j]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -10747,26 +11857,26 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       __pyx_t_2 = ((bz3_last_error((__pyx_v_self->states[__pyx_v_j])) != BZ3_OK) != 0);
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":560
+        /* "bz3/backends/cython/_bz3.pyx":618
  *             for j in range(i):  # state index
  *                 if bz3_last_error(self.states[j]) != BZ3_OK:
  *                     raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.states[j]))             # <<<<<<<<<<<<<<
  * 
  *                 ret.extend((self.sizes[j] + 8) * b"\x00")
  */
-        __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_j]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 560, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_j]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 560, __pyx_L1_error)
+        __pyx_t_7 = PyUnicode_Format(__pyx_kp_u_Failed_to_encode_a_block_s, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 618, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 560, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 560, __pyx_L1_error)
+        __PYX_ERR(0, 618, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":559
+        /* "bz3/backends/cython/_bz3.pyx":617
  *             bz3_encode_blocks(self.states, self.buffers, self.sizes, i)
  *             for j in range(i):  # state index
  *                 if bz3_last_error(self.states[j]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -10775,24 +11885,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":562
+      /* "bz3/backends/cython/_bz3.pyx":620
  *                     raise ValueError("Failed to encode a block: %s" % bz3_strerror(self.states[j]))
  * 
  *                 ret.extend((self.sizes[j] + 8) * b"\x00")             # <<<<<<<<<<<<<<
  *                 write_neutral_s32(<uint8_t *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j] - 8]),
  *                                   self.sizes[j])
  */
-      __pyx_t_1 = __Pyx_PyInt_From_long(((__pyx_v_self->sizes[__pyx_v_j]) + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 562, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_long(((__pyx_v_self->sizes[__pyx_v_j]) + 8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 620, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 562, __pyx_L1_error)
+      __pyx_t_7 = PyNumber_Multiply(__pyx_t_1, __pyx_kp_b__5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 620, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 562, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 620, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":563
+      /* "bz3/backends/cython/_bz3.pyx":621
  * 
  *                 ret.extend((self.sizes[j] + 8) * b"\x00")
  *                 write_neutral_s32(<uint8_t *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j] - 8]),             # <<<<<<<<<<<<<<
@@ -10801,7 +11911,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
       write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_j])) - 8)]))), (__pyx_v_self->sizes[__pyx_v_j]));
 
-      /* "bz3/backends/cython/_bz3.pyx":565
+      /* "bz3/backends/cython/_bz3.pyx":623
  *                 write_neutral_s32(<uint8_t *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j] - 8]),
  *                                   self.sizes[j])
  *                 write_neutral_s32(<uint8_t *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j] - 4]),             # <<<<<<<<<<<<<<
@@ -10810,7 +11920,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
       write_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_v_ret)[((PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_j])) - 4)]))), (__pyx_v_self->old_sizes[__pyx_v_j]));
 
-      /* "bz3/backends/cython/_bz3.pyx":567
+      /* "bz3/backends/cython/_bz3.pyx":625
  *                 write_neutral_s32(<uint8_t *> &(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j] - 4]),
  *                                   self.old_sizes[j])
  *                 memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret) - self.sizes[j]]), self.buffers[j],             # <<<<<<<<<<<<<<
@@ -10820,14 +11930,14 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
       (void)(memcpy((&(PyByteArray_AS_STRING(__pyx_v_ret)[(PyByteArray_GET_SIZE(__pyx_v_ret) - (__pyx_v_self->sizes[__pyx_v_j]))])), (__pyx_v_self->buffers[__pyx_v_j]), ((size_t)(__pyx_v_self->sizes[__pyx_v_j]))));
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":570
+    /* "bz3/backends/cython/_bz3.pyx":628
  *                        <size_t> self.sizes[j])
  * 
  *             self.uncompressed.clear()             # <<<<<<<<<<<<<<
  *         return bytes(ret)
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_clear); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 570, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->uncompressed, __pyx_n_s_clear); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 628, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_8 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
@@ -10841,12 +11951,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     }
     __pyx_t_1 = (__pyx_t_8) ? __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_8) : __Pyx_PyObject_CallNoArg(__pyx_t_7);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 570, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":543
+    /* "bz3/backends/cython/_bz3.pyx":601
  *             int i = 0  # thread count
  *             int j
  *         if self.uncompressed:  # will perform a compress             # <<<<<<<<<<<<<<
@@ -10855,7 +11965,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":571
+  /* "bz3/backends/cython/_bz3.pyx":629
  * 
  *             self.uncompressed.clear()
  *         return bytes(ret)             # <<<<<<<<<<<<<<
@@ -10863,13 +11973,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  *     cpdef inline list error(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 571, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 629, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":536
+  /* "bz3/backends/cython/_bz3.pyx":594
  *             return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
@@ -10914,7 +12024,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_6flush
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 536, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 594, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -10931,7 +12041,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_6flush
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":573
+/* "bz3/backends/cython/_bz3.pyx":631
  *         return bytes(ret)
  * 
  *     cpdef inline list error(self):             # <<<<<<<<<<<<<<
@@ -10957,19 +12067,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":575
+  /* "bz3/backends/cython/_bz3.pyx":633
  *     cpdef inline list error(self):
  *         cdef uint32_t i
  *         cdef list ret = []             # <<<<<<<<<<<<<<
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 575, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 633, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":576
+  /* "bz3/backends/cython/_bz3.pyx":634
  *         cdef uint32_t i
  *         cdef list ret = []
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -10981,7 +12091,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "bz3/backends/cython/_bz3.pyx":577
+    /* "bz3/backends/cython/_bz3.pyx":635
  *         cdef list ret = []
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -10991,26 +12101,26 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     __pyx_t_5 = ((bz3_last_error((__pyx_v_self->states[__pyx_v_i])) != BZ3_OK) != 0);
     if (__pyx_t_5) {
 
-      /* "bz3/backends/cython/_bz3.pyx":578
+      /* "bz3/backends/cython/_bz3.pyx":636
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes>bz3_strerror(self.states[i])).decode())             # <<<<<<<<<<<<<<
  *         return ret
  * 
  */
-      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 578, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 636, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (unlikely(__pyx_t_1 == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-        __PYX_ERR(0, 578, __pyx_L1_error)
+        __PYX_ERR(0, 636, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 578, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 636, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_6); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 578, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_6); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 636, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":577
+      /* "bz3/backends/cython/_bz3.pyx":635
  *         cdef list ret = []
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -11020,7 +12130,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":579
+  /* "bz3/backends/cython/_bz3.pyx":637
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes>bz3_strerror(self.states[i])).decode())
  *         return ret             # <<<<<<<<<<<<<<
@@ -11032,7 +12142,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":573
+  /* "bz3/backends/cython/_bz3.pyx":631
  *         return bytes(ret)
  * 
  *     cpdef inline list error(self):             # <<<<<<<<<<<<<<
@@ -11076,7 +12186,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_8error
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 573, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 631, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11093,7 +12203,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_8error
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":408
+/* "bz3/backends/cython/_bz3.pyx":466
  *         int32_t * sizes   # compressed
  *         int32_t * old_sizes # origin size
  *         readonly int32_t block_size             # <<<<<<<<<<<<<<
@@ -11123,7 +12233,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10bloc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 408, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 466, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11140,7 +12250,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10bloc
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":411
+/* "bz3/backends/cython/_bz3.pyx":469
  *         bytearray uncompressed
  *         bint have_magic_number
  *         readonly uint32_t numthreads  # how many threads to use             # <<<<<<<<<<<<<<
@@ -11170,7 +12280,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_10numt
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 469, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11302,7 +12412,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_12__se
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":582
+/* "bz3/backends/cython/_bz3.pyx":640
  * 
  * 
  * cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):             # <<<<<<<<<<<<<<
@@ -11318,7 +12428,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
   int32_t __pyx_t_3;
   __Pyx_RefNannySetupContext("bz3_decode_blocks", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":584
+  /* "bz3/backends/cython/_bz3.pyx":642
  * cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):             # <<<<<<<<<<<<<<
@@ -11355,7 +12465,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
                         {
                             __pyx_v_i = (int32_t)(0 + 1 * __pyx_t_2);
 
-                            /* "bz3/backends/cython/_bz3.pyx":585
+                            /* "bz3/backends/cython/_bz3.pyx":643
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):
  *         bz3_decode_block(states[i], buffers[i], sizes[i], orig_size[i])             # <<<<<<<<<<<<<<
@@ -11376,7 +12486,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
         #endif
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":584
+      /* "bz3/backends/cython/_bz3.pyx":642
  * cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):
  *     cdef int32_t i
  *     for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):             # <<<<<<<<<<<<<<
@@ -11395,7 +12505,7 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
       }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":582
+  /* "bz3/backends/cython/_bz3.pyx":640
  * 
  * 
  * cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):             # <<<<<<<<<<<<<<
@@ -11407,8 +12517,8 @@ static void __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(struct bz3_st
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":602
- *         readonly uint32_t numthreads  # how many threads to use
+/* "bz3/backends/cython/_bz3.pyx":661
+ *         readonly bint ignore_error  # decode
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -11434,7 +12544,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("init_state", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":604
+  /* "bz3/backends/cython/_bz3.pyx":663
  *     cdef inline int init_state(self, int32_t block_size) except -1:
  *         """should exec only once"""
  *         if not self.states:             # <<<<<<<<<<<<<<
@@ -11444,7 +12554,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
   __pyx_t_1 = ((!(__pyx_v_self->states != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":605
+    /* "bz3/backends/cython/_bz3.pyx":664
  *         """should exec only once"""
  *         if not self.states:
  *             self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array             # <<<<<<<<<<<<<<
@@ -11453,7 +12563,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
     __pyx_v_self->states = ((struct bz3_state **)PyMem_Calloc(__pyx_v_self->numthreads, (sizeof(struct bz3_state *))));
 
-    /* "bz3/backends/cython/_bz3.pyx":606
+    /* "bz3/backends/cython/_bz3.pyx":665
  *         if not self.states:
  *             self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array
  *             if not self.states:             # <<<<<<<<<<<<<<
@@ -11463,16 +12573,16 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
     __pyx_t_1 = ((!(__pyx_v_self->states != 0)) != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":607
+      /* "bz3/backends/cython/_bz3.pyx":666
  *             self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array
  *             if not self.states:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
  *         if not self.buffers:
  *             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
  */
-      PyErr_NoMemory(); __PYX_ERR(0, 607, __pyx_L1_error)
+      PyErr_NoMemory(); __PYX_ERR(0, 666, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":606
+      /* "bz3/backends/cython/_bz3.pyx":665
  *         if not self.states:
  *             self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array
  *             if not self.states:             # <<<<<<<<<<<<<<
@@ -11481,7 +12591,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":604
+    /* "bz3/backends/cython/_bz3.pyx":663
  *     cdef inline int init_state(self, int32_t block_size) except -1:
  *         """should exec only once"""
  *         if not self.states:             # <<<<<<<<<<<<<<
@@ -11490,7 +12600,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":608
+  /* "bz3/backends/cython/_bz3.pyx":667
  *             if not self.states:
  *                 raise MemoryError
  *         if not self.buffers:             # <<<<<<<<<<<<<<
@@ -11500,7 +12610,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
   __pyx_t_1 = ((!(__pyx_v_self->buffers != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":609
+    /* "bz3/backends/cython/_bz3.pyx":668
  *                 raise MemoryError
  *         if not self.buffers:
  *             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))             # <<<<<<<<<<<<<<
@@ -11509,7 +12619,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
     __pyx_v_self->buffers = ((uint8_t **)PyMem_Calloc(__pyx_v_self->numthreads, (sizeof(uint8_t *))));
 
-    /* "bz3/backends/cython/_bz3.pyx":610
+    /* "bz3/backends/cython/_bz3.pyx":669
  *         if not self.buffers:
  *             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
  *             if not self.buffers:             # <<<<<<<<<<<<<<
@@ -11519,16 +12629,16 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
     __pyx_t_1 = ((!(__pyx_v_self->buffers != 0)) != 0);
     if (unlikely(__pyx_t_1)) {
 
-      /* "bz3/backends/cython/_bz3.pyx":611
+      /* "bz3/backends/cython/_bz3.pyx":670
  *             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
  *             if not self.buffers:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
  *         cdef uint32_t i
  *         try:
  */
-      PyErr_NoMemory(); __PYX_ERR(0, 611, __pyx_L1_error)
+      PyErr_NoMemory(); __PYX_ERR(0, 670, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":610
+      /* "bz3/backends/cython/_bz3.pyx":669
  *         if not self.buffers:
  *             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
  *             if not self.buffers:             # <<<<<<<<<<<<<<
@@ -11537,7 +12647,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":608
+    /* "bz3/backends/cython/_bz3.pyx":667
  *             if not self.states:
  *                 raise MemoryError
  *         if not self.buffers:             # <<<<<<<<<<<<<<
@@ -11546,7 +12656,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":613
+  /* "bz3/backends/cython/_bz3.pyx":672
  *                 raise MemoryError
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -11562,7 +12672,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
     __Pyx_XGOTREF(__pyx_t_4);
     /*try:*/ {
 
-      /* "bz3/backends/cython/_bz3.pyx":614
+      /* "bz3/backends/cython/_bz3.pyx":673
  *         cdef uint32_t i
  *         try:
  *             for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -11574,7 +12684,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
       for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
         __pyx_v_i = __pyx_t_7;
 
-        /* "bz3/backends/cython/_bz3.pyx":615
+        /* "bz3/backends/cython/_bz3.pyx":674
  *         try:
  *             for i in range(self.numthreads):
  *                 self.states[i] = bz3_new(block_size)             # <<<<<<<<<<<<<<
@@ -11583,7 +12693,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
         (__pyx_v_self->states[__pyx_v_i]) = bz3_new(__pyx_v_block_size);
 
-        /* "bz3/backends/cython/_bz3.pyx":616
+        /* "bz3/backends/cython/_bz3.pyx":675
  *             for i in range(self.numthreads):
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:             # <<<<<<<<<<<<<<
@@ -11593,20 +12703,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
         __pyx_t_1 = (((__pyx_v_self->states[__pyx_v_i]) == NULL) != 0);
         if (unlikely(__pyx_t_1)) {
 
-          /* "bz3/backends/cython/_bz3.pyx":617
+          /* "bz3/backends/cython/_bz3.pyx":676
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:
  *                     raise MemoryError("Failed to create a block encoder state")  # todo             # <<<<<<<<<<<<<<
  *                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:
  */
-          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 617, __pyx_L7_error)
+          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 676, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_Raise(__pyx_t_8, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __PYX_ERR(0, 617, __pyx_L7_error)
+          __PYX_ERR(0, 676, __pyx_L7_error)
 
-          /* "bz3/backends/cython/_bz3.pyx":616
+          /* "bz3/backends/cython/_bz3.pyx":675
  *             for i in range(self.numthreads):
  *                 self.states[i] = bz3_new(block_size)
  *                 if self.states[i] == NULL:             # <<<<<<<<<<<<<<
@@ -11615,7 +12725,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":618
+        /* "bz3/backends/cython/_bz3.pyx":677
  *                 if self.states[i] == NULL:
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)             # <<<<<<<<<<<<<<
@@ -11624,7 +12734,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
         (__pyx_v_self->buffers[__pyx_v_i]) = ((uint8_t *)PyMem_Malloc(((__pyx_v_block_size + (((long)__pyx_v_block_size) / 50)) + 32)));
 
-        /* "bz3/backends/cython/_bz3.pyx":619
+        /* "bz3/backends/cython/_bz3.pyx":678
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:             # <<<<<<<<<<<<<<
@@ -11634,20 +12744,20 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
         __pyx_t_1 = (((__pyx_v_self->buffers[__pyx_v_i]) == NULL) != 0);
         if (unlikely(__pyx_t_1)) {
 
-          /* "bz3/backends/cython/_bz3.pyx":620
+          /* "bz3/backends/cython/_bz3.pyx":679
  *                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:
  *                     raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *         except:
  *             self.free_states()
  */
-          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 620, __pyx_L7_error)
+          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 679, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_Raise(__pyx_t_8, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __PYX_ERR(0, 620, __pyx_L7_error)
+          __PYX_ERR(0, 679, __pyx_L7_error)
 
-          /* "bz3/backends/cython/_bz3.pyx":619
+          /* "bz3/backends/cython/_bz3.pyx":678
  *                     raise MemoryError("Failed to create a block encoder state")  # todo
  *                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
  *                 if self.buffers[i] == NULL:             # <<<<<<<<<<<<<<
@@ -11657,7 +12767,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
         }
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":613
+      /* "bz3/backends/cython/_bz3.pyx":672
  *                 raise MemoryError
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -11672,7 +12782,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
     __pyx_L7_error:;
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":621
+    /* "bz3/backends/cython/_bz3.pyx":680
  *                 if self.buffers[i] == NULL:
  *                     raise MemoryError("Failed to allocate memory")
  *         except:             # <<<<<<<<<<<<<<
@@ -11681,12 +12791,12 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
     /*except:*/ {
       __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.init_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10) < 0) __PYX_ERR(0, 621, __pyx_L9_except_error)
+      if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10) < 0) __PYX_ERR(0, 680, __pyx_L9_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_GOTREF(__pyx_t_10);
 
-      /* "bz3/backends/cython/_bz3.pyx":622
+      /* "bz3/backends/cython/_bz3.pyx":681
  *                     raise MemoryError("Failed to allocate memory")
  *         except:
  *             self.free_states()             # <<<<<<<<<<<<<<
@@ -11695,7 +12805,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
       __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_free_states(__pyx_v_self);
 
-      /* "bz3/backends/cython/_bz3.pyx":623
+      /* "bz3/backends/cython/_bz3.pyx":682
  *         except:
  *             self.free_states()
  *             self.free_buffers()             # <<<<<<<<<<<<<<
@@ -11704,7 +12814,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
  */
       __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_free_buffers(__pyx_v_self);
 
-      /* "bz3/backends/cython/_bz3.pyx":624
+      /* "bz3/backends/cython/_bz3.pyx":683
  *             self.free_states()
  *             self.free_buffers()
  *             raise             # <<<<<<<<<<<<<<
@@ -11716,11 +12826,11 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
       __Pyx_XGIVEREF(__pyx_t_10);
       __Pyx_ErrRestoreWithState(__pyx_t_8, __pyx_t_9, __pyx_t_10);
       __pyx_t_8 = 0; __pyx_t_9 = 0; __pyx_t_10 = 0; 
-      __PYX_ERR(0, 624, __pyx_L9_except_error)
+      __PYX_ERR(0, 683, __pyx_L9_except_error)
     }
     __pyx_L9_except_error:;
 
-    /* "bz3/backends/cython/_bz3.pyx":613
+    /* "bz3/backends/cython/_bz3.pyx":672
  *                 raise MemoryError
  *         cdef uint32_t i
  *         try:             # <<<<<<<<<<<<<<
@@ -11735,17 +12845,17 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
     __pyx_L12_try_end:;
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":625
+  /* "bz3/backends/cython/_bz3.pyx":684
  *             self.free_buffers()
  *             raise
  *         self.block_size = block_size             # <<<<<<<<<<<<<<
  * 
- *     def __cinit__(self,  uint32_t numthreads):
+ *     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
  */
   __pyx_v_self->block_size = __pyx_v_block_size;
 
-  /* "bz3/backends/cython/_bz3.pyx":602
- *         readonly uint32_t numthreads  # how many threads to use
+  /* "bz3/backends/cython/_bz3.pyx":661
+ *         readonly bint ignore_error  # decode
  * 
  *     cdef inline int init_state(self, int32_t block_size) except -1:             # <<<<<<<<<<<<<<
  *         """should exec only once"""
@@ -11766,10 +12876,10 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":627
+/* "bz3/backends/cython/_bz3.pyx":686
  *         self.block_size = block_size
  * 
- *     def __cinit__(self,  uint32_t numthreads):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):             # <<<<<<<<<<<<<<
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
@@ -11778,6 +12888,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompress
 static int __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   uint32_t __pyx_v_numthreads;
+  int __pyx_v_ignore_error;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -11785,12 +12896,14 @@ static int __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_1__cinit__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_numthreads,0};
-    PyObject* values[1] = {0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_numthreads,&__pyx_n_s_ignore_error,0};
+    PyObject* values[2] = {0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -11801,33 +12914,48 @@ static int __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_1__cinit__
         case  0:
         if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_numthreads)) != 0)) kw_args--;
         else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ignore_error);
+          if (value) { values[1] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 627, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 686, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
-      goto __pyx_L5_argtuple_error;
     } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
     }
-    __pyx_v_numthreads = __Pyx_PyInt_As_uint32_t(values[0]); if (unlikely((__pyx_v_numthreads == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 627, __pyx_L3_error)
+    __pyx_v_numthreads = __Pyx_PyInt_As_uint32_t(values[0]); if (unlikely((__pyx_v_numthreads == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 686, __pyx_L3_error)
+    if (values[1]) {
+      __pyx_v_ignore_error = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_ignore_error == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 686, __pyx_L3_error)
+    } else {
+      __pyx_v_ignore_error = ((int)0);
+    }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 627, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 686, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *)__pyx_v_self), __pyx_v_numthreads);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *)__pyx_v_self), __pyx_v_numthreads, __pyx_v_ignore_error);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, uint32_t __pyx_v_numthreads) {
+static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self, uint32_t __pyx_v_numthreads, int __pyx_v_ignore_error) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -11837,14 +12965,14 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":628
+  /* "bz3/backends/cython/_bz3.pyx":687
  * 
- *     def __cinit__(self,  uint32_t numthreads):
+ *     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
  *         self.unused = bytearray()             # <<<<<<<<<<<<<<
  *         self.have_magic_number = 0 # magic number
  *         self.numthreads = numthreads
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 687, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->unused);
@@ -11852,26 +12980,35 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
   __pyx_v_self->unused = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":629
- *     def __cinit__(self,  uint32_t numthreads):
+  /* "bz3/backends/cython/_bz3.pyx":688
+ *     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number             # <<<<<<<<<<<<<<
  *         self.numthreads = numthreads
- * 
+ *         self.ignore_error = ignore_error
  */
   __pyx_v_self->have_magic_number = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":630
+  /* "bz3/backends/cython/_bz3.pyx":689
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number
  *         self.numthreads = numthreads             # <<<<<<<<<<<<<<
+ *         self.ignore_error = ignore_error
  * 
- *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  */
   __pyx_v_self->numthreads = __pyx_v_numthreads;
 
-  /* "bz3/backends/cython/_bz3.pyx":632
+  /* "bz3/backends/cython/_bz3.pyx":690
+ *         self.have_magic_number = 0 # magic number
  *         self.numthreads = numthreads
+ *         self.ignore_error = ignore_error             # <<<<<<<<<<<<<<
+ * 
+ *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
+ */
+  __pyx_v_self->ignore_error = __pyx_v_ignore_error;
+
+  /* "bz3/backends/cython/_bz3.pyx":692
+ *         self.ignore_error = ignore_error
  * 
  *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)             # <<<<<<<<<<<<<<
  *         if not self.sizes:
@@ -11879,7 +13016,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
   __pyx_v_self->sizes = ((int32_t *)PyMem_Malloc(((sizeof(int32_t)) * __pyx_v_numthreads)));
 
-  /* "bz3/backends/cython/_bz3.pyx":633
+  /* "bz3/backends/cython/_bz3.pyx":693
  * 
  *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:             # <<<<<<<<<<<<<<
@@ -11889,16 +13026,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
   __pyx_t_2 = ((!(__pyx_v_self->sizes != 0)) != 0);
   if (unlikely(__pyx_t_2)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":634
+    /* "bz3/backends/cython/_bz3.pyx":694
  *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 634, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 694, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":633
+    /* "bz3/backends/cython/_bz3.pyx":693
  * 
  *         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.sizes:             # <<<<<<<<<<<<<<
@@ -11907,7 +13044,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":635
+  /* "bz3/backends/cython/_bz3.pyx":695
  *         if not self.sizes:
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)             # <<<<<<<<<<<<<<
@@ -11916,7 +13053,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
   __pyx_v_self->old_sizes = ((int32_t *)PyMem_Malloc(((sizeof(int32_t)) * __pyx_v_numthreads)));
 
-  /* "bz3/backends/cython/_bz3.pyx":636
+  /* "bz3/backends/cython/_bz3.pyx":696
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:             # <<<<<<<<<<<<<<
@@ -11926,7 +13063,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
   __pyx_t_2 = ((!(__pyx_v_self->old_sizes != 0)) != 0);
   if (unlikely(__pyx_t_2)) {
 
-    /* "bz3/backends/cython/_bz3.pyx":637
+    /* "bz3/backends/cython/_bz3.pyx":697
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:
  *             PyMem_Free(self.sizes)             # <<<<<<<<<<<<<<
@@ -11935,7 +13072,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
     PyMem_Free(__pyx_v_self->sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":638
+    /* "bz3/backends/cython/_bz3.pyx":698
  *         if not self.old_sizes:
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL             # <<<<<<<<<<<<<<
@@ -11944,16 +13081,16 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
     __pyx_v_self->sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":639
+    /* "bz3/backends/cython/_bz3.pyx":699
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *             raise MemoryError             # <<<<<<<<<<<<<<
  * 
  *     cdef inline void free_states(self):
  */
-    PyErr_NoMemory(); __PYX_ERR(0, 639, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(0, 699, __pyx_L1_error)
 
-    /* "bz3/backends/cython/_bz3.pyx":636
+    /* "bz3/backends/cython/_bz3.pyx":696
  *             raise MemoryError
  *         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
  *         if not self.old_sizes:             # <<<<<<<<<<<<<<
@@ -11962,10 +13099,10 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":627
+  /* "bz3/backends/cython/_bz3.pyx":686
  *         self.block_size = block_size
  * 
- *     def __cinit__(self,  uint32_t numthreads):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):             # <<<<<<<<<<<<<<
  *         self.unused = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
@@ -11982,7 +13119,7 @@ static int __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor___cinit__(
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":641
+/* "bz3/backends/cython/_bz3.pyx":701
  *             raise MemoryError
  * 
  *     cdef inline void free_states(self):             # <<<<<<<<<<<<<<
@@ -11999,7 +13136,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("free_states", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":643
+  /* "bz3/backends/cython/_bz3.pyx":703
  *     cdef inline void free_states(self):
  *         cdef uint32_t i
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -12011,7 +13148,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "bz3/backends/cython/_bz3.pyx":644
+    /* "bz3/backends/cython/_bz3.pyx":704
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.states[i]:             # <<<<<<<<<<<<<<
@@ -12021,7 +13158,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
     __pyx_t_4 = ((__pyx_v_self->states[__pyx_v_i]) != 0);
     if (__pyx_t_4) {
 
-      /* "bz3/backends/cython/_bz3.pyx":645
+      /* "bz3/backends/cython/_bz3.pyx":705
  *         for i in range(self.numthreads):
  *             if self.states[i]:
  *                 bz3_free(self.states[i])             # <<<<<<<<<<<<<<
@@ -12030,7 +13167,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
  */
       bz3_free((__pyx_v_self->states[__pyx_v_i]));
 
-      /* "bz3/backends/cython/_bz3.pyx":646
+      /* "bz3/backends/cython/_bz3.pyx":706
  *             if self.states[i]:
  *                 bz3_free(self.states[i])
  *                 self.states[i] = NULL             # <<<<<<<<<<<<<<
@@ -12039,7 +13176,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
  */
       (__pyx_v_self->states[__pyx_v_i]) = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":644
+      /* "bz3/backends/cython/_bz3.pyx":704
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.states[i]:             # <<<<<<<<<<<<<<
@@ -12049,7 +13186,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":641
+  /* "bz3/backends/cython/_bz3.pyx":701
  *             raise MemoryError
  * 
  *     cdef inline void free_states(self):             # <<<<<<<<<<<<<<
@@ -12061,7 +13198,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":648
+/* "bz3/backends/cython/_bz3.pyx":708
  *                 self.states[i] = NULL
  * 
  *     cdef inline void free_buffers(self):             # <<<<<<<<<<<<<<
@@ -12078,7 +13215,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("free_buffers", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":650
+  /* "bz3/backends/cython/_bz3.pyx":710
  *     cdef inline void free_buffers(self):
  *         cdef uint32_t i
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -12090,7 +13227,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "bz3/backends/cython/_bz3.pyx":651
+    /* "bz3/backends/cython/_bz3.pyx":711
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:             # <<<<<<<<<<<<<<
@@ -12100,7 +13237,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
     __pyx_t_4 = ((__pyx_v_self->buffers[__pyx_v_i]) != 0);
     if (__pyx_t_4) {
 
-      /* "bz3/backends/cython/_bz3.pyx":652
+      /* "bz3/backends/cython/_bz3.pyx":712
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:
  *                 PyMem_Free(self.buffers[i])             # <<<<<<<<<<<<<<
@@ -12109,7 +13246,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
  */
       PyMem_Free((__pyx_v_self->buffers[__pyx_v_i]));
 
-      /* "bz3/backends/cython/_bz3.pyx":653
+      /* "bz3/backends/cython/_bz3.pyx":713
  *             if self.buffers[i]:
  *                 PyMem_Free(self.buffers[i])
  *                 self.buffers[i] = NULL             # <<<<<<<<<<<<<<
@@ -12118,7 +13255,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
  */
       (__pyx_v_self->buffers[__pyx_v_i]) = NULL;
 
-      /* "bz3/backends/cython/_bz3.pyx":651
+      /* "bz3/backends/cython/_bz3.pyx":711
  *         cdef uint32_t i
  *         for i in range(self.numthreads):
  *             if self.buffers[i]:             # <<<<<<<<<<<<<<
@@ -12128,7 +13265,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":648
+  /* "bz3/backends/cython/_bz3.pyx":708
  *                 self.states[i] = NULL
  * 
  *     cdef inline void free_buffers(self):             # <<<<<<<<<<<<<<
@@ -12140,7 +13277,7 @@ static CYTHON_INLINE void __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompres
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":655
+/* "bz3/backends/cython/_bz3.pyx":715
  *                 self.buffers[i] = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -12164,7 +13301,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":656
+  /* "bz3/backends/cython/_bz3.pyx":716
  * 
  *     def __dealloc__(self):
  *         self.free_states()             # <<<<<<<<<<<<<<
@@ -12173,7 +13310,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_free_states(__pyx_v_self);
 
-  /* "bz3/backends/cython/_bz3.pyx":657
+  /* "bz3/backends/cython/_bz3.pyx":717
  *     def __dealloc__(self):
  *         self.free_states()
  *         self.free_buffers()             # <<<<<<<<<<<<<<
@@ -12182,7 +13319,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_free_buffers(__pyx_v_self);
 
-  /* "bz3/backends/cython/_bz3.pyx":658
+  /* "bz3/backends/cython/_bz3.pyx":718
  *         self.free_states()
  *         self.free_buffers()
  *         if self.states:             # <<<<<<<<<<<<<<
@@ -12192,7 +13329,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   __pyx_t_1 = (__pyx_v_self->states != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":659
+    /* "bz3/backends/cython/_bz3.pyx":719
  *         self.free_buffers()
  *         if self.states:
  *             PyMem_Free(self.states)             # <<<<<<<<<<<<<<
@@ -12201,7 +13338,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     PyMem_Free(__pyx_v_self->states);
 
-    /* "bz3/backends/cython/_bz3.pyx":660
+    /* "bz3/backends/cython/_bz3.pyx":720
  *         if self.states:
  *             PyMem_Free(self.states)
  *             self.states = NULL             # <<<<<<<<<<<<<<
@@ -12210,7 +13347,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     __pyx_v_self->states = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":658
+    /* "bz3/backends/cython/_bz3.pyx":718
  *         self.free_states()
  *         self.free_buffers()
  *         if self.states:             # <<<<<<<<<<<<<<
@@ -12219,7 +13356,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":661
+  /* "bz3/backends/cython/_bz3.pyx":721
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *         if self.buffers:             # <<<<<<<<<<<<<<
@@ -12229,7 +13366,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   __pyx_t_1 = (__pyx_v_self->buffers != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":662
+    /* "bz3/backends/cython/_bz3.pyx":722
  *             self.states = NULL
  *         if self.buffers:
  *             PyMem_Free(self.buffers)             # <<<<<<<<<<<<<<
@@ -12238,7 +13375,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     PyMem_Free(__pyx_v_self->buffers);
 
-    /* "bz3/backends/cython/_bz3.pyx":663
+    /* "bz3/backends/cython/_bz3.pyx":723
  *         if self.buffers:
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL             # <<<<<<<<<<<<<<
@@ -12247,7 +13384,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     __pyx_v_self->buffers = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":661
+    /* "bz3/backends/cython/_bz3.pyx":721
  *             PyMem_Free(self.states)
  *             self.states = NULL
  *         if self.buffers:             # <<<<<<<<<<<<<<
@@ -12256,7 +13393,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":664
+  /* "bz3/backends/cython/_bz3.pyx":724
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *         if self.sizes:             # <<<<<<<<<<<<<<
@@ -12266,7 +13403,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   __pyx_t_1 = (__pyx_v_self->sizes != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":665
+    /* "bz3/backends/cython/_bz3.pyx":725
  *             self.buffers = NULL
  *         if self.sizes:
  *             PyMem_Free(self.sizes)             # <<<<<<<<<<<<<<
@@ -12275,7 +13412,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     PyMem_Free(__pyx_v_self->sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":666
+    /* "bz3/backends/cython/_bz3.pyx":726
  *         if self.sizes:
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL             # <<<<<<<<<<<<<<
@@ -12284,7 +13421,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     __pyx_v_self->sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":664
+    /* "bz3/backends/cython/_bz3.pyx":724
  *             PyMem_Free(self.buffers)
  *             self.buffers = NULL
  *         if self.sizes:             # <<<<<<<<<<<<<<
@@ -12293,7 +13430,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":667
+  /* "bz3/backends/cython/_bz3.pyx":727
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *         if self.old_sizes:             # <<<<<<<<<<<<<<
@@ -12303,7 +13440,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   __pyx_t_1 = (__pyx_v_self->old_sizes != 0);
   if (__pyx_t_1) {
 
-    /* "bz3/backends/cython/_bz3.pyx":668
+    /* "bz3/backends/cython/_bz3.pyx":728
  *             self.sizes = NULL
  *         if self.old_sizes:
  *             PyMem_Free(self.old_sizes)             # <<<<<<<<<<<<<<
@@ -12312,7 +13449,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     PyMem_Free(__pyx_v_self->old_sizes);
 
-    /* "bz3/backends/cython/_bz3.pyx":669
+    /* "bz3/backends/cython/_bz3.pyx":729
  *         if self.old_sizes:
  *             PyMem_Free(self.old_sizes)
  *             self.old_sizes = NULL             # <<<<<<<<<<<<<<
@@ -12321,7 +13458,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
     __pyx_v_self->old_sizes = NULL;
 
-    /* "bz3/backends/cython/_bz3.pyx":667
+    /* "bz3/backends/cython/_bz3.pyx":727
  *             PyMem_Free(self.sizes)
  *             self.sizes = NULL
  *         if self.old_sizes:             # <<<<<<<<<<<<<<
@@ -12330,7 +13467,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":655
+  /* "bz3/backends/cython/_bz3.pyx":715
  *                 self.buffers[i] = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -12342,7 +13479,7 @@ static void __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_2__deallo
   __Pyx_RefNannyFinishContext();
 }
 
-/* "bz3/backends/cython/_bz3.pyx":671
+/* "bz3/backends/cython/_bz3.pyx":731
  *             self.old_sizes = NULL
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -12377,7 +13514,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":672
+  /* "bz3/backends/cython/_bz3.pyx":732
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):
  *         cdef Py_ssize_t input_size = data.shape[0]             # <<<<<<<<<<<<<<
@@ -12386,19 +13523,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
   __pyx_v_input_size = (__pyx_v_data.shape[0]);
 
-  /* "bz3/backends/cython/_bz3.pyx":674
+  /* "bz3/backends/cython/_bz3.pyx":734
  *         cdef Py_ssize_t input_size = data.shape[0]
  *         cdef int32_t code
  *         cdef bytearray ret = bytearray()             # <<<<<<<<<<<<<<
  *         cdef int32_t  block_size
  *         cdef uint32_t i, thread_count, j, should_delete=0
  */
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 674, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)(&PyByteArray_Type))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 734, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":676
+  /* "bz3/backends/cython/_bz3.pyx":736
  *         cdef bytearray ret = bytearray()
  *         cdef int32_t  block_size
  *         cdef uint32_t i, thread_count, j, should_delete=0             # <<<<<<<<<<<<<<
@@ -12407,7 +13544,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
   __pyx_v_should_delete = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":677
+  /* "bz3/backends/cython/_bz3.pyx":737
  *         cdef int32_t  block_size
  *         cdef uint32_t i, thread_count, j, should_delete=0
  *         cdef int should_break = 0             # <<<<<<<<<<<<<<
@@ -12416,7 +13553,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
   __pyx_v_should_break = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":678
+  /* "bz3/backends/cython/_bz3.pyx":738
  *         cdef uint32_t i, thread_count, j, should_delete=0
  *         cdef int should_break = 0
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -12426,16 +13563,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
   __pyx_t_2 = ((__pyx_v_input_size > 0) != 0);
   if (__pyx_t_2) {
 
-    /* "bz3/backends/cython/_bz3.pyx":682
+    /* "bz3/backends/cython/_bz3.pyx":742
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header             # <<<<<<<<<<<<<<
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 682, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 742, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 682, __pyx_L1_error)
+    __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_data, 1, (PyObject *(*)(char *)) __pyx_memview_get_nn_uint8_t__const__, (int (*)(char *, PyObject *)) NULL, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 742, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -12450,12 +13587,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 682, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 742, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "bz3/backends/cython/_bz3.pyx":683
+    /* "bz3/backends/cython/_bz3.pyx":743
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
@@ -12476,7 +13613,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "bz3/backends/cython/_bz3.pyx":684
+      /* "bz3/backends/cython/_bz3.pyx":744
  *             self.unused.extend(data) # read header
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -12489,20 +13626,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":685
+        /* "bz3/backends/cython/_bz3.pyx":745
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  */
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 685, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 745, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 685, __pyx_L1_error)
+        __PYX_ERR(0, 745, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":684
+        /* "bz3/backends/cython/_bz3.pyx":744
  *             self.unused.extend(data) # read header
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
@@ -12511,7 +13648,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":686
+      /* "bz3/backends/cython/_bz3.pyx":746
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))             # <<<<<<<<<<<<<<
@@ -12523,7 +13660,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       __pyx_v_block_size = read_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_t_1)[5]))));
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":687
+      /* "bz3/backends/cython/_bz3.pyx":747
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):             # <<<<<<<<<<<<<<
@@ -12541,20 +13678,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       __pyx_L9_bool_binop_done:;
       if (unlikely(__pyx_t_2)) {
 
-        /* "bz3/backends/cython/_bz3.pyx":688
+        /* "bz3/backends/cython/_bz3.pyx":748
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
  *                 self.init_state(block_size)
  *                 del self.unused[:9]
  */
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 688, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 748, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_Raise(__pyx_t_1, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __PYX_ERR(0, 688, __pyx_L1_error)
+        __PYX_ERR(0, 748, __pyx_L1_error)
 
-        /* "bz3/backends/cython/_bz3.pyx":687
+        /* "bz3/backends/cython/_bz3.pyx":747
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):             # <<<<<<<<<<<<<<
@@ -12563,16 +13700,16 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":689
+      /* "bz3/backends/cython/_bz3.pyx":749
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *                 self.init_state(block_size)             # <<<<<<<<<<<<<<
  *                 del self.unused[:9]
  *                 self.have_magic_number = 1
  */
-      __pyx_t_7 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_init_state(__pyx_v_self, __pyx_v_block_size); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 689, __pyx_L1_error)
+      __pyx_t_7 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_init_state(__pyx_v_self, __pyx_v_block_size); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 749, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":690
+      /* "bz3/backends/cython/_bz3.pyx":750
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
  *                 self.init_state(block_size)
  *                 del self.unused[:9]             # <<<<<<<<<<<<<<
@@ -12581,11 +13718,11 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       if (unlikely(__pyx_v_self->unused == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 690, __pyx_L1_error)
+        __PYX_ERR(0, 750, __pyx_L1_error)
       }
-      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, 9, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 690, __pyx_L1_error)
+      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, 9, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 750, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":691
+      /* "bz3/backends/cython/_bz3.pyx":751
  *                 self.init_state(block_size)
  *                 del self.unused[:9]
  *                 self.have_magic_number = 1             # <<<<<<<<<<<<<<
@@ -12594,7 +13731,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       __pyx_v_self->have_magic_number = 1;
 
-      /* "bz3/backends/cython/_bz3.pyx":683
+      /* "bz3/backends/cython/_bz3.pyx":743
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
@@ -12603,7 +13740,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":693
+    /* "bz3/backends/cython/_bz3.pyx":753
  *                 self.have_magic_number = 1
  *             # block
  *             while not should_break:             # <<<<<<<<<<<<<<
@@ -12614,7 +13751,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       __pyx_t_2 = ((!(__pyx_v_should_break != 0)) != 0);
       if (!__pyx_t_2) break;
 
-      /* "bz3/backends/cython/_bz3.pyx":694
+      /* "bz3/backends/cython/_bz3.pyx":754
  *             # block
  *             while not should_break:
  *                 thread_count = 0  # thread             # <<<<<<<<<<<<<<
@@ -12623,7 +13760,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       __pyx_v_thread_count = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":696
+      /* "bz3/backends/cython/_bz3.pyx":756
  *                 thread_count = 0  # thread
  *                 # should_delete = 0 # self.unused
  *                 for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -12635,7 +13772,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_i = __pyx_t_10;
 
-        /* "bz3/backends/cython/_bz3.pyx":697
+        /* "bz3/backends/cython/_bz3.pyx":757
  *                 # should_delete = 0 # self.unused
  *                 for i in range(self.numthreads):
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte header             # <<<<<<<<<<<<<<
@@ -12648,7 +13785,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         if (__pyx_t_2) {
 
-          /* "bz3/backends/cython/_bz3.pyx":698
+          /* "bz3/backends/cython/_bz3.pyx":758
  *                 for i in range(self.numthreads):
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte header
  *                         should_break = 1             # <<<<<<<<<<<<<<
@@ -12657,7 +13794,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
           __pyx_v_should_break = 1;
 
-          /* "bz3/backends/cython/_bz3.pyx":699
+          /* "bz3/backends/cython/_bz3.pyx":759
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte header
  *                         should_break = 1
  *                         break             # <<<<<<<<<<<<<<
@@ -12666,7 +13803,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
           goto __pyx_L14_break;
 
-          /* "bz3/backends/cython/_bz3.pyx":697
+          /* "bz3/backends/cython/_bz3.pyx":757
  *                 # should_delete = 0 # self.unused
  *                 for i in range(self.numthreads):
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte header             # <<<<<<<<<<<<<<
@@ -12675,7 +13812,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":700
+        /* "bz3/backends/cython/_bz3.pyx":760
  *                         should_break = 1
  *                         break
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const             # <<<<<<<<<<<<<<
@@ -12687,7 +13824,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         (__pyx_v_self->sizes[__pyx_v_i]) = read_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_t_1)[__pyx_v_should_delete]))));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "bz3/backends/cython/_bz3.pyx":701
+        /* "bz3/backends/cython/_bz3.pyx":761
  *                         break
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))             # <<<<<<<<<<<<<<
@@ -12699,7 +13836,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         (__pyx_v_self->old_sizes[__pyx_v_i]) = read_neutral_s32(((uint8_t *)(&(PyByteArray_AS_STRING(__pyx_t_1)[(__pyx_v_should_delete + 4)]))));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "bz3/backends/cython/_bz3.pyx":702
+        /* "bz3/backends/cython/_bz3.pyx":762
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #             # <<<<<<<<<<<<<<
@@ -12712,7 +13849,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         if (__pyx_t_2) {
 
-          /* "bz3/backends/cython/_bz3.pyx":703
+          /* "bz3/backends/cython/_bz3.pyx":763
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #
  *                         should_break = 1             # <<<<<<<<<<<<<<
@@ -12721,7 +13858,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
           __pyx_v_should_break = 1;
 
-          /* "bz3/backends/cython/_bz3.pyx":704
+          /* "bz3/backends/cython/_bz3.pyx":764
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #
  *                         should_break = 1
  *                         break             # <<<<<<<<<<<<<<
@@ -12730,7 +13867,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
           goto __pyx_L14_break;
 
-          /* "bz3/backends/cython/_bz3.pyx":702
+          /* "bz3/backends/cython/_bz3.pyx":762
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #             # <<<<<<<<<<<<<<
@@ -12739,7 +13876,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":705
+        /* "bz3/backends/cython/_bz3.pyx":765
  *                         should_break = 1
  *                         break
  *                     memcpy(self.buffers[i], &(PyByteArray_AS_STRING(self.unused)[should_delete+8]), <size_t>self.sizes[i])             # <<<<<<<<<<<<<<
@@ -12751,7 +13888,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         (void)(memcpy((__pyx_v_self->buffers[__pyx_v_i]), (&(PyByteArray_AS_STRING(__pyx_t_1)[(__pyx_v_should_delete + 8)])), ((size_t)(__pyx_v_self->sizes[__pyx_v_i]))));
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "bz3/backends/cython/_bz3.pyx":706
+        /* "bz3/backends/cython/_bz3.pyx":766
  *                         break
  *                     memcpy(self.buffers[i], &(PyByteArray_AS_STRING(self.unused)[should_delete+8]), <size_t>self.sizes[i])
  *                     should_delete += (self.sizes[i] + 8)             # <<<<<<<<<<<<<<
@@ -12760,7 +13897,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
         __pyx_v_should_delete = (__pyx_v_should_delete + ((__pyx_v_self->sizes[__pyx_v_i]) + 8));
 
-        /* "bz3/backends/cython/_bz3.pyx":707
+        /* "bz3/backends/cython/_bz3.pyx":767
  *                     memcpy(self.buffers[i], &(PyByteArray_AS_STRING(self.unused)[should_delete+8]), <size_t>self.sizes[i])
  *                     should_delete += (self.sizes[i] + 8)
  *                     thread_count += 1             # <<<<<<<<<<<<<<
@@ -12771,7 +13908,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       }
       __pyx_L14_break:;
 
-      /* "bz3/backends/cython/_bz3.pyx":708
+      /* "bz3/backends/cython/_bz3.pyx":768
  *                     should_delete += (self.sizes[i] + 8)
  *                     thread_count += 1
  *                 if thread_count:  # blockdecodejb             # <<<<<<<<<<<<<<
@@ -12781,7 +13918,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       __pyx_t_2 = (__pyx_v_thread_count != 0);
       if (__pyx_t_2) {
 
-        /* "bz3/backends/cython/_bz3.pyx":709
+        /* "bz3/backends/cython/_bz3.pyx":769
  *                     thread_count += 1
  *                 if thread_count:  # blockdecodejb
  *                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)             # <<<<<<<<<<<<<<
@@ -12790,7 +13927,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
         __pyx_f_3bz3_8backends_6cython_4_bz3_bz3_decode_blocks(__pyx_v_self->states, __pyx_v_self->buffers, __pyx_v_self->sizes, __pyx_v_self->old_sizes, ((int32_t)__pyx_v_thread_count));
 
-        /* "bz3/backends/cython/_bz3.pyx":708
+        /* "bz3/backends/cython/_bz3.pyx":768
  *                     should_delete += (self.sizes[i] + 8)
  *                     thread_count += 1
  *                 if thread_count:  # blockdecodejb             # <<<<<<<<<<<<<<
@@ -12799,74 +13936,106 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       }
 
-      /* "bz3/backends/cython/_bz3.pyx":710
+      /* "bz3/backends/cython/_bz3.pyx":770
  *                 if thread_count:  # blockdecodejb
  *                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
  *                 for j in range(thread_count):             # <<<<<<<<<<<<<<
  *                     if bz3_last_error(self.states[j]) != BZ3_OK:
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+ *                         if self.ignore_error:
  */
       __pyx_t_8 = __pyx_v_thread_count;
       __pyx_t_9 = __pyx_t_8;
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_j = __pyx_t_10;
 
-        /* "bz3/backends/cython/_bz3.pyx":711
+        /* "bz3/backends/cython/_bz3.pyx":771
  *                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
  *                 for j in range(thread_count):
  *                     if bz3_last_error(self.states[j]) != BZ3_OK:             # <<<<<<<<<<<<<<
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
- *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
+ *                         if self.ignore_error:
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
  */
         __pyx_t_2 = ((bz3_last_error((__pyx_v_self->states[__pyx_v_j])) != BZ3_OK) != 0);
-        if (unlikely(__pyx_t_2)) {
+        if (__pyx_t_2) {
 
-          /* "bz3/backends/cython/_bz3.pyx":712
+          /* "bz3/backends/cython/_bz3.pyx":772
  *                 for j in range(thread_count):
  *                     if bz3_last_error(self.states[j]) != BZ3_OK:
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))             # <<<<<<<<<<<<<<
+ *                         if self.ignore_error:             # <<<<<<<<<<<<<<
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
+ *                         else:
+ */
+          __pyx_t_2 = (__pyx_v_self->ignore_error != 0);
+          if (likely(__pyx_t_2)) {
+
+            /* "bz3/backends/cython/_bz3.pyx":773
+ *                     if bz3_last_error(self.states[j]) != BZ3_OK:
+ *                         if self.ignore_error:
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))             # <<<<<<<<<<<<<<
+ *                         else:
+ *                             raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+ */
+            (void)(fprintf(stderr, ((char const *)"Writing invalid block: %s\n"), bz3_strerror((__pyx_v_self->states[__pyx_v_j]))));
+
+            /* "bz3/backends/cython/_bz3.pyx":772
+ *                 for j in range(thread_count):
+ *                     if bz3_last_error(self.states[j]) != BZ3_OK:
+ *                         if self.ignore_error:             # <<<<<<<<<<<<<<
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
+ *                         else:
+ */
+            goto __pyx_L21;
+          }
+
+          /* "bz3/backends/cython/_bz3.pyx":775
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
+ *                         else:
+ *                             raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))             # <<<<<<<<<<<<<<
  *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
  *             if should_delete:
  */
-          __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_j]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 712, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_data_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 712, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_3);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 712, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __PYX_ERR(0, 712, __pyx_L1_error)
+          /*else*/ {
+            __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_j]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 775, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_1);
+            __pyx_t_3 = PyUnicode_Format(__pyx_kp_u_Failed_to_decode_data_s, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 775, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+            __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 775, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_1);
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __Pyx_Raise(__pyx_t_1, 0, 0, 0);
+            __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+            __PYX_ERR(0, 775, __pyx_L1_error)
+          }
+          __pyx_L21:;
 
-          /* "bz3/backends/cython/_bz3.pyx":711
+          /* "bz3/backends/cython/_bz3.pyx":771
  *                     bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
  *                 for j in range(thread_count):
  *                     if bz3_last_error(self.states[j]) != BZ3_OK:             # <<<<<<<<<<<<<<
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
- *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
+ *                         if self.ignore_error:
+ *                             fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.states[j]))
  */
         }
 
-        /* "bz3/backends/cython/_bz3.pyx":713
- *                     if bz3_last_error(self.states[j]) != BZ3_OK:
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+        /* "bz3/backends/cython/_bz3.pyx":776
+ *                         else:
+ *                             raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
  *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])             # <<<<<<<<<<<<<<
  *             if should_delete:
  *                 del self.unused[:should_delete]
  */
-        __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(((const char*)(__pyx_v_self->buffers[__pyx_v_j])) + 0, (__pyx_v_self->old_sizes[__pyx_v_j]) - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 713, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(((const char*)(__pyx_v_self->buffers[__pyx_v_j])) + 0, (__pyx_v_self->old_sizes[__pyx_v_j]) - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 776, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_3 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 713, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyByteArray_Type_extend, __pyx_v_ret, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 776, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":714
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+    /* "bz3/backends/cython/_bz3.pyx":777
+ *                             raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
  *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
  *             if should_delete:             # <<<<<<<<<<<<<<
  *                 del self.unused[:should_delete]
@@ -12875,7 +14044,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     __pyx_t_2 = (__pyx_v_should_delete != 0);
     if (__pyx_t_2) {
 
-      /* "bz3/backends/cython/_bz3.pyx":715
+      /* "bz3/backends/cython/_bz3.pyx":778
  *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
  *             if should_delete:
  *                 del self.unused[:should_delete]             # <<<<<<<<<<<<<<
@@ -12884,12 +14053,12 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
       if (unlikely(__pyx_v_self->unused == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 715, __pyx_L1_error)
+        __PYX_ERR(0, 778, __pyx_L1_error)
       }
-      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, __pyx_v_should_delete, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 715, __pyx_L1_error)
+      if (__Pyx_PyObject_DelSlice(__pyx_v_self->unused, 0, __pyx_v_should_delete, NULL, NULL, NULL, 0, 1, 0) < 0) __PYX_ERR(0, 778, __pyx_L1_error)
 
-      /* "bz3/backends/cython/_bz3.pyx":714
- *                         raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
+      /* "bz3/backends/cython/_bz3.pyx":777
+ *                             raise ValueError("Failed to decode data: %s" % bz3_strerror(self.states[j]))
  *                     ret.extend(<bytes>self.buffers[j][:self.old_sizes[j]])
  *             if should_delete:             # <<<<<<<<<<<<<<
  *                 del self.unused[:should_delete]
@@ -12897,7 +14066,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":678
+    /* "bz3/backends/cython/_bz3.pyx":738
  *         cdef uint32_t i, thread_count, j, should_delete=0
  *         cdef int should_break = 0
  *         if input_size > 0:             # <<<<<<<<<<<<<<
@@ -12906,7 +14075,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  */
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":716
+  /* "bz3/backends/cython/_bz3.pyx":779
  *             if should_delete:
  *                 del self.unused[:should_delete]
  *         return bytes(ret)             # <<<<<<<<<<<<<<
@@ -12914,13 +14083,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *     @property
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 716, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 779, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":671
+  /* "bz3/backends/cython/_bz3.pyx":731
  *             self.old_sizes = NULL
  * 
  *     cpdef inline bytes decompress(self, const uint8_t[::1] data):             # <<<<<<<<<<<<<<
@@ -12955,7 +14124,7 @@ static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_5dec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("decompress (wrapper)", 0);
   assert(__pyx_arg_data); {
-    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 671, __pyx_L3_error)
+    __pyx_v_data = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_data, 0); if (unlikely(!__pyx_v_data.memview)) __PYX_ERR(0, 731, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12979,8 +14148,8 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4dec
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decompress", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 671, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_decompress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 671, __pyx_L1_error)
+  if (unlikely(!__pyx_v_data.memview)) { __Pyx_RaiseUnboundLocalError("data"); __PYX_ERR(0, 731, __pyx_L1_error) }
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_decompress(__pyx_v_self, __pyx_v_data, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 731, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12998,7 +14167,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4dec
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":719
+/* "bz3/backends/cython/_bz3.pyx":782
  * 
  *     @property
  *     def unused_data(self):             # <<<<<<<<<<<<<<
@@ -13028,7 +14197,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11un
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":721
+  /* "bz3/backends/cython/_bz3.pyx":784
  *     def unused_data(self):
  *         """Data found after the end of the compressed stream."""
  *         return bytes(self.unused)             # <<<<<<<<<<<<<<
@@ -13036,13 +14205,13 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11un
  *     cpdef inline list error(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_self->unused); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 721, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_self->unused); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 784, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":719
+  /* "bz3/backends/cython/_bz3.pyx":782
  * 
  *     @property
  *     def unused_data(self):             # <<<<<<<<<<<<<<
@@ -13061,7 +14230,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_11un
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":723
+/* "bz3/backends/cython/_bz3.pyx":786
  *         return bytes(self.unused)
  * 
  *     cpdef inline list error(self):             # <<<<<<<<<<<<<<
@@ -13087,19 +14256,19 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":725
+  /* "bz3/backends/cython/_bz3.pyx":788
  *     cpdef inline list error(self):
  *         cdef uint32_t i
  *         cdef list ret = []             # <<<<<<<<<<<<<<
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 788, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":726
+  /* "bz3/backends/cython/_bz3.pyx":789
  *         cdef uint32_t i
  *         cdef list ret = []
  *         for i in range(self.numthreads):             # <<<<<<<<<<<<<<
@@ -13111,7 +14280,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "bz3/backends/cython/_bz3.pyx":727
+    /* "bz3/backends/cython/_bz3.pyx":790
  *         cdef list ret = []
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -13121,25 +14290,25 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     __pyx_t_5 = ((bz3_last_error((__pyx_v_self->states[__pyx_v_i])) != BZ3_OK) != 0);
     if (__pyx_t_5) {
 
-      /* "bz3/backends/cython/_bz3.pyx":728
+      /* "bz3/backends/cython/_bz3.pyx":791
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes> bz3_strerror(self.states[i])).decode())             # <<<<<<<<<<<<<<
  *         return ret
  */
-      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 728, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 791, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (unlikely(__pyx_t_1 == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-        __PYX_ERR(0, 728, __pyx_L1_error)
+        __PYX_ERR(0, 791, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 728, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 791, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_6); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 728, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_6); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 791, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "bz3/backends/cython/_bz3.pyx":727
+      /* "bz3/backends/cython/_bz3.pyx":790
  *         cdef list ret = []
  *         for i in range(self.numthreads):
  *             if bz3_last_error(self.states[i]) != BZ3_OK:             # <<<<<<<<<<<<<<
@@ -13149,7 +14318,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     }
   }
 
-  /* "bz3/backends/cython/_bz3.pyx":729
+  /* "bz3/backends/cython/_bz3.pyx":792
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes> bz3_strerror(self.states[i])).decode())
  *         return ret             # <<<<<<<<<<<<<<
@@ -13159,7 +14328,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "bz3/backends/cython/_bz3.pyx":723
+  /* "bz3/backends/cython/_bz3.pyx":786
  *         return bytes(self.unused)
  * 
  *     cpdef inline list error(self):             # <<<<<<<<<<<<<<
@@ -13203,7 +14372,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6err
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("error", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 723, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_error(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 786, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13220,7 +14389,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6err
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":597
+/* "bz3/backends/cython/_bz3.pyx":655
  *         int32_t * sizes   # compressed
  *         int32_t * old_sizes  # origin
  *         readonly int32_t block_size             # <<<<<<<<<<<<<<
@@ -13250,7 +14419,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10bl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 597, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int32_t(__pyx_v_self->block_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13267,12 +14436,12 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10bl
   return __pyx_r;
 }
 
-/* "bz3/backends/cython/_bz3.pyx":600
+/* "bz3/backends/cython/_bz3.pyx":658
  *         bytearray unused  #
  *         bint have_magic_number
  *         readonly uint32_t numthreads  # how many threads to use             # <<<<<<<<<<<<<<
+ *         readonly bint ignore_error  # decode
  * 
- *     cdef inline int init_state(self, int32_t block_size) except -1:
  */
 
 /* Python wrapper */
@@ -13297,7 +14466,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10nu
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_self->numthreads); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 658, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13307,6 +14476,53 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10nu
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.numthreads.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bz3/backends/cython/_bz3.pyx":659
+ *         bint have_magic_number
+ *         readonly uint32_t numthreads  # how many threads to use
+ *         readonly bint ignore_error  # decode             # <<<<<<<<<<<<<<
+ * 
+ *     cdef inline int init_state(self, int32_t block_size) except -1:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error___get__(((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error___get__(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->ignore_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 659, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("bz3.backends.cython._bz3.BZ3OmpDecompressor.ignore_error.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -26607,7 +27823,7 @@ static struct __pyx_vtabstruct_3bz3_8backends_6cython_4_bz3_BZ3Decompressor __py
 static struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *__pyx_freelist_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[8];
 static int __pyx_freecount_3bz3_8backends_6cython_4_bz3_BZ3Decompressor = 0;
 
-static PyObject *__pyx_tp_new_3bz3_8backends_6cython_4_bz3_BZ3Decompressor(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_3bz3_8backends_6cython_4_bz3_BZ3Decompressor(PyTypeObject *t, PyObject *a, PyObject *k) {
   struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *p;
   PyObject *o;
   if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_3bz3_8backends_6cython_4_bz3_BZ3Decompressor > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor)))) {
@@ -26621,7 +27837,7 @@ static PyObject *__pyx_tp_new_3bz3_8backends_6cython_4_bz3_BZ3Decompressor(PyTyp
   p = ((struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *)o);
   p->__pyx_vtab = __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Decompressor;
   p->unused = ((PyObject*)Py_None); Py_INCREF(Py_None);
-  if (unlikely(__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
+  if (unlikely(__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_1__cinit__(o, a, k) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
@@ -26654,6 +27870,10 @@ static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_bl
   return __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_10block_size_1__get__(o);
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_ignore_error(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_12ignore_error_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] = {
   {"decompress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_5decompress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_4decompress},
   {"error", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_7error, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_6error},
@@ -26665,6 +27885,7 @@ static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] 
 static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3Decompressor[] = {
   {(char *)"unused_data", __pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_unused_data, 0, (char *)"Data found after the end of the compressed stream.", 0},
   {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_block_size, 0, (char *)0, 0},
+  {(char *)"ignore_error", __pyx_getprop_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_ignore_error, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
@@ -26933,6 +28154,10 @@ static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor
   return __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_10numthreads_1__get__(o);
 }
 
+static PyObject *__pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_ignore_error(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_12ignore_error_1__get__(o);
+}
+
 static PyMethodDef __pyx_methods_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor[] = {
   {"decompress", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_5decompress, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_4decompress},
   {"error", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_7error, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_6error},
@@ -26945,6 +28170,7 @@ static struct PyGetSetDef __pyx_getsets_3bz3_8backends_6cython_4_bz3_BZ3OmpDecom
   {(char *)"unused_data", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_unused_data, 0, (char *)"Data found after the end of the compressed stream.", 0},
   {(char *)"block_size", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_block_size, 0, (char *)0, 0},
   {(char *)"numthreads", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_numthreads, 0, (char *)0, 0},
+  {(char *)"ignore_error", __pyx_getprop_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_ignore_error, 0, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
@@ -27748,11 +28974,11 @@ static PyTypeObject __pyx_type___pyx_memoryviewslice = {
 };
 
 static PyMethodDef __pyx_methods[] = {
-  {"test_file", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_5test_file, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_4test_file},
-  {"bound", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_7bound, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_6bound},
-  {"compress_into", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_9compress_into, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_8compress_into},
-  {"decompress_into", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_11decompress_into, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_10decompress_into},
-  {"libversion", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_13libversion, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_12libversion},
+  {"test_file", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_7test_file, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_6test_file},
+  {"bound", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_9bound, METH_O, __pyx_doc_3bz3_8backends_6cython_4_bz3_8bound},
+  {"compress_into", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_11compress_into, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_10compress_into},
+  {"decompress_into", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_3bz3_8backends_6cython_4_bz3_13decompress_into, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3bz3_8backends_6cython_4_bz3_12decompress_into},
+  {"libversion", (PyCFunction)__pyx_pw_3bz3_8backends_6cython_4_bz3_15libversion, METH_NOARGS, __pyx_doc_3bz3_8backends_6cython_4_bz3_14libversion},
   {0, 0, 0, 0}
 };
 
@@ -27872,6 +29098,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
+  {&__pyx_n_s_ignore_error, __pyx_k_ignore_error, sizeof(__pyx_k_ignore_error), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_input, __pyx_k_input, sizeof(__pyx_k_input), 0, 0, 1, 1},
   {&__pyx_kp_u_input_except_a_file_like_object, __pyx_k_input_except_a_file_like_object, sizeof(__pyx_k_input_except_a_file_like_object), 0, 1, 0, 0},
@@ -27904,6 +29131,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_read, __pyx_k_read, sizeof(__pyx_k_read), 0, 0, 1, 1},
+  {&__pyx_n_s_recover_file, __pyx_k_recover_file, sizeof(__pyx_k_recover_file), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
@@ -27930,10 +29158,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 43, __pyx_L1_error)
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 444, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 502, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
   __pyx_builtin_Ellipsis = __Pyx_GetBuiltinName(__pyx_n_s_Ellipsis); if (!__pyx_builtin_Ellipsis) __PYX_ERR(1, 406, __pyx_L1_error)
   __pyx_builtin_id = __Pyx_GetBuiltinName(__pyx_n_s_id); if (!__pyx_builtin_id) __PYX_ERR(1, 615, __pyx_L1_error)
@@ -27947,36 +29175,36 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "bz3/backends/cython/_bz3.pyx":43
+  /* "bz3/backends/cython/_bz3.pyx":44
  *     def __cinit__(self, int32_t block_size):
  *         if block_size < KiB(65) or block_size > MiB(511):
  *             raise ValueError("Block size must be between 65 KiB and 511 MiB")             # <<<<<<<<<<<<<<
  *         self.block_size = block_size
  *         self.state = bz3_new(block_size)
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Block_size_must_be_between_65_Ki); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_u_Block_size_must_be_between_65_Ki); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "bz3/backends/cython/_bz3.pyx":47
+  /* "bz3/backends/cython/_bz3.pyx":48
  *         self.state = bz3_new(block_size)
  *         if self.state == NULL:
  *             raise MemoryError("Failed to create a block encoder state")             # <<<<<<<<<<<<<<
  *         self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
  *         if self.buffer == NULL:
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_Failed_to_create_a_block_encoder); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_u_Failed_to_create_a_block_encoder); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "bz3/backends/cython/_bz3.pyx":52
+  /* "bz3/backends/cython/_bz3.pyx":53
  *             bz3_free(self.state)
  *             self.state = NULL
  *             raise MemoryError("Failed to allocate memory")             # <<<<<<<<<<<<<<
  *         self.uncompressed = bytearray()
  *         self.have_magic_number = 0 # magic number
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Failed_to_allocate_memory); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_Failed_to_allocate_memory); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
@@ -27999,25 +29227,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "bz3/backends/cython/_bz3.pyx":169
+  /* "bz3/backends/cython/_bz3.pyx":172
  *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Invalid_signature); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Invalid_signature); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 172, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "bz3/backends/cython/_bz3.pyx":172
+  /* "bz3/backends/cython/_bz3.pyx":175
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
  *                 if block_size  < KiB(65) or block_size >MiB(511):
  *                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")             # <<<<<<<<<<<<<<
  *                 self.init_state(block_size)
  *                 del self.unused[:9]
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_The_input_file_is_corrupted_Reas); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_The_input_file_is_corrupted_Reas); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 175, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
 
@@ -28040,14 +29268,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "bz3/backends/cython/_bz3.pyx":261
+  /* "bz3/backends/cython/_bz3.pyx":267
  *     data = input.read(9) # magic and block_size type: bytes len = 9
  *     if PyBytes_GET_SIZE(data) < 9:
  *         raise ValueError("Invalid file. Reason: Smaller than magic header")             # <<<<<<<<<<<<<<
  *     if strncmp(PyBytes_AS_STRING(data), magic, 5) != 0:
  *         raise ValueError("Invalid signature")
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_Invalid_file_Reason_Smaller_than); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_Invalid_file_Reason_Smaller_than); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
@@ -28284,29 +29512,41 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
 
-  /* "bz3/backends/cython/_bz3.pyx":207
+  /* "bz3/backends/cython/_bz3.pyx":213
  * 
  * 
  * def compress_file(object input, object output, int32_t block_size):             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
-  __pyx_tuple__37 = PyTuple_Pack(9, __pyx_n_s_input, __pyx_n_s_output, __pyx_n_s_block_size, __pyx_n_s_state, __pyx_n_s_buffer, __pyx_n_s_data, __pyx_n_s_new_size, __pyx_n_s_byteswap_buf, __pyx_n_s_old_size); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_tuple__37 = PyTuple_Pack(9, __pyx_n_s_input, __pyx_n_s_output, __pyx_n_s_block_size, __pyx_n_s_state, __pyx_n_s_buffer, __pyx_n_s_data, __pyx_n_s_new_size, __pyx_n_s_byteswap_buf, __pyx_n_s_old_size); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(3, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bz3_backends_cython__bz3_pyx, __pyx_n_s_compress_file, 207, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(3, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bz3_backends_cython__bz3_pyx, __pyx_n_s_compress_file, 213, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 213, __pyx_L1_error)
 
-  /* "bz3/backends/cython/_bz3.pyx":252
+  /* "bz3/backends/cython/_bz3.pyx":258
  *         buffer = NULL
  * 
  * def decompress_file(object input, object output):             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
-  __pyx_tuple__39 = PyTuple_Pack(9, __pyx_n_s_input, __pyx_n_s_output, __pyx_n_s_data, __pyx_n_s_block_size, __pyx_n_s_state, __pyx_n_s_buffer, __pyx_n_s_new_size, __pyx_n_s_old_size, __pyx_n_s_code); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_tuple__39 = PyTuple_Pack(9, __pyx_n_s_input, __pyx_n_s_output, __pyx_n_s_data, __pyx_n_s_block_size, __pyx_n_s_state, __pyx_n_s_buffer, __pyx_n_s_new_size, __pyx_n_s_old_size, __pyx_n_s_code); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 258, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
-  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(2, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bz3_backends_cython__bz3_pyx, __pyx_n_s_decompress_file, 252, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(2, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bz3_backends_cython__bz3_pyx, __pyx_n_s_decompress_file, 258, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 258, __pyx_L1_error)
+
+  /* "bz3/backends/cython/_bz3.pyx":310
+ *         buffer = NULL
+ * 
+ * def recover_file(object input, object output):             # <<<<<<<<<<<<<<
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ */
+  __pyx_tuple__41 = PyTuple_Pack(9, __pyx_n_s_input, __pyx_n_s_output, __pyx_n_s_data, __pyx_n_s_block_size, __pyx_n_s_state, __pyx_n_s_buffer, __pyx_n_s_new_size, __pyx_n_s_old_size, __pyx_n_s_code); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__41);
+  __Pyx_GIVEREF(__pyx_tuple__41);
+  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(2, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bz3_backends_cython__bz3_pyx, __pyx_n_s_recover_file, 310, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 310, __pyx_L1_error)
 
   /* "View.MemoryView":287
  *         return self.name
@@ -28315,9 +29555,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(1, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__41);
-  __Pyx_GIVEREF(__pyx_tuple__41);
+  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(1, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__43);
+  __Pyx_GIVEREF(__pyx_tuple__43);
 
   /* "View.MemoryView":288
  * 
@@ -28326,9 +29566,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(1, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__42);
-  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(1, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__44);
+  __Pyx_GIVEREF(__pyx_tuple__44);
 
   /* "View.MemoryView":289
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -28337,9 +29577,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(1, 289, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__43);
-  __Pyx_GIVEREF(__pyx_tuple__43);
+  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(1, 289, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__45);
+  __Pyx_GIVEREF(__pyx_tuple__45);
 
   /* "View.MemoryView":292
  * 
@@ -28348,9 +29588,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(1, 292, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__44);
-  __Pyx_GIVEREF(__pyx_tuple__44);
+  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__46);
+  __Pyx_GIVEREF(__pyx_tuple__46);
 
   /* "View.MemoryView":293
  * 
@@ -28359,19 +29599,19 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(1, 293, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__45);
-  __Pyx_GIVEREF(__pyx_tuple__45);
+  __pyx_tuple__47 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(1, 293, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__47);
+  __Pyx_GIVEREF(__pyx_tuple__47);
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Enum(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__46 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__46);
-  __Pyx_GIVEREF(__pyx_tuple__46);
-  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__48 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__48);
+  __Pyx_GIVEREF(__pyx_tuple__48);
+  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -28450,31 +29690,31 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Compressor.compress = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_compress;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Compressor.flush = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_flush;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Compressor.error = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Compressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_13BZ3Compressor_error;
-  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_dictoffset && __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3Compressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3Compressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __pyx_ptype_3bz3_8backends_6cython_4_bz3_BZ3Compressor = &__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Compressor;
   __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Decompressor = &__pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Decompressor;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.init_state = (int (*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *, int32_t))__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_init_state;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.decompress = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_decompress;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.error = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3Decompressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompressor_error;
-  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_dictoffset && __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3Decompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3Decompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
   __pyx_ptype_3bz3_8backends_6cython_4_bz3_BZ3Decompressor = &__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3Decompressor;
   __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor = &__pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.free_states = (void (*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *))__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_free_states;
@@ -28482,16 +29722,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.compress = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_compress;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.flush = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_flush;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.error = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_error;
-  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 460, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_dictoffset && __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3OmpCompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 460, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3OmpCompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 460, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor) < 0) __PYX_ERR(0, 460, __pyx_L1_error)
   __pyx_ptype_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor = &__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpCompressor;
   __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor = &__pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.init_state = (int (*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *, int32_t))__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_init_state;
@@ -28499,16 +29739,16 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.free_buffers = (void (*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *))__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_free_buffers;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.decompress = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_decompress;
   __pyx_vtable_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.error = (PyObject *(*)(struct __pyx_obj_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor *, int __pyx_skip_dispatch))__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDecompressor_error;
-  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 649, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_dictoffset && __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3OmpDecompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor.tp_dict, __pyx_vtabptr_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 649, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_BZ3OmpDecompressor, (PyObject *)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 649, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor) < 0) __PYX_ERR(0, 649, __pyx_L1_error)
   __pyx_ptype_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor = &__pyx_type_3bz3_8backends_6cython_4_bz3_BZ3OmpDecompressor;
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -28812,7 +30052,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "bz3/backends/cython/_bz3.pyx":23
+  /* "bz3/backends/cython/_bz3.pyx":24
  *     void* PyMem_Calloc(size_t nelem, size_t elsize)
  * 
  * cdef const char* magic = "BZ3v1"             # <<<<<<<<<<<<<<
@@ -28821,28 +30061,40 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_3bz3_8backends_6cython_4_bz3_magic = ((char const *)"BZ3v1");
 
-  /* "bz3/backends/cython/_bz3.pyx":207
+  /* "bz3/backends/cython/_bz3.pyx":213
  * 
  * 
  * def compress_file(object input, object output, int32_t block_size):             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3bz3_8backends_6cython_4_bz3_1compress_file, NULL, __pyx_n_s_bz3_backends_cython__bz3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3bz3_8backends_6cython_4_bz3_1compress_file, NULL, __pyx_n_s_bz3_backends_cython__bz3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_compress_file, __pyx_t_1) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_compress_file, __pyx_t_1) < 0) __PYX_ERR(0, 213, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "bz3/backends/cython/_bz3.pyx":252
+  /* "bz3/backends/cython/_bz3.pyx":258
  *         buffer = NULL
  * 
  * def decompress_file(object input, object output):             # <<<<<<<<<<<<<<
  *     if not PyFile_Check(input):
  *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3bz3_8backends_6cython_4_bz3_3decompress_file, NULL, __pyx_n_s_bz3_backends_cython__bz3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3bz3_8backends_6cython_4_bz3_3decompress_file, NULL, __pyx_n_s_bz3_backends_cython__bz3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_decompress_file, __pyx_t_1) < 0) __PYX_ERR(0, 252, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_decompress_file, __pyx_t_1) < 0) __PYX_ERR(0, 258, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "bz3/backends/cython/_bz3.pyx":310
+ *         buffer = NULL
+ * 
+ * def recover_file(object input, object output):             # <<<<<<<<<<<<<<
+ *     if not PyFile_Check(input):
+ *         raise TypeError("input except a file-like object, got %s" % type(input).__name__)
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3bz3_8backends_6cython_4_bz3_5recover_file, NULL, __pyx_n_s_bz3_backends_cython__bz3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_recover_file, __pyx_t_1) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "bz3/backends/cython/_bz3.pyx":1
@@ -28875,7 +30127,7 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 287, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_1);
@@ -28889,7 +30141,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__42, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 288, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_1);
@@ -28903,7 +30155,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 289, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_1);
@@ -28917,7 +30169,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__46, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_1);
@@ -28931,7 +30183,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 293, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__47, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 293, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
@@ -30059,46 +31311,6 @@ static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
     } else {
         return PyUnicode_Decode(cstring, length, encoding, errors);
     }
-}
-
-/* KeywordStringCheck */
-static int __Pyx_CheckKeywordStrings(
-    PyObject *kwdict,
-    const char* function_name,
-    int kw_allowed)
-{
-    PyObject* key = 0;
-    Py_ssize_t pos = 0;
-#if CYTHON_COMPILING_IN_PYPY
-    if (!kw_allowed && PyDict_Next(kwdict, &pos, &key, 0))
-        goto invalid_keyword;
-    return 1;
-#else
-    while (PyDict_Next(kwdict, &pos, &key, 0)) {
-        #if PY_MAJOR_VERSION < 3
-        if (unlikely(!PyString_Check(key)))
-        #endif
-            if (unlikely(!PyUnicode_Check(key)))
-                goto invalid_keyword_type;
-    }
-    if ((!kw_allowed) && unlikely(key))
-        goto invalid_keyword;
-    return 1;
-invalid_keyword_type:
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() keywords must be strings", function_name);
-    return 0;
-#endif
-invalid_keyword:
-    PyErr_Format(PyExc_TypeError,
-    #if PY_MAJOR_VERSION < 3
-        "%.200s() got an unexpected keyword argument '%.200s'",
-        function_name, PyString_AsString(key));
-    #else
-        "%s() got an unexpected keyword argument '%U'",
-        function_name, key);
-    #endif
-    return 0;
 }
 
 /* GetException */

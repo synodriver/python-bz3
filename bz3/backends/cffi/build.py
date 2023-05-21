@@ -1,5 +1,4 @@
 import glob
-import sys
 
 from cffi import FFI
 
@@ -136,7 +135,7 @@ ffibuilder.set_source(
     source,
     sources=c_sources,
     include_dirs=["./dep/include"],
-    define_macros=[("VERSION", '"1.3.0.r2-g2c8100a"')],
+    define_macros=[("VERSION", '"1.3.1.r1-g812e779"')],
 )
 
 if __name__ == "__main__":

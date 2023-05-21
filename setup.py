@@ -50,7 +50,7 @@ extensions = [
         "bz3.backends.cython._bz3",
         c_sources,
         include_dirs=["./dep/include"],
-        define_macros=[("VERSION", '"1.3.0.r2-g2c8100a"')],
+        define_macros=[("VERSION", '"1.3.1.r1-g812e779"')],
         extra_compile_args=extra_compile_args,
         extra_link_args=extra_link_args,
     ),
