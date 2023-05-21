@@ -12,5 +12,6 @@ from bz3.backends.cython._bz3 import (
     decompress_file,
     decompress_into,
     libversion,
+    recover_file,
     test_file,
 )

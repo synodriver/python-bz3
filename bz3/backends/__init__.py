@@ -29,6 +29,7 @@ if not _should_use_cffi():
         decompress_file,
         decompress_into,
         libversion,
+        recover_file,
         test_file,
     )
 else:
@@ -41,5 +42,6 @@ else:
         decompress_file,
         decompress_into,
         libversion,
+        recover_file,
         test_file,
     )
