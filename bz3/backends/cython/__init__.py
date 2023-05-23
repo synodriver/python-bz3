@@ -1,5 +1,5 @@
 """
-Copyright (c) 2008-2021 synodriver <synodriver@gmail.com>
+Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 from bz3.backends.cython._bz3 import (
     BZ3Compressor,
