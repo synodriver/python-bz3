@@ -4864,7 +4864,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  *                     break
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst             # <<<<<<<<<<<<<<
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  */
       __pyx_t_1 = __pyx_v_self->unused;
       __Pyx_INCREF(__pyx_t_1);
@@ -4875,7 +4875,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  *                     break
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))             # <<<<<<<<<<<<<<
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
       __pyx_t_1 = __pyx_v_self->unused;
@@ -4886,24 +4886,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       /* "bz3/backends/cython/_bz3.pyx":185
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  */
-      __pyx_t_6 = ((__pyx_v_old_size > bz3_bound(__pyx_v_self->block_size)) != 0);
+      __pyx_t_6 = ((__pyx_v_old_size > ((int32_t)bz3_bound(__pyx_v_self->block_size))) != 0);
       if (!__pyx_t_6) {
       } else {
         __pyx_t_2 = __pyx_t_6;
         goto __pyx_L15_bool_binop_done;
       }
-      __pyx_t_6 = ((__pyx_v_new_size > bz3_bound(__pyx_v_self->block_size)) != 0);
+      __pyx_t_6 = ((__pyx_v_new_size > ((int32_t)bz3_bound(__pyx_v_self->block_size))) != 0);
       __pyx_t_2 = __pyx_t_6;
       __pyx_L15_bool_binop_done:;
       if (unlikely(__pyx_t_2)) {
 
         /* "bz3/backends/cython/_bz3.pyx":186
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  *                     break
@@ -4917,14 +4917,14 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
         /* "bz3/backends/cython/_bz3.pyx":185
  *                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  */
       }
 
       /* "bz3/backends/cython/_bz3.pyx":187
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #             # <<<<<<<<<<<<<<
  *                     break
@@ -4946,7 +4946,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
         goto __pyx_L12_break;
 
         /* "bz3/backends/cython/_bz3.pyx":187
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #             # <<<<<<<<<<<<<<
  *                     break
@@ -7023,7 +7023,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  */
         goto __pyx_L16_break;
 
@@ -7040,7 +7040,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
@@ -7048,24 +7048,24 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
       /* "bz3/backends/cython/_bz3.pyx":295
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes
  */
-      __pyx_t_5 = ((__pyx_v_old_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_old_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       if (!__pyx_t_5) {
       } else {
         __pyx_t_1 = __pyx_t_5;
         goto __pyx_L20_bool_binop_done;
       }
-      __pyx_t_5 = ((__pyx_v_new_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_new_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       __pyx_t_1 = __pyx_t_5;
       __pyx_L20_bool_binop_done:;
       if (unlikely(__pyx_t_1)) {
 
         /* "bz3/backends/cython/_bz3.pyx":296
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *             data = input.read(new_size) # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:
@@ -7079,14 +7079,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_2decompress_file(CYTHON_U
         /* "bz3/backends/cython/_bz3.pyx":295
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes
  */
       }
 
       /* "bz3/backends/cython/_bz3.pyx":297
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < new_size:
@@ -8041,7 +8041,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUS
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  */
         goto __pyx_L16_break;
 
@@ -8058,7 +8058,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUS
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
@@ -8066,24 +8066,24 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUS
       /* "bz3/backends/cython/_bz3.pyx":349
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes
  */
-      __pyx_t_5 = ((__pyx_v_old_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_old_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       if (!__pyx_t_5) {
       } else {
         __pyx_t_1 = __pyx_t_5;
         goto __pyx_L20_bool_binop_done;
       }
-      __pyx_t_5 = ((__pyx_v_new_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_new_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       __pyx_t_1 = __pyx_t_5;
       __pyx_L20_bool_binop_done:;
       if (unlikely(__pyx_t_1)) {
 
         /* "bz3/backends/cython/_bz3.pyx":350
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *             data = input.read(new_size) # type: bytes
  *             if PyBytes_GET_SIZE(data) < new_size:
@@ -8097,14 +8097,14 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_4recover_file(CYTHON_UNUS
         /* "bz3/backends/cython/_bz3.pyx":349
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes
  */
       }
 
       /* "bz3/backends/cython/_bz3.pyx":351
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 raise ValueError("Failed to decode a block: Inconsistent headers.")
  *             data = input.read(new_size) # type: bytes             # <<<<<<<<<<<<<<
  *             if PyBytes_GET_SIZE(data) < new_size:
@@ -9039,7 +9039,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break             # <<<<<<<<<<<<<<
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  */
         goto __pyx_L18_break;
 
@@ -9056,7 +9056,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
  *             if PyBytes_GET_SIZE(data) < 4:
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))             # <<<<<<<<<<<<<<
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 if should_raise:
  */
       __pyx_v_old_size = read_neutral_s32(((uint8_t *)PyBytes_AS_STRING(__pyx_v_data)));
@@ -9064,24 +9064,24 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
       /* "bz3/backends/cython/_bz3.pyx":407
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 if should_raise:
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
-      __pyx_t_5 = ((__pyx_v_old_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_old_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       if (!__pyx_t_5) {
       } else {
         __pyx_t_1 = __pyx_t_5;
         goto __pyx_L22_bool_binop_done;
       }
-      __pyx_t_5 = ((__pyx_v_new_size > bz3_bound(__pyx_v_block_size)) != 0);
+      __pyx_t_5 = ((__pyx_v_new_size > ((int32_t)bz3_bound(__pyx_v_block_size))) != 0);
       __pyx_t_1 = __pyx_t_5;
       __pyx_L22_bool_binop_done:;
       if (__pyx_t_1) {
 
         /* "bz3/backends/cython/_bz3.pyx":408
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 if should_raise:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 return 0
@@ -9090,7 +9090,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
         if (unlikely(__pyx_t_1)) {
 
           /* "bz3/backends/cython/_bz3.pyx":409
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 if should_raise:
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *                 return 0
@@ -9104,7 +9104,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
 
           /* "bz3/backends/cython/_bz3.pyx":408
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):
  *                 if should_raise:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                 return 0
@@ -9124,7 +9124,7 @@ static CYTHON_INLINE int __pyx_f_3bz3_8backends_6cython_4_bz3_test_file(PyObject
         /* "bz3/backends/cython/_bz3.pyx":407
  *                 break
  *             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
- *             if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):             # <<<<<<<<<<<<<<
+ *             if old_size > <int32_t>bz3_bound(block_size) or new_size > <int32_t>bz3_bound(block_size):             # <<<<<<<<<<<<<<
  *                 if should_raise:
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
@@ -14448,7 +14448,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *                         break
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const             # <<<<<<<<<<<<<<
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):
  */
         __pyx_t_1 = __pyx_v_self->unused;
         __Pyx_INCREF(__pyx_t_1);
@@ -14459,7 +14459,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *                         break
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))             # <<<<<<<<<<<<<<
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")
  */
         __pyx_t_1 = __pyx_v_self->unused;
@@ -14470,24 +14470,24 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
         /* "bz3/backends/cython/_bz3.pyx":813
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #
  */
-        __pyx_t_6 = (((__pyx_v_self->old_sizes[__pyx_v_i]) > bz3_bound(__pyx_v_self->block_size)) != 0);
+        __pyx_t_6 = (((__pyx_v_self->old_sizes[__pyx_v_i]) > ((int32_t)bz3_bound(__pyx_v_self->block_size))) != 0);
         if (!__pyx_t_6) {
         } else {
           __pyx_t_2 = __pyx_t_6;
           goto __pyx_L17_bool_binop_done;
         }
-        __pyx_t_6 = (((__pyx_v_self->sizes[__pyx_v_i]) > bz3_bound(__pyx_v_self->block_size)) != 0);
+        __pyx_t_6 = (((__pyx_v_self->sizes[__pyx_v_i]) > ((int32_t)bz3_bound(__pyx_v_self->block_size))) != 0);
         __pyx_t_2 = __pyx_t_6;
         __pyx_L17_bool_binop_done:;
         if (unlikely(__pyx_t_2)) {
 
           /* "bz3/backends/cython/_bz3.pyx":814
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #
  *                         should_break = 1
@@ -14501,14 +14501,14 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
           /* "bz3/backends/cython/_bz3.pyx":813
  *                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
  *                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):             # <<<<<<<<<<<<<<
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #
  */
         }
 
         /* "bz3/backends/cython/_bz3.pyx":815
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #             # <<<<<<<<<<<<<<
  *                         should_break = 1
@@ -14539,7 +14539,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
           goto __pyx_L14_break;
 
           /* "bz3/backends/cython/_bz3.pyx":815
- *                     if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+ *                     if self.old_sizes[i] > <int32_t>bz3_bound(self.block_size) or self.sizes[i] > <int32_t>bz3_bound(self.block_size):
  *                         raise ValueError("Failed to decode a block: Inconsistent headers.")
  *                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: #             # <<<<<<<<<<<<<<
  *                         should_break = 1
@@ -29923,7 +29923,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
   /* "bz3/backends/cython/_bz3.pyx":186
  *                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
- *                 if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+ *                 if old_size > <int32_t>bz3_bound(self.block_size) or new_size > <int32_t>bz3_bound(self.block_size):
  *                     raise ValueError("Failed to decode a block: Inconsistent headers.")             # <<<<<<<<<<<<<<
  *                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: #
  *                     break

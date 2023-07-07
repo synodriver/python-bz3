@@ -32,6 +32,16 @@ class TestSeek(TestCase):
                                 ])
         memtrace.parse_log(os.path.join(current_dir, "mem2.log"), state)
 
+    def test_not_leak3(self):
+        state = memtrace.State([(r"BZ3OmpDecompressor __cinit__ (?P<addr>\w+)",
+                                 r"BZ3OmpDecompressor __dealloc__ (?P<addr>\w+)"),
+                                (r"PyMem_Malloc (?P<addr>\w+)",
+                                 r"PyMem_Free (?P<addr>\w+)"),
+                                (r"bz3_new (?P<addr>\w+)",
+                                 r"bz3_free (?P<addr>\w+)")
+                                ])
+        memtrace.parse_log(os.path.join(current_dir, "mem3.log"), state)
+
     def tearDown(self) -> None:
         print("done")
 
