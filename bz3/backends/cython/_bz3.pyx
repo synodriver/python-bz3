@@ -46,7 +46,7 @@ cdef class BZ3Compressor:
         self.state = bz3_new(block_size)
         if self.state == NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
+        self.buffer = <uint8_t *>PyMem_Malloc(bz3_bound(block_size))
         if self.buffer == NULL:
             bz3_free(self.state)
             self.state = NULL
@@ -138,7 +138,7 @@ cdef class BZ3Decompressor:
         self.state = bz3_new(block_size)
         if self.state == NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+        self.buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
         if self.buffer == NULL:
             bz3_free(self.state)
             self.state = NULL
@@ -182,6 +182,8 @@ cdef class BZ3Decompressor:
                     break
                 new_size = read_neutral_s32(<uint8_t*>PyByteArray_AS_STRING(self.unused)) # todo gcc warning but bytes is contst
                 old_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[4]))
+                if old_size > bz3_bound(self.block_size) or new_size > bz3_bound(self.block_size):
+                    raise ValueError("Failed to decode a block: Inconsistent headers.")
                 if PyByteArray_GET_SIZE(self.unused) < new_size+8: # 数据段不够
                     break
                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
@@ -218,7 +220,7 @@ def compress_file(object input, object output, int32_t block_size):
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
+    cdef uint8_t * buffer = <uint8_t *>PyMem_Malloc(bz3_bound(block_size))
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -273,7 +275,7 @@ def decompress_file(object input, object output):
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -290,6 +292,8 @@ def decompress_file(object input, object output):
             if PyBytes_GET_SIZE(data) < 4:
                 break
             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+                raise ValueError("Failed to decode a block: Inconsistent headers.")
             data = input.read(new_size) # type: bytes
             if PyBytes_GET_SIZE(data) < new_size:
                 break
@@ -325,7 +329,7 @@ def recover_file(object input, object output):
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -342,6 +346,8 @@ def recover_file(object input, object output):
             if PyBytes_GET_SIZE(data) < 4:
                 break
             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+                raise ValueError("Failed to decode a block: Inconsistent headers.")
             data = input.read(new_size) # type: bytes
             if PyBytes_GET_SIZE(data) < new_size:
                 break
@@ -381,7 +387,7 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -398,6 +404,10 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
             if PyBytes_GET_SIZE(data) < 4:
                 break
             old_size = read_neutral_s32(<uint8_t *> PyBytes_AS_STRING(data))
+            if old_size > bz3_bound(block_size) or new_size > bz3_bound(block_size):
+                if should_raise:
+                    raise ValueError("Failed to decode a block: Inconsistent headers.")
+                return 0
             data = input.read(new_size)  # type: bytes
             if PyBytes_GET_SIZE(data) < new_size:
                 break
@@ -513,7 +523,7 @@ cdef class BZ3OmpCompressor:
                 if self.states[i] == NULL:
                     raise MemoryError("Failed to create a block encoder state")  # todo 如何善后
                 MEMLOG("bz3_new %p\n", self.states[i])
-                self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
+                self.buffers[i] = <uint8_t *>PyMem_Malloc(bz3_bound(block_size))
                 if self.buffers[i] == NULL:
                     raise MemoryError("Failed to allocate memory")
                 MEMLOG("PyMem_Malloc %p\n", self.buffers[i])
@@ -700,7 +710,7 @@ cdef class BZ3OmpDecompressor:
                 if self.states[i] == NULL:
                     raise MemoryError("Failed to create a block encoder state")  # todo 如何善后
                 MEMLOG("bz3_new %p\n", self.states[i])
-                self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
+                self.buffers[i] = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
                 if self.buffers[i] == NULL:
                     raise MemoryError("Failed to allocate memory")
                 MEMLOG("PyMem_Malloc %p\n", self.buffers[i])
@@ -800,6 +810,8 @@ cdef class BZ3OmpDecompressor:
                         break
                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
                     self.old_sizes[i] = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[should_delete+4]))
+                    if self.old_sizes[i] > bz3_bound(self.block_size) or self.sizes[i] > bz3_bound(self.block_size):
+                        raise ValueError("Failed to decode a block: Inconsistent headers.")
                     if (PyByteArray_GET_SIZE(self.unused)-should_delete) < self.sizes[i]+8: # 数据段不够
                         should_break = 1
                         break
