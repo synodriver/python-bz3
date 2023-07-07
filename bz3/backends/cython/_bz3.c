@@ -7,10 +7,6 @@
             [
                 "VERSION",
                 "\"1.3.1.r1-g812e779\""
-            ],
-            [
-                "MEMDEBUG",
-                null
             ]
         ],
         "depends": [
