@@ -121,13 +121,11 @@ class DecompressReader(io.RawIOBase):
 
     # Rewind the file to the beginning of the data stream.
     def _rewind(self):
-        print("_rewind")
         self._fp.seek(0)
         self._eof = False
         self._pos = 0
         self._buffer.clear()
         self._decompressor = self._decomp_factory(**self._decomp_args)
-        print("_rewind done")
 
     def seek(self, offset, whence=io.SEEK_SET):
         # Recalculate offset as an absolute file position.

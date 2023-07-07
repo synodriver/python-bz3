@@ -15,7 +15,7 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
                                         bz3_decompress, bz3_encode_block,
                                         bz3_free, bz3_last_error, bz3_new,
                                         bz3_state, bz3_strerror, bz3_version,
-                                        read_neutral_s32, write_neutral_s32)
+                                        read_neutral_s32, write_neutral_s32, MEMLOG)
 
 
 cdef extern from "Python.h":
@@ -475,27 +475,36 @@ cdef class BZ3OmpCompressor:
         self.states = <bz3_state **>PyMem_Calloc(<size_t>numthreads, sizeof(bz3_state *)) # prepare the array
         if not self.states:
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.states)
         self.buffers = <uint8_t **>PyMem_Calloc(<size_t>numthreads, sizeof(uint8_t *))
         if not self.buffers:
             PyMem_Free(self.states)
             self.states = NULL
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.buffers)
         self.sizes = <int32_t *>PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.sizes:
             PyMem_Free(self.states)
+            MEMLOG("PyMem_Free %p\n", self.states)
             self.states = NULL
             PyMem_Free(self.buffers)
+            MEMLOG("PyMem_Free %p\n", self.buffers)
             self.buffers = NULL
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.sizes)
         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.old_sizes:
             PyMem_Free(self.states)
+            MEMLOG("PyMem_Free %p\n", self.states)
             self.states = NULL
             PyMem_Free(self.buffers)
+            MEMLOG("PyMem_Free %p\n", self.buffers)
             self.buffers = NULL
             PyMem_Free(self.sizes)
+            MEMLOG("PyMem_Free %p\n", self.sizes)
             self.sizes = NULL
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.old_sizes)
 
         cdef uint32_t i
         try:
@@ -503,19 +512,25 @@ cdef class BZ3OmpCompressor:
                 self.states[i] = bz3_new(block_size)
                 if self.states[i] == NULL:
                     raise MemoryError("Failed to create a block encoder state")  # todo 如何善后
+                MEMLOG("bz3_new %p\n", self.states[i])
                 self.buffers[i] = <uint8_t *>PyMem_Malloc(block_size + block_size / 50 + 32)
                 if self.buffers[i] == NULL:
                     raise MemoryError("Failed to allocate memory")
+                MEMLOG("PyMem_Malloc %p\n", self.buffers[i])
         except:
             self.free_states()
             self.free_buffers()
             PyMem_Free(self.states)
+            MEMLOG("PyMem_Free %p\n", self.states)
             self.states = NULL
             PyMem_Free(self.buffers)
+            MEMLOG("PyMem_Free %p\n", self.buffers)
             self.buffers = NULL
             PyMem_Free(self.sizes)
+            MEMLOG("PyMem_Free %p\n", self.sizes)
             self.sizes = NULL
             PyMem_Free(self.old_sizes)
+            MEMLOG("PyMem_Free %p\n", self.old_sizes)
             self.old_sizes = NULL
             raise
         self.uncompressed = bytearray()
@@ -524,17 +539,21 @@ cdef class BZ3OmpCompressor:
 
     cdef inline void free_states(self):
         cdef uint32_t i
-        for i in range(self.numthreads):
-            if self.states[i]:
-                bz3_free(self.states[i])
-                self.states[i] = NULL
+        if self.states:
+            for i in range(self.numthreads):
+                if self.states[i]:
+                    bz3_free(self.states[i])
+                    MEMLOG("bz3_free %p\n", self.states[i])
+                    self.states[i] = NULL
 
     cdef inline void free_buffers(self):
         cdef uint32_t i
-        for i in range(self.numthreads):
-            if self.buffers[i]:
-                PyMem_Free(self.buffers[i])
-                self.buffers[i] = NULL
+        if self.buffers:
+            for i in range(self.numthreads):
+                if self.buffers[i]:
+                    PyMem_Free(self.buffers[i])
+                    MEMLOG("PyMem_Free %p\n", self.buffers[i])
+                    self.buffers[i] = NULL
 
     def __dealloc__(self):
         cdef uint32_t i
@@ -542,15 +561,19 @@ cdef class BZ3OmpCompressor:
         self.free_buffers()
         if self.states:
             PyMem_Free(self.states)
+            MEMLOG("PyMem_Free %p\n", self.states)
             self.states = NULL
         if self.buffers:
             PyMem_Free(self.buffers)
+            MEMLOG("PyMem_Free %p\n", self.buffers)
             self.buffers = NULL
         if self.sizes:
             PyMem_Free(self.sizes)
+            MEMLOG("PyMem_Free %p\n", self.sizes)
             self.sizes = NULL
         if self.old_sizes:
             PyMem_Free(self.old_sizes)
+            MEMLOG("PyMem_Free %p\n", self.old_sizes)
             self.old_sizes = NULL
 
     cpdef inline bytes compress(self, const uint8_t[::1] data):
@@ -664,19 +687,23 @@ cdef class BZ3OmpDecompressor:
             self.states = <bz3_state **> PyMem_Calloc(self.numthreads, sizeof(bz3_state *))  # prepare the array
             if not self.states:
                 raise MemoryError
+            MEMLOG("PyMem_Malloc %p\n", self.states)
         if not self.buffers:
             self.buffers = <uint8_t **> PyMem_Calloc(self.numthreads, sizeof(uint8_t *))
             if not self.buffers:
                 raise MemoryError
+            MEMLOG("PyMem_Malloc %p\n", self.buffers)
         cdef uint32_t i
         try:
             for i in range(self.numthreads):
                 self.states[i] = bz3_new(block_size)
                 if self.states[i] == NULL:
                     raise MemoryError("Failed to create a block encoder state")  # todo 如何善后
+                MEMLOG("bz3_new %p\n", self.states[i])
                 self.buffers[i] = <uint8_t *> PyMem_Malloc(block_size + block_size / 50 + 32)
                 if self.buffers[i] == NULL:
                     raise MemoryError("Failed to allocate memory")
+                MEMLOG("PyMem_Malloc %p\n", self.buffers[i])
         except:
             self.free_states()
             self.free_buffers()
@@ -684,6 +711,8 @@ cdef class BZ3OmpDecompressor:
         self.block_size = block_size
 
     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
+        self.states = NULL
+        self.buffers = NULL
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
         self.numthreads = numthreads
@@ -692,41 +721,53 @@ cdef class BZ3OmpDecompressor:
         self.sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.sizes:
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.sizes)
         self.old_sizes = <int32_t *> PyMem_Malloc(sizeof(int32_t) * numthreads)
         if not self.old_sizes:
             PyMem_Free(self.sizes)
             self.sizes = NULL
             raise MemoryError
+        MEMLOG("PyMem_Malloc %p\n", self.old_sizes)
+        MEMLOG("BZ3OmpDecompressor __cinit__ %p\n", <void*>self)
 
     cdef inline void free_states(self):
         cdef uint32_t i
-        for i in range(self.numthreads):
-            if self.states[i]:
-                bz3_free(self.states[i])
-                self.states[i] = NULL
+        if self.states: # states数组是否初始化，即是否调用过init_states
+            for i in range(self.numthreads):
+                if self.states[i]:
+                    bz3_free(self.states[i])
+                    MEMLOG("bz3_free %p\n", self.states[i])
+                    self.states[i] = NULL
 
     cdef inline void free_buffers(self):
-        cdef uint32_t i
-        for i in range(self.numthreads):
-            if self.buffers[i]:
-                PyMem_Free(self.buffers[i])
-                self.buffers[i] = NULL
+        cdef uint32_t i # states数组是否初始化，即是否调用过init_states
+        if self.buffers: # states数组是否初始化，即是否调用过init_states
+            for i in range(self.numthreads):
+                if self.buffers[i]:
+                    PyMem_Free(self.buffers[i])
+                    MEMLOG("PyMem_Free %p\n", self.buffers[i])
+                    self.buffers[i] = NULL
 
     def __dealloc__(self):
         self.free_states()
         self.free_buffers()
         if self.states:
             PyMem_Free(self.states)
+            MEMLOG("PyMem_Free %p\n", self.states)
             self.states = NULL
         if self.buffers:
             PyMem_Free(self.buffers)
+            MEMLOG("PyMem_Free %p\n", self.buffers)
             self.buffers = NULL
         if self.sizes:
             PyMem_Free(self.sizes)
+            MEMLOG("PyMem_Free %p\n", self.sizes)
             self.sizes = NULL
         if self.old_sizes:
             PyMem_Free(self.old_sizes)
+            MEMLOG("PyMem_Free %p\n", self.old_sizes)
             self.old_sizes = NULL
+        MEMLOG("BZ3OmpDecompressor __dealloc__ %p\n", <void *> self)
 
     cpdef inline bytes decompress(self, const uint8_t[::1] data):
         cdef Py_ssize_t input_size = data.shape[0]

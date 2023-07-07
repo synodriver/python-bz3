@@ -32,6 +32,13 @@ else:
     extra_link_args = ["-fopenmp"]
 
 
+def has_option(name: str) -> bool:
+    if name in sys.argv[1:]:
+        sys.argv.remove(name)
+        return True
+    return False
+
+
 class build_ext_compiler_check(build_ext):
     def build_extensions(self):
         compiler = self.compiler.compiler_type
@@ -45,12 +52,16 @@ class build_ext_compiler_check(build_ext):
 
 c_sources = ["bz3/backends/cython/_bz3.pyx"] + glob.glob("./dep/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
+define_macros = [("VERSION", '"1.3.1.r1-g812e779"')]
+if has_option("--debug"):
+    define_macros.append(("MEMDEBUG", None))
+
 extensions = [
     Extension(
         "bz3.backends.cython._bz3",
         c_sources,
         include_dirs=["./dep/include"],
-        define_macros=[("VERSION", '"1.3.1.r1-g812e779"')],
+        define_macros=define_macros,
         extra_compile_args=extra_compile_args,
         extra_link_args=extra_link_args,
     ),
@@ -74,14 +85,6 @@ def get_version() -> str:
 
 
 packages = find_packages(exclude=("test", "tests.*", "test*"))
-
-
-def has_option(name: str) -> bool:
-    if name in sys.argv[1:]:
-        sys.argv.remove(name)
-        return True
-    return False
-
 
 setup_requires = []
 install_requires = []

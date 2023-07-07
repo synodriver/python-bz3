@@ -44,3 +44,13 @@ cdef extern from "libbz3.h" nogil:
     void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
                            int32_t n)
     const char * bz3_version()
+
+cdef extern from "<stdio.h>" nogil:
+    """
+#ifdef MEMDEBUG
+    #define MEMLOG(...) fprintf(stderr, __VA_ARGS__)
+#else
+    #define MEMLOG(...)
+#endif
+    """
+    void MEMLOG(const char* fmt, ...)

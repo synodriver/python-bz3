@@ -37,6 +37,14 @@ class TestCompress(TestCase):
         with bz3_open("test.bz3", "rt", encoding="utf-8") as f:
             self.assertEqual(f.read(), "test data")
 
+    def test_filelike_seek(self):
+        with bz3_open("test.bz3", "wt", encoding="utf-8") as f:
+            f.write("test data")
+        with bz3_open("test.bz3", "rb") as f:
+            f.seek(0, 2)
+            f.seek(0, 0)
+            self.assertEqual(f.read(), b"test data")
+
     def test_zerocopy(self):
         outsize = bound(100)
         out = bytearray(200)
