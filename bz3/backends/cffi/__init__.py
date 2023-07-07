@@ -42,7 +42,7 @@ class BZ3Compressor:
         if self.state != ffi.NULL:
             lib.bz3_free(self.state)
         if self.buffer != ffi.NULL:
-            lib.PyMem_Freffi.e(self.buffer)
+            lib.PyMem_Free(self.buffer)
 
     def compress(self, data: bytes) -> bytes:
         input_size: int = len(data)
