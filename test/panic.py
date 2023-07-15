@@ -2,7 +2,9 @@
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 import os
+import sys
 
+sys.path.append(".")
 from bz3.backends.cython import BZ3OmpCompressor, BZ3OmpDecompressor, BZ3Compressor, BZ3Decompressor
 
 for i in range(100):
