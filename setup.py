@@ -128,8 +128,10 @@ def main():
         install_requires=install_requires,
         license="BSD",
         classifiers=[
-            "Development Status :: 3 - Alpha",
+            "Development Status :: 4 - Beta",
             "Operating System :: OS Independent",
+            "Topic :: System :: Archiving",
+            "Topic :: System :: Archiving :: Compression",
             "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
             "Programming Language :: C",
             "Programming Language :: Cython",
