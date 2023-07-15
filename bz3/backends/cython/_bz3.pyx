@@ -566,7 +566,6 @@ cdef class BZ3OmpCompressor:
                     self.buffers[i] = NULL
 
     def __dealloc__(self):
-        cdef uint32_t i
         self.free_states()
         self.free_buffers()
         if self.states:
