@@ -52,7 +52,7 @@ class build_ext_compiler_check(build_ext):
 
 c_sources = ["bz3/backends/cython/_bz3.pyx"] + glob.glob("./dep/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
-define_macros = [("VERSION", '"1.3.1.r4-g6d041f4"')]
+define_macros = [("VERSION", '"1.3.1.r5-g646212a"')]
 if has_option("--debug"):
     define_macros.append(("MEMDEBUG", None))
 

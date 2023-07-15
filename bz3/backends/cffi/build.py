@@ -135,7 +135,7 @@ ffibuilder.set_source(
     source,
     sources=c_sources,
     include_dirs=["./dep/include"],
-    define_macros=[("VERSION", '"1.3.1.r4-g6d041f4"')],
+    define_macros=[("VERSION", '"1.3.1.r5-g646212a"')],
 )
 
 if __name__ == "__main__":
