@@ -161,7 +161,7 @@ class BZ3Decompressor:
             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
             self.unused.extend(data)
             if (
-                len(self.unused) > 9 and not self.have_magic_number
+                len(self.unused) >= 9 and not self.have_magic_number
             ):  # 9 bytes magic number
                 if bytes(self.unused[:5]) != b"BZ3v1":
                     raise ValueError("Invalid signature")

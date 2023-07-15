@@ -17,3 +17,4 @@ lib/
 bzip3.egg-info/
 *.bin
 *.bz3
+CMakeLists.txt

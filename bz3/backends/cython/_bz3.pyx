@@ -167,7 +167,7 @@ cdef class BZ3Decompressor:
             #     raise
             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
             self.unused.extend(data)
-            if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+            if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -622,7 +622,7 @@ cdef class BZ3OmpCompressor:
                         memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]]), self.buffers[i], <size_t>self.sizes[i])
 
                     del self.uncompressed[:all_blocks_size]
-            return bytes(ret)
+        return bytes(ret)
 
     cpdef inline bytes flush(self):
         cdef bytearray ret = bytearray()
@@ -791,7 +791,7 @@ cdef class BZ3OmpDecompressor:
             #     raise
             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
             self.unused.extend(data) # read header
-            if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+            if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))

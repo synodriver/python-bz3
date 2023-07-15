@@ -3,6 +3,8 @@ Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 import sys
 
+import bz3
+
 sys.path.append(".")
 import os
 from random import randint
@@ -18,6 +20,7 @@ from bz3 import (
 )
 from bz3 import open as bz3_open
 from bz3 import test_file
+
 
 # os.environ["BZ3_USE_CFFI"] = "1"
 
@@ -57,6 +60,9 @@ class TestCompress(TestCase):
 
     def test_version(self):
         self.assertTrue(isinstance(libversion(), str))
+
+    def test_zerosize(self):
+        self.assertEqual(bz3.decompress(bz3.compress(b"")), b"", "fail to compress b\"\"")
 
 
 if __name__ == "__main__":

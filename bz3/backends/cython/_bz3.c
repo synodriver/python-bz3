@@ -7,6 +7,10 @@
             [
                 "VERSION",
                 "\"1.3.1.r4-g6d041f4\""
+            ],
+            [
+                "MEMDEBUG",
+                null
             ]
         ],
         "depends": [
@@ -4646,7 +4650,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)             # <<<<<<<<<<<<<<
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  */
     __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
@@ -4674,13 +4678,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
     /* "bz3/backends/cython/_bz3.pyx":170
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  */
     __pyx_t_1 = __pyx_v_self->unused;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_6 = ((PyByteArray_GET_SIZE(__pyx_t_1) > 9) != 0);
+    __pyx_t_6 = ((PyByteArray_GET_SIZE(__pyx_t_1) >= 9) != 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_6) {
     } else {
@@ -4694,7 +4698,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
 
       /* "bz3/backends/cython/_bz3.pyx":171
  *             self.unused.extend(data)
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -4706,7 +4710,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       if (unlikely(__pyx_t_2)) {
 
         /* "bz3/backends/cython/_bz3.pyx":172
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -4720,7 +4724,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
 
         /* "bz3/backends/cython/_bz3.pyx":171
  *             self.unused.extend(data)
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -4813,7 +4817,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_15BZ3Decompr
       /* "bz3/backends/cython/_bz3.pyx":170
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data)
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  */
@@ -11989,7 +11993,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  *                         memcpy(&(PyByteArray_AS_STRING(ret)[PyByteArray_GET_SIZE(ret)-self.sizes[i]]), self.buffers[i], <size_t>self.sizes[i])
  * 
  *                     del self.uncompressed[:all_blocks_size]             # <<<<<<<<<<<<<<
- *             return bytes(ret)
+ *         return bytes(ret)
  * 
  */
         if (unlikely(__pyx_v_self->uncompressed == Py_None)) {
@@ -12008,20 +12012,6 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
     }
 
-    /* "bz3/backends/cython/_bz3.pyx":625
- * 
- *                     del self.uncompressed[:all_blocks_size]
- *             return bytes(ret)             # <<<<<<<<<<<<<<
- * 
- *     cpdef inline bytes flush(self):
- */
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_r = ((PyObject*)__pyx_t_1);
-    __pyx_t_1 = 0;
-    goto __pyx_L0;
-
     /* "bz3/backends/cython/_bz3.pyx":602
  *             self.have_magic_number = 1
  *         cdef uint32_t i
@@ -12030,6 +12020,20 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  *             #     raise
  */
   }
+
+  /* "bz3/backends/cython/_bz3.pyx":625
+ * 
+ *                     del self.uncompressed[:all_blocks_size]
+ *         return bytes(ret)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline bytes flush(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
 
   /* "bz3/backends/cython/_bz3.pyx":589
  *             self.old_sizes = NULL
@@ -12040,8 +12044,6 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
  */
 
   /* function exit code */
-  __pyx_r = ((PyObject*)Py_None); __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
@@ -12112,7 +12114,7 @@ static PyObject *__pyx_pf_3bz3_8backends_6cython_4_bz3_16BZ3OmpCompressor_4compr
 }
 
 /* "bz3/backends/cython/_bz3.pyx":627
- *             return bytes(ret)
+ *         return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
  *         cdef bytearray ret = bytearray()
@@ -12429,7 +12431,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_16BZ3OmpComp
   goto __pyx_L0;
 
   /* "bz3/backends/cython/_bz3.pyx":627
- *             return bytes(ret)
+ *         return bytes(ret)
  * 
  *     cpdef inline bytes flush(self):             # <<<<<<<<<<<<<<
  *         cdef bytearray ret = bytearray()
@@ -14198,7 +14200,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *             #     raise
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header             # <<<<<<<<<<<<<<
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  */
     __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->unused, __pyx_n_s_extend); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 793, __pyx_L1_error)
@@ -14226,13 +14228,13 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
     /* "bz3/backends/cython/_bz3.pyx":794
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  */
     __pyx_t_1 = __pyx_v_self->unused;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_6 = ((PyByteArray_GET_SIZE(__pyx_t_1) > 9) != 0);
+    __pyx_t_6 = ((PyByteArray_GET_SIZE(__pyx_t_1) >= 9) != 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_6) {
     } else {
@@ -14246,7 +14248,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
 
       /* "bz3/backends/cython/_bz3.pyx":795
  *             self.unused.extend(data) # read header
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -14258,7 +14260,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       if (unlikely(__pyx_t_2)) {
 
         /* "bz3/backends/cython/_bz3.pyx":796
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -14272,7 +14274,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
 
         /* "bz3/backends/cython/_bz3.pyx":795
  *             self.unused.extend(data) # read header
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Invalid signature")
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
@@ -14365,7 +14367,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
       /* "bz3/backends/cython/_bz3.pyx":794
  *             # memcpy(&(PyByteArray_AS_STRING(self.unused)[PyByteArray_GET_SIZE(self.unused)-input_size]), &data[0], input_size) # self.unused.extend
  *             self.unused.extend(data) # read header
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number             # <<<<<<<<<<<<<<
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")
  */
@@ -29900,7 +29902,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__8);
 
   /* "bz3/backends/cython/_bz3.pyx":172
- *             if PyByteArray_GET_SIZE(self.unused) > 9 and not self.have_magic_number: # 9 bytes magic number
+ *             if PyByteArray_GET_SIZE(self.unused) >= 9 and not self.have_magic_number: # 9 bytes magic number
  *                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
  *                     raise ValueError("Invalid signature")             # <<<<<<<<<<<<<<
  *                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
