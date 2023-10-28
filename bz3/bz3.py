@@ -22,7 +22,7 @@ _MODE_WRITE = 3
 
 
 class BZ3File(BaseStream):
-    """A file object providing transparent bzip2 (de)compression.
+    """A file object providing transparent bzip3 (de)compression.
 
     A BZ3File can act as a wrapper for an existing file object, or refer
     directly to a named file on disk.
@@ -345,7 +345,7 @@ def decompress(data: bytes, num_threads: int = 1) -> bytes:
     """Decompress a block of data.
     num_threads, which control how many threads to use. if given, must >= 1.
 
-    For incremental decompression, use a BZ2Decompressor object instead.
+    For incremental decompression, use a BZ3Decompressor object instead.
     """
     if num_threads == 1:
         decomp = BZ3Decompressor()
