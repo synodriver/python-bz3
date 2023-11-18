@@ -11,12 +11,12 @@ from bz3 import compress, decompress
 from bz3 import open as _open
 from bz3.backends.cython import BZ3OmpCompressor, BZ3OmpDecompressor
 
-origin_data = b"124" * (100 * 10 ** 6 + 7)
+origin_data = b"124" * (100 * 10**6 + 7)
 
 
 class TestOmp(TestCase):
     def test_compress(self):
-        compressor = BZ3OmpCompressor(10 ** 6 * 5, 32)
+        compressor = BZ3OmpCompressor(10**6 * 5, 32)
         # origin_data = b"124" * (600*10 ** 6 + 7)
         compressed_data = compressor.compress(origin_data) + compressor.flush()
         self.assertEqual(decompress(compressed_data), origin_data)
@@ -34,9 +34,14 @@ class TestOmp(TestCase):
             self.assertEqual(f.read(), origin_data)
 
     def test_zerosize(self):
-        self.assertEqual(bz3.decompress(bz3.compress(b"", num_threads=os.cpu_count()), num_threads=os.cpu_count()),
-                         b"",
-                         "fail to compress b\"\"")
+        self.assertEqual(
+            bz3.decompress(
+                bz3.compress(b"", num_threads=os.cpu_count()),
+                num_threads=os.cpu_count(),
+            ),
+            b"",
+            'fail to compress b""',
+        )
 
 
 if __name__ == "__main__":

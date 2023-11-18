@@ -26,9 +26,7 @@ class BZ3Compressor:
         self.state = lib.bz3_new(block_size)
         if self.state == ffi.NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = ffi.cast(
-            "uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size))
-        )
+        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
         if self.buffer == ffi.NULL:
             lib.bz3_free(self.state)
             raise MemoryError("Failed to allocate memory")
@@ -132,9 +130,7 @@ class BZ3Decompressor:
         self.state = lib.bz3_new(block_size)
         if self.state == ffi.NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = ffi.cast(
-            "uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size))
-        )
+        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
         if self.buffer == ffi.NULL:
             lib.bz3_free(self.state)
             self.state = ffi.NULL
@@ -187,7 +183,9 @@ class BZ3Decompressor:
                 old_size = lib.read_neutral_s32(
                     ffi.cast("uint8_t*", ffi.from_buffer(temp))
                 )
-                if old_size > lib.bz3_bound(self.block_size) or new_size > lib.bz3_bound(self.block_size):
+                if old_size > lib.bz3_bound(
+                    self.block_size
+                ) or new_size > lib.bz3_bound(self.block_size):
                     raise ValueError("Failed to decode a block: Inconsistent headers.")
                 if len(self.unused) < new_size + 8:  # 数据段不够
                     break
@@ -307,7 +305,9 @@ def decompress_file(input: IO, output: IO) -> None:
             if len(data) < 4:
                 break
             old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
-            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(block_size):
+            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(
+                block_size
+            ):
                 raise ValueError("Failed to decode a block: Inconsistent headers.")
             data = input.read(new_size)  # type: bytes
             if len(data) < new_size:
@@ -368,7 +368,9 @@ def recover_file(input: IO, output: IO) -> None:
             if len(data) < 4:
                 break
             old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
-            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(block_size):
+            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(
+                block_size
+            ):
                 raise ValueError("Failed to decode a block: Inconsistent headers.")
             data = input.read(new_size)  # type: bytes
             if len(data) < new_size:
@@ -431,7 +433,9 @@ def test_file(input: IO, should_raise: bool = False) -> bool:
             if len(data) < 4:
                 break
             old_size = lib.read_neutral_s32(ffi.cast("uint8_t*", ffi.from_buffer(data)))
-            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(block_size):
+            if old_size > lib.bz3_bound(block_size) or new_size > lib.bz3_bound(
+                block_size
+            ):
                 raise ValueError("Failed to decode a block: Inconsistent headers.")
             data = input.read(new_size)  # type: bytes
             if len(data) < new_size:

@@ -1,4 +1,4 @@
-from typing import List, IO
+from typing import IO, List
 
 class BZ3Compressor:
     block_size: int
@@ -22,7 +22,6 @@ class BZ3OmpCompressor:
     def compress(self, data: bytes) -> bytes: ...
     def error(self) -> List[str]: ...
     def flush(self) -> bytes: ...
-
 
 class BZ3OmpDecompressor:
     block_size: int

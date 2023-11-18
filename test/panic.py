@@ -5,10 +5,15 @@ import os
 import sys
 
 sys.path.append(".")
-from bz3.backends.cython import BZ3OmpCompressor, BZ3OmpDecompressor, BZ3Compressor, BZ3Decompressor
+from bz3.backends.cython import (
+    BZ3Compressor,
+    BZ3Decompressor,
+    BZ3OmpCompressor,
+    BZ3OmpDecompressor,
+)
 
 for i in range(100):
-    compressor = BZ3OmpCompressor(10 ** 6, os.cpu_count())
+    compressor = BZ3OmpCompressor(10**6, os.cpu_count())
     del compressor
     print("compressor fine")
 
@@ -18,7 +23,7 @@ for i in range(100):
     print("decompressor fine")
 
 for i in range(100):
-    decompressor = BZ3Compressor(10 ** 6)
+    decompressor = BZ3Compressor(10**6)
     del decompressor
     print("compressor fine")
 

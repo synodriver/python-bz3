@@ -126,7 +126,7 @@ def main():
         python_requires=">=3.6",
         setup_requires=setup_requires,
         install_requires=install_requires,
-        license="BSD",
+        license="LGPLv3",
         classifiers=[
             "Development Status :: 4 - Beta",
             "Operating System :: OS Independent",

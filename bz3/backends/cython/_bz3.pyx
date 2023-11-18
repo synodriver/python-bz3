@@ -10,12 +10,12 @@ from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.stdio cimport fprintf, stderr
 from libc.string cimport memcpy, strncmp
 
-from bz3.backends.cython.bzip3 cimport (BZ3_OK, KiB, MiB, bz3_bound,
+from bz3.backends.cython.bzip3 cimport (BZ3_OK, MEMLOG, KiB, MiB, bz3_bound,
                                         bz3_compress, bz3_decode_block,
                                         bz3_decompress, bz3_encode_block,
                                         bz3_free, bz3_last_error, bz3_new,
                                         bz3_state, bz3_strerror, bz3_version,
-                                        read_neutral_s32, write_neutral_s32, MEMLOG)
+                                        read_neutral_s32, write_neutral_s32)
 
 
 cdef extern from "Python.h":
