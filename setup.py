@@ -36,6 +36,9 @@ def has_option(name: str) -> bool:
     if name in sys.argv[1:]:
         sys.argv.remove(name)
         return True
+    name = name.strip("-").upper()
+    if os.environ.get(name, None) is not None:
+        return True
     return False
 
 
@@ -52,7 +55,7 @@ class build_ext_compiler_check(build_ext):
 
 c_sources = ["bz3/backends/cython/_bz3.pyx"] + glob.glob("./dep/src/*.c")
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
-define_macros = [("VERSION", '"1.4.0.r3-gd9e5e15"')]
+define_macros = [("VERSION", '"1.4.0.r5-gf55631b"')]
 if has_option("--debug"):
     define_macros.append(("MEMDEBUG", None))
 
@@ -136,8 +139,6 @@ def main():
             "Programming Language :: C",
             "Programming Language :: Cython",
             "Programming Language :: Python",
-            "Programming Language :: Python :: 3.6",
-            "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",

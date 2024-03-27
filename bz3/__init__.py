@@ -1,7 +1,7 @@
 """
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 from bz3.backends import (
     bound,
