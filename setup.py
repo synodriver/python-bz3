@@ -94,7 +94,7 @@ install_requires = []
 setup_kw = {}
 if has_option("--use-cython"):
     print("building cython")
-    setup_requires.append("cython")
+    setup_requires.append("cython>=3.0.10")
     setup_kw["ext_modules"] = cythonize(
         extensions,
         compiler_directives={

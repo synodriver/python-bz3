@@ -2,8 +2,9 @@
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 import secrets
-from unittest import TestCase
 import sys
+from unittest import TestCase
+
 sys.path.append(".")
 from bz3 import bound, compress, compress_into, decompress, decompress_into
 

@@ -4,7 +4,7 @@ cimport cython
 from cpython.bytearray cimport PyByteArray_AS_STRING, PyByteArray_GET_SIZE
 from cpython.bytes cimport (PyBytes_AS_STRING, PyBytes_FromStringAndSize,
                             PyBytes_GET_SIZE)
-from cpython.mem cimport PyMem_Free, PyMem_Malloc
+from cpython.mem cimport PyMem_Calloc, PyMem_Free, PyMem_Malloc
 from cpython.object cimport PyObject_HasAttrString
 from libc.stdint cimport int32_t, uint8_t, uint32_t
 from libc.stdio cimport fprintf, stderr
@@ -17,9 +17,6 @@ from bz3.backends.cython.bzip3 cimport (BZ3_OK, MEMLOG, KiB, MiB, bz3_bound,
                                         bz3_state, bz3_strerror, bz3_version,
                                         read_neutral_s32, write_neutral_s32)
 
-
-cdef extern from "Python.h":
-    void* PyMem_Calloc(size_t nelem, size_t elsize)
 
 cdef const char* magic = "BZ3v1"
 
@@ -457,7 +454,7 @@ cpdef inline str libversion():
 from cython.parallel cimport prange
 
 
-cdef void bz3_encode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t *sizes, int32_t numthreads):
+cdef void bz3_encode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t *sizes, int32_t numthreads) noexcept:
     # sizes: read and write
     cdef int32_t i
     for i in prange(numthreads, nogil=True, schedule="static", num_threads=numthreads):
@@ -669,7 +666,7 @@ cdef class BZ3OmpCompressor:
         return ret
 
 
-cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads):
+cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads) noexcept:
     cdef int32_t i
     for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):
         bz3_decode_block(states[i], buffers[i], sizes[i], orig_size[i])
@@ -794,7 +791,7 @@ cdef class BZ3OmpDecompressor:
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
-                if block_size  < KiB(65) or block_size >MiB(511):
+                if block_size < KiB(65) or block_size > MiB(511):
                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
                 self.init_state(block_size)
                 del self.unused[:9]
@@ -804,7 +801,7 @@ cdef class BZ3OmpDecompressor:
                 thread_count = 0  # 这一波能用上几个thread
                 # should_delete = 0 # 讀取完成后從self.unused刪多少
                 for i in range(self.numthreads):
-                    if (PyByteArray_GET_SIZE(self.unused)-should_delete)<8: # 8 byte的 header都不够 直接返回
+                    if (PyByteArray_GET_SIZE(self.unused)-should_delete) < 8: # 8 byte的 header都不够 直接返回
                         should_break = 1
                         break
                     self.sizes[i] = read_neutral_s32(<uint8_t*>&PyByteArray_AS_STRING(self.unused)[should_delete]) # todo gcc warning but bytes is const
