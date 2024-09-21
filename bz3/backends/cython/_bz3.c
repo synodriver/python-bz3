@@ -6,18 +6,18 @@
         "define_macros": [
             [
                 "VERSION",
-                "\"1.4.0.r5-gf55631b\""
+                "\"1.4.0.r7-ge57ae08\""
             ]
         ],
         "depends": [
-            "dep\\include\\common.h",
-            "dep\\include\\libbz3.h"
+            "dep/include/common.h",
+            "dep/include/libbz3.h"
         ],
         "extra_compile_args": [
-            "-openmp"
+            "-fopenmp"
         ],
         "extra_link_args": [
-            "-openmp"
+            "-fopenmp"
         ],
         "include_dirs": [
             "./dep/include"
@@ -25,7 +25,7 @@
         "name": "bz3.backends.cython._bz3",
         "sources": [
             "bz3/backends/cython/_bz3.pyx",
-            "./dep/src\\libbz3.c"
+            "./dep/src/libbz3.c"
         ]
     },
     "module_name": "bz3.backends.cython._bz3"
@@ -1513,7 +1513,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "bz3\\\\backends\\\\cython\\\\_bz3.pyx",
+  "bz3/backends/cython/_bz3.pyx",
   "<stringsource>",
   "type.pxd",
 };
@@ -3340,7 +3340,7 @@ static const char __pyx_k_Failed_to_encode_a_block_s[] = "Failed to encode a blo
 static const char __pyx_k_Index_out_of_bounds_axis_d[] = "Index out of bounds (axis %d)";
 static const char __pyx_k_Step_may_not_be_zero_axis_d[] = "Step may not be zero (axis %d)";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
-static const char __pyx_k_bz3_backends_cython__bz3_pyx[] = "bz3\\backends\\cython\\_bz3.pyx";
+static const char __pyx_k_bz3_backends_cython__bz3_pyx[] = "bz3/backends/cython/_bz3.pyx";
 static const char __pyx_k_BZ3Compressor___reduce_cython[] = "BZ3Compressor.__reduce_cython__";
 static const char __pyx_k_BZ3OmpDecompressor_decompress[] = "BZ3OmpDecompressor.decompress";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";

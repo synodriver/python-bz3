@@ -1,2 +1,2 @@
-Cython>=3.0.9
+Cython>=3.0.10
 cffi>=1.0.0
