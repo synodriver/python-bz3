@@ -74,6 +74,13 @@ int bz3_compress(uint32_t block_size, const uint8_t * in, uint8_t * out, size_t 
  */
 int bz3_decompress(const uint8_t * in, uint8_t * out, size_t in_size, size_t * out_size);
 
+/** No dynamic (re)allocation occurs outside of that.
+ * 
+ * @param block_size The block size to be used for compression
+ * @return The total number of bytes required for compression, or 0 if block_size is invalid
+*/
+size_t bz3_min_memory_needed(int32_t block_size);
+
 /**
  * @brief Encode a single block. Returns the amount of bytes written to `buffer'.
  * `buffer' must be able to hold at least `size + size / 50 + 32' bytes. The size must not
@@ -88,7 +95,7 @@ int32_t bz3_encode_block(struct bz3_state * state, uint8_t * buffer, int32_t siz
  * @param size The size of the compressed data in `buffer'
  * @param orig_size The original size of the data before compression.
  */
-int32_t bz3_decode_block(struct bz3_state * state, uint8_t * buffer, int32_t size, int32_t orig_size);
+int32_t bz3_decode_block(struct bz3_state * state, uint8_t * buffer, size_t buffer_size, int32_t compressed_size, int32_t orig_size);
 
 /**
  * @brief Encode `n' blocks, all in parallel.
@@ -106,7 +113,28 @@ int32_t bz3_decode_block(struct bz3_state * state, uint8_t * buffer, int32_t siz
  * @brief Decode `n' blocks, all in parallel.
  * Same specifics as `bz3_encode_blocks', but doesn't overwrite `sizes'.
  */
-//void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[], int32_t n);
+//void bz3_decode_blocks(struct bz3_state * states[], uint8_t * buffers[], size_t buffer_sizes[], int32_t sizes[], int32_t orig_sizes[], int32_t n);
+/**
+ * @brief Check if using original file size as buffer size is sufficient for decompressing
+ * a block at `block` pointer.
+ * 
+ * @param block Pointer to the compressed block data
+ * @param block_size Size of the block buffer in bytes (must be at least 13 bytes for header)
+ * @param orig_size Size of the original uncompressed data 
+ * @return 1 if original size is sufficient, 0 if insufficient, -1 on header error (insufficient buffer size)
+ * 
+ * @remarks
+ * 
+ *      This function is useful for external APIs using the low level block encoding API,
+ *      `bz3_encode_block`. You would normally call this directly after `bz3_encode_block`
+ *      on the block that has been output.
+ *      
+ *      The purpose of this function is to prevent encoding blocks that would require an additional
+ *      malloc at decompress time.
+ *      The goal is to prevent erroring with `BZ3_ERR_DATA_SIZE_TOO_SMALL`, thus
+ *      in turn 
+ */
+int bz3_orig_size_sufficient_for_decode(const uint8_t * block, size_t block_size, int32_t orig_size);
 
 const char * bz3_version();
 

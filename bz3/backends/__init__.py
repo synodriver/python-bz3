@@ -1,6 +1,7 @@
 """
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
+
 import os
 import platform
 
@@ -29,6 +30,8 @@ if not _should_use_cffi():
         decompress_file,
         decompress_into,
         libversion,
+        min_memory_needed,
+        orig_size_sufficient_for_decode,
         recover_file,
         test_file,
     )
@@ -42,6 +45,8 @@ else:
         decompress_file,
         decompress_into,
         libversion,
+        min_memory_needed,
+        orig_size_sufficient_for_decode,
         recover_file,
         test_file,
     )

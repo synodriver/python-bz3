@@ -13,7 +13,9 @@ from libc.string cimport memcpy, strncmp
 from bz3.backends.cython.bzip3 cimport (BZ3_OK, MEMLOG, KiB, MiB, bz3_bound,
                                         bz3_compress, bz3_decode_block,
                                         bz3_decompress, bz3_encode_block,
-                                        bz3_free, bz3_last_error, bz3_new,
+                                        bz3_free, bz3_last_error,
+                                        bz3_min_memory_needed, bz3_new,
+                                        bz3_orig_size_sufficient_for_decode,
                                         bz3_state, bz3_strerror, bz3_version,
                                         read_neutral_s32, write_neutral_s32)
 
@@ -124,6 +126,7 @@ cdef class BZ3Decompressor:
     cdef:
         bz3_state * state
         uint8_t * buffer
+        size_t buffer_size
         readonly int32_t block_size
         bytearray unused  # 还没解压的数据
         bint have_magic_number
@@ -135,7 +138,8 @@ cdef class BZ3Decompressor:
         self.state = bz3_new(block_size)
         if self.state == NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
+        self.buffer_size = bz3_bound(block_size)
+        self.buffer = <uint8_t *> PyMem_Malloc(self.buffer_size)
         if self.buffer == NULL:
             bz3_free(self.state)
             self.state = NULL
@@ -168,7 +172,7 @@ cdef class BZ3Decompressor:
                 if strncmp(PyByteArray_AS_STRING(self.unused), magic, 5) != 0:
                     raise ValueError("Invalid signature")
                 block_size = read_neutral_s32(<uint8_t*>&(PyByteArray_AS_STRING(self.unused)[5]))
-                if block_size  < KiB(65) or block_size >MiB(511):
+                if block_size < KiB(65) or block_size > MiB(511):
                     raise ValueError("The input file is corrupted. Reason: Invalid block size in the header")
                 self.init_state(block_size)
                 del self.unused[:9]
@@ -185,7 +189,7 @@ cdef class BZ3Decompressor:
                     break
                 memcpy(self.buffer, &(PyByteArray_AS_STRING(self.unused)[8]), <size_t>new_size)
                 with nogil:
-                    code = bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                    code = bz3_decode_block(self.state, self.buffer, self.buffer_size, new_size, old_size)
                 if code == -1:
                     if self.ignore_error:
                         fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(self.state))
@@ -272,7 +276,8 @@ def decompress_file(object input, object output):
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
+    cdef size_t buffer_size = bz3_bound(block_size)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(buffer_size)
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -296,7 +301,7 @@ def decompress_file(object input, object output):
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
             with nogil:
-                code = bz3_decode_block(state, buffer, new_size, old_size)
+                code = bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             if code == -1:
                 raise ValueError("Failed to decode a block: %s" % bz3_strerror(state))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
@@ -326,7 +331,8 @@ def recover_file(object input, object output):
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
+    cdef size_t buffer_size = bz3_bound(block_size)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(buffer_size)
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -350,7 +356,7 @@ def recover_file(object input, object output):
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
             with nogil:
-                code = bz3_decode_block(state, buffer, new_size, old_size)
+                code = bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             if code == -1:
                 fprintf(stderr, "Writing invalid block: %s\n", bz3_strerror(state))
             output.write(PyBytes_FromStringAndSize(<char*>buffer, old_size))
@@ -384,7 +390,8 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
     cdef bz3_state *state = bz3_new(block_size)
     if state == NULL:
         raise MemoryError("Failed to create a block encoder state")
-    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
+    cdef size_t buffer_size = bz3_bound(block_size)
+    cdef uint8_t *buffer = <uint8_t *> PyMem_Malloc(buffer_size)
     if buffer == NULL:
         bz3_free(state)
         state = NULL
@@ -410,7 +417,7 @@ cpdef inline bint test_file(object input, bint should_raise = False) except? 0:
                 break
             memcpy(buffer, PyBytes_AS_STRING(data), <size_t> new_size)
             with nogil:
-                code = bz3_decode_block(state, buffer, new_size, old_size)
+                code = bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             # print(f"newsize {new_size} oldsize {old_size}") # todo
             if code == -1:
                 if should_raise:
@@ -446,6 +453,18 @@ cpdef inline size_t decompress_into(const uint8_t[::1] data, uint8_t[::1] out) e
     if bzerr != BZ3_OK:
         raise ValueError(f"bz3_decompress() failed with error code {bzerr}")
     return out_size
+
+cpdef inline size_t min_memory_needed(int32_t block_size) noexcept:
+    cdef size_t ret
+    with nogil:
+        ret = bz3_min_memory_needed(block_size)
+    return ret
+
+cpdef inline int orig_size_sufficient_for_decode(const uint8_t[::1] block, int32_t orig_size) noexcept:
+    cdef int ret
+    with nogil:
+        ret = bz3_orig_size_sufficient_for_decode(&block[0], <size_t>block.shape[0], orig_size)
+    return ret
 
 cpdef inline str libversion():
     return (<bytes>bz3_version()).decode()
@@ -666,10 +685,10 @@ cdef class BZ3OmpCompressor:
         return ret
 
 
-cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, int32_t* sizes, int32_t* orig_size, int32_t numthreads) noexcept:
+cdef void bz3_decode_blocks(bz3_state ** states, uint8_t ** buffers, size_t *buffer_sizes, int32_t* sizes, int32_t* orig_size, int32_t numthreads) noexcept:
     cdef int32_t i
     for i in prange(numthreads, nogil=True, schedule='static', num_threads=numthreads):
-        bz3_decode_block(states[i], buffers[i], sizes[i], orig_size[i])
+        bz3_decode_block(states[i], buffers[i], buffer_sizes[i], sizes[i], orig_size[i])
 
 
 @cython.freelist(8)
@@ -679,6 +698,7 @@ cdef class BZ3OmpDecompressor:
     cdef:
         bz3_state ** states
         uint8_t ** buffers
+        size_t* buffer_sizes
         int32_t * sizes   # compressed
         int32_t * old_sizes  # origin
         readonly int32_t block_size
@@ -699,14 +719,21 @@ cdef class BZ3OmpDecompressor:
             if not self.buffers:
                 raise MemoryError
             MEMLOG("PyMem_Malloc %p\n", self.buffers)
+        if not self.buffer_sizes:
+            self.buffer_sizes = <size_t *> PyMem_Calloc(self.numthreads, sizeof(size_t))
+            if not self.buffer_sizes:
+                raise MemoryError
+            MEMLOG("PyMem_Malloc %p\n", self.buffer_sizes)
+        cdef size_t buffer_size = bz3_bound(block_size)
         cdef uint32_t i
         try:
             for i in range(self.numthreads):
+                self.buffer_sizes[i] = buffer_size
                 self.states[i] = bz3_new(block_size)
                 if self.states[i] == NULL:
                     raise MemoryError("Failed to create a block encoder state")  # todo 如何善后
                 MEMLOG("bz3_new %p\n", self.states[i])
-                self.buffers[i] = <uint8_t *> PyMem_Malloc(bz3_bound(block_size))
+                self.buffers[i] = <uint8_t *> PyMem_Malloc(buffer_size)
                 if self.buffers[i] == NULL:
                     raise MemoryError("Failed to allocate memory")
                 MEMLOG("PyMem_Malloc %p\n", self.buffers[i])
@@ -719,6 +746,7 @@ cdef class BZ3OmpDecompressor:
     def __cinit__(self,  uint32_t numthreads, bint ignore_error = False):
         self.states = NULL
         self.buffers = NULL
+        self.buffer_sizes = NULL
         self.unused = bytearray()
         self.have_magic_number = 0 # 还没有读到magic number
         self.numthreads = numthreads
@@ -773,6 +801,10 @@ cdef class BZ3OmpDecompressor:
             PyMem_Free(self.old_sizes)
             MEMLOG("PyMem_Free %p\n", self.old_sizes)
             self.old_sizes = NULL
+        if self.buffer_sizes:
+            PyMem_Free(self.buffer_sizes)
+            MEMLOG("PyMem_Free %p\n", self.buffer_sizes)
+            self.buffer_sizes = NULL
         MEMLOG("BZ3OmpDecompressor __dealloc__ %p\n", <void *> self)
 
     cpdef inline bytes decompress(self, const uint8_t[::1] data):
@@ -815,7 +847,7 @@ cdef class BZ3OmpDecompressor:
                     should_delete += (self.sizes[i] + 8)
                     thread_count += 1
                 if thread_count:  # 一个block都凑不齐decode个jb
-                    bz3_decode_blocks(self.states, self.buffers, self.sizes, self.old_sizes, <int32_t>thread_count)
+                    bz3_decode_blocks(self.states, self.buffers, self.buffer_sizes, self.sizes, self.old_sizes, <int32_t>thread_count)
                 for j in range(thread_count):
                     if bz3_last_error(self.states[j]) != BZ3_OK:
                         if self.ignore_error:

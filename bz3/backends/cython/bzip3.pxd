@@ -38,11 +38,13 @@ cdef extern from "libbz3.h" nogil:
     size_t bz3_bound(size_t input_size)
     int bz3_compress(uint32_t block_size, const uint8_t * in_, uint8_t * out, size_t in_size, size_t * out_size)
     int bz3_decompress(const uint8_t * in_, uint8_t * out, size_t in_size, size_t * out_size)
+    size_t bz3_min_memory_needed(int32_t block_size)
     int32_t bz3_encode_block(bz3_state * state, uint8_t * buffer, int32_t size)
-    int32_t bz3_decode_block(bz3_state * state, uint8_t * buffer, int32_t size, int32_t orig_size)
+    int32_t bz3_decode_block(bz3_state * state, uint8_t * buffer, size_t buffer_size, int32_t compressed_size, int32_t orig_size)
     void bz3_encode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t n)
-    void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], int32_t sizes[], int32_t orig_sizes[],
+    void bz3_decode_blocks(bz3_state * states[], uint8_t * buffers[], size_t buffer_sizes[], int32_t sizes[], int32_t orig_sizes[],
                            int32_t n)
+    int bz3_orig_size_sufficient_for_decode(const uint8_t * block, size_t block_size, int32_t orig_size)
     const char * bz3_version()
 
 cdef extern from "<stdio.h>" nogil:

@@ -3,6 +3,7 @@ import glob
 import os
 import re
 import sys
+import sysconfig
 from collections import defaultdict
 
 try:
@@ -61,11 +62,7 @@ define_macros = [("VERSION", '"1.4.0.r7-ge57ae08"')]
 if has_option("--debug"):
     define_macros.append(("MEMDEBUG", None))
 
-if (
-    sys.version_info > (3, 13, 0)
-    and hasattr(sys, "_is_gil_enabled")
-    and not sys._is_gil_enabled()
-):
+if sysconfig.get_config_var("Py_GIL_DISABLED"):
     print("build nogil")
     define_macros.append(
         ("Py_GIL_DISABLED", "1"),
@@ -162,6 +159,7 @@ def main():
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
             "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
             "Programming Language :: Python :: Implementation :: CPython",
             "Programming Language :: Python :: Implementation :: PyPy",
         ],

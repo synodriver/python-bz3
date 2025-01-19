@@ -1,6 +1,8 @@
 """
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
+import os
+# os.environ["BZ3_USE_CFFI"] = "1"
 import secrets
 import sys
 from unittest import TestCase

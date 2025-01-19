@@ -1,7 +1,8 @@
 """
-Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
+Copyright (c) 2008-2025 synodriver <diguohuangjiajinweijun@gmail.com>
 """
-__version__ = "0.1.6"
+
+__version__ = "0.1.7"
 
 from bz3.backends import (
     bound,
@@ -10,6 +11,8 @@ from bz3.backends import (
     decompress_file,
     decompress_into,
     libversion,
+    min_memory_needed,
+    orig_size_sufficient_for_decode,
     recover_file,
     test_file,
 )

@@ -130,7 +130,8 @@ class BZ3Decompressor:
         self.state = lib.bz3_new(block_size)
         if self.state == ffi.NULL:
             raise MemoryError("Failed to create a block encoder state")
-        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
+        self.buffer_size = lib.bz3_bound(block_size)
+        self.buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(self.buffer_size))
         if self.buffer == ffi.NULL:
             lib.bz3_free(self.state)
             self.state = ffi.NULL
@@ -192,7 +193,9 @@ class BZ3Decompressor:
                 temp = self.unused[8:]
                 lib.memcpy(self.buffer, ffi.from_buffer(temp), new_size)
 
-                code = lib.bz3_decode_block(self.state, self.buffer, new_size, old_size)
+                code = lib.bz3_decode_block(
+                    self.state, self.buffer, self.buffer_size, new_size, old_size
+                )
                 if code == -1:
                     if self.ignore_error:
                         print(
@@ -289,7 +292,8 @@ def decompress_file(input: IO, output: IO) -> None:
     state = lib.bz3_new(block_size)
     if state == ffi.NULL:
         raise MemoryError("Failed to create a block encoder state")
-    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
+    buffer_size = lib.bz3_bound(block_size)
+    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(buffer_size))
     if buffer == ffi.NULL:
         lib.bz3_free(state)
         raise MemoryError("Failed to allocate memory")
@@ -313,7 +317,7 @@ def decompress_file(input: IO, output: IO) -> None:
             if len(data) < new_size:
                 break
             lib.memcpy(buffer, ffi.cast("uint8_t*", ffi.from_buffer(data)), new_size)
-            code = lib.bz3_decode_block(state, buffer, new_size, old_size)
+            code = lib.bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             if code == -1:
                 raise ValueError(
                     "Failed to decode a block: %s" % lib.bz3_strerror(state)
@@ -352,7 +356,8 @@ def recover_file(input: IO, output: IO) -> None:
     state = lib.bz3_new(block_size)
     if state == ffi.NULL:
         raise MemoryError("Failed to create a block encoder state")
-    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
+    buffer_size = lib.bz3_bound(block_size)
+    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(buffer_size))
     if buffer == ffi.NULL:
         lib.bz3_free(state)
         raise MemoryError("Failed to allocate memory")
@@ -376,7 +381,7 @@ def recover_file(input: IO, output: IO) -> None:
             if len(data) < new_size:
                 break
             lib.memcpy(buffer, ffi.cast("uint8_t*", ffi.from_buffer(data)), new_size)
-            code = lib.bz3_decode_block(state, buffer, new_size, old_size)
+            code = lib.bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             if code == -1:
                 print(
                     f"Writing invalid block: {lib.bz3_strerror(state)}", file=sys.stderr
@@ -417,7 +422,8 @@ def test_file(input: IO, should_raise: bool = False) -> bool:
     state = lib.bz3_new(block_size)
     if state == ffi.NULL:
         raise MemoryError("Failed to create a block encoder state")
-    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(lib.bz3_bound(block_size)))
+    buffer_size = lib.bz3_bound(block_size)
+    buffer = ffi.cast("uint8_t*", lib.PyMem_Malloc(buffer_size))
     if buffer == ffi.NULL:
         lib.bz3_free(state)
         raise MemoryError("Failed to allocate memory")
@@ -441,7 +447,7 @@ def test_file(input: IO, should_raise: bool = False) -> bool:
             if len(data) < new_size:
                 break
             lib.memcpy(buffer, ffi.cast("uint8_t*", ffi.from_buffer(data)), new_size)
-            code = lib.bz3_decode_block(state, buffer, new_size, old_size)
+            code = lib.bz3_decode_block(state, buffer, buffer_size, new_size, old_size)
             if code == -1:
                 if should_raise:
                     raise ValueError(
@@ -478,6 +484,16 @@ def decompress_into(data, out) -> int:
     if bzerr != lib.BZ3_OK:
         raise ValueError(f"bz3_decompress() failed with error code {bzerr}")
     return out_size[0]
+
+
+def min_memory_needed(block_size: int) -> int:
+    return lib.bz3_min_memory_needed(block_size)
+
+
+def orig_size_sufficient_for_decode(block: bytes, orig_size: int) -> int:
+    return lib.bz3_orig_size_sufficient_for_decode(
+        ffi.from_buffer(block), len(block), orig_size
+    )
 
 
 def libversion() -> str:

@@ -1,4 +1,5 @@
 """Copied from cpython to ensure compatibility"""
+
 import io
 from typing import Any, Callable, Dict
 

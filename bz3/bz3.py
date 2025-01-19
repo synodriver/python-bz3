@@ -1,6 +1,7 @@
 """
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
+
 import io
 import os
 from builtins import open as _builtin_open
