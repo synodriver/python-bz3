@@ -9,10 +9,6 @@
                 "\"1.4.0.r7-ge57ae08\""
             ],
             [
-                "MEMDEBUG",
-                null
-            ],
-            [
                 "Py_GIL_DISABLED",
                 "1"
             ]
@@ -31472,6 +31468,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes> bz3_strerror(self.states[i])).decode())             # <<<<<<<<<<<<<<
  *         return ret
+ * 
 */
       __pyx_t_1 = __Pyx_PyBytes_FromString(bz3_strerror((__pyx_v_self->states[__pyx_v_i]))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 872, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
@@ -31499,6 +31496,7 @@ static CYTHON_INLINE PyObject *__pyx_f_3bz3_8backends_6cython_4_bz3_18BZ3OmpDeco
  *             if bz3_last_error(self.states[i]) != BZ3_OK:
  *                 ret.append((<bytes> bz3_strerror(self.states[i])).decode())
  *         return ret             # <<<<<<<<<<<<<<
+ * 
 */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_ret);

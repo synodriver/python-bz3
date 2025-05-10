@@ -11,7 +11,7 @@ from bz3 import compress, decompress
 from bz3 import open as _open
 from bz3.backends.cython import BZ3OmpCompressor, BZ3OmpDecompressor
 
-origin_data = b"124" * (100 * 10**6 + 7)
+origin_data = b"124" * (1000 * 10**6 + 7)
 
 
 class TestOmp(TestCase):
